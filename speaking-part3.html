@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking Part 3 — Two-way Discussion | EngLish</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="listening-navbar">
+        <a href="speaking.html" class="back-home">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Speaking Hub
+        </a>
+
+        <div class="listening-logo">
+            <i class="fa-solid fa-language"></i>
+            Eng<span>Lish</span>
+        </div>
+
+        <div class="speaking-nav-pills">
+            <a href="speaking-part1.html">Part 1</a>
+            <a href="speaking-part2.html">Part 2</a>
+            <a href="speaking-part3.html" class="active">Part 3</a>
+        </div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="speaking-container">
+
+        <!-- HEADER SECTION -->
+        <div class="speaking-header">
+            <div class="part-badge-group">
+                <span class="part-badge">
+                    <i class="fa-solid fa-comments"></i>
+                    PART 03 / SPEAKING
+                </span>
+            </div>
+
+            <h1 class="speaking-title">Two-way Discussion</h1>
+
+            <p class="speaking-subtitle">
+                In Part 3, you engage in an in-depth discussion on abstract ideas, societal values, comparisons, and advertising trends. First try answering on your own, then review the sample answers at the bottom.
+            </p>
+        </div>
+
+
+        <!-- SAMPLE RESOURCES SECTION -->
+        <section class="sample-resources-section">
+
+            <div class="section-header-row">
+                <div class="resources-heading">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>SAMPLE RESOURCES</span>
+                </div>
+                <span class="resource-badge">Official IELTS Study Materials</span>
+            </div>
+
+            <div class="resource-options-grid">
+
+                <!-- 01 — LISTEN (SAMPLE RECORDING) -->
+                <div class="resource-card">
+                    <div class="resource-card-header">
+                        <div class="option-num-title">
+                            <span class="option-num">01 — LISTEN</span>
+                            <span>Official Sample Recording</span>
+                        </div>
+                        <span class="resource-badge">Part 3 MP3</span>
+                    </div>
+
+                    <div class="custom-audio-box">
+                        <audio id="audioPart3" preload="auto">
+                            <source src="audio/ielts-speaking-part-3-sample-recording.mp3" type="audio/mpeg">
+                            Your browser does not support HTML audio player.
+                        </audio>
+
+                        <div class="audio-controls-row">
+                            <button class="play-pause-btn" aria-label="Play Audio">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+
+                            <div class="audio-progress-container">
+                                <input type="range" class="audio-slider" min="0" max="100" value="0" step="0.1">
+                                <div class="audio-time-display">
+                                    <span class="current-time">0:00</span>
+                                    <span class="total-time">0:00</span>
+                                </div>
+                            </div>
+
+                            <div class="audio-volume-box">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 02 — READ (SAMPLE TRANSCRIPT) -->
+                <div class="resource-card">
+                    <div class="resource-card-header">
+                        <div class="option-num-title">
+                            <span class="option-num">02 — READ</span>
+                            <span>Official Sample Transcript</span>
+                        </div>
+                    </div>
+
+                    <button class="toggle-transcript-btn" data-target="transcriptPanelPart3">
+                        <i class="fa-regular fa-file-lines"></i>
+                        Read Transcript
+                    </button>
+
+                    <div class="transcript-panel" id="transcriptPanelPart3">
+                        
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag examiner">EXAMINER</span>
+                            <div class="dialogue-text">
+                                "We've been talking about a personal possession, and now I'd like to discuss with you one or two more general questions related to this. First, let me ask about people's values. What kind of things give status to people in your country?"
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag candidate">CANDIDATE</span>
+                            <div class="dialogue-text">
+                                "In my country, status is traditionally linked to career achievements, high educational qualifications, and modern possessions like high-end electronic devices or vehicles. However, among younger generations, intellectual accomplishments and social contribution are increasingly valued."
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag examiner">EXAMINER</span>
+                            <div class="dialogue-text">
+                                "Have things changed since your parents’ time?"
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag candidate">CANDIDATE</span>
+                            <div class="dialogue-text">
+                                "Significantly, yes. During my parents' era, status was primarily measured by physical assets like owning land or traditional property. Nowadays, digital skills, global exposure, and rapid career growth hold far greater importance."
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag examiner">EXAMINER</span>
+                            <div class="dialogue-text">
+                                "Now let's discuss the role of advertising. Do you think advertising influences what people buy?"
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag candidate">CANDIDATE</span>
+                            <div class="dialogue-text">
+                                "Undoubtedly. Modern advertising leverages targeted media and subtle psychological cues that shape consumer desires. Even when individuals believe they are making independent choices, persuasive marketing often influences their purchasing decisions."
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE QUESTIONS SECTION -->
+        <section class="practice-section">
+
+            <div class="practice-section-heading">
+                <h2 style="font-size: 22px; font-weight: 800; color: var(--dark);">PRACTICE QUESTIONS</h2>
+                <p style="color: var(--muted); font-size: 14px;">Try responding to each question on your own first. Scroll down to review the sample answers at the bottom.</p>
+            </div>
+
+
+            <!-- TOPIC 1: PEOPLE'S VALUES -->
+            <div class="topic-group">
+                <div class="topic-title">PEOPLE'S VALUES</div>
+
+                <!-- Q1 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">01</span>
+                            <span class="question-text">What kind of things give status to people in your country?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">02</span>
+                            <span class="question-text">Have things changed since your parents’ time?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- TOPIC 2: THE ROLE OF ADVERTISING -->
+            <div class="topic-group">
+                <div class="topic-title">THE ROLE OF ADVERTISING</div>
+
+                <!-- Q3 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">03</span>
+                            <span class="question-text">Do you think advertising influences what people buy?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">04</span>
+                            <span class="question-text">Is advertising always truthful?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- SAMPLE ANSWERS SECTION (AT THE BOTTOM) -->
+        <section class="sample-answers-section" id="sampleAnswersSection" style="margin-top: 50px; padding: 32px; background: white; border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow);">
+            
+            <div class="section-header-row" style="margin-bottom: 20px;">
+                <div class="resources-heading">
+                    <i class="fa-solid fa-lightbulb" style="color: var(--primary);"></i>
+                    <span>SAMPLE ANSWERS & RESPONSES</span>
+                </div>
+                <span class="resource-badge">Answer Key / Reference</span>
+            </div>
+
+            <p style="color: var(--muted); font-size: 14px; margin-bottom: 30px;">
+                Review the sample answers below to refine your vocabulary and argument structure after answering the questions above.
+            </p>
+
+            <div class="answers-list" style="display: flex; flex-direction: column; gap: 20px;">
+
+                <!-- Ans 1 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 01: What kind of things give status to people in your country?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "In my country, social status is often derived from academic qualifications, prestigious career titles, and technological assets. However, ethical leadership and social impact are also gaining strong recognition."
+                    </div>
+                </div>
+
+                <!-- Ans 2 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 02: Have things changed since your parents’ time?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "Yes, there has been a major shift. Previous generations prioritized physical stability like land ownership and long-term jobs. Today, young professionals prioritize digital fluency, mobility, and continuous skill development."
+                    </div>
+                </div>
+
+                <!-- Ans 3 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 03: Do you think advertising influences what people buy?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "Modern advertising definitely plays a powerful role. Through repetitive branding, influencer endorsements, and algorithmic targeting, advertisements make products feel desirable and essential."
+                    </div>
+                </div>
+
+                <!-- Ans 4 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 04: Is advertising always truthful?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "Not always. While strict advertising regulations exist, companies frequently highlight positive product features while downplaying limitations to attract buyers."
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PAGE NAVIGATION FOOTER -->
+        <div class="page-nav-footer">
+            <a href="speaking-part2.html" class="nav-link-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                ← Part 2
+            </a>
+
+            <a href="speaking.html" class="nav-link-btn primary">
+                <i class="fa-solid fa-house"></i>
+                Back to Speaking Hub
+            </a>
+        </div>
+
+    </main>
+
+    <!-- JS -->
+    <script src="speaking.js"></script>
+
+</body>
+
+</html>

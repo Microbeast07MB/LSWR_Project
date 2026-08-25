@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking Part 1 — Introduction & Interview | EngLish</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="listening-navbar">
+        <a href="speaking.html" class="back-home">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Speaking Hub
+        </a>
+
+        <div class="listening-logo">
+            <i class="fa-solid fa-language"></i>
+            Eng<span>Lish</span>
+        </div>
+
+        <div class="speaking-nav-pills">
+            <a href="speaking-part1.html" class="active">Part 1</a>
+            <a href="speaking-part2.html">Part 2</a>
+            <a href="speaking-part3.html">Part 3</a>
+        </div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="speaking-container">
+
+        <!-- HEADER SECTION -->
+        <div class="speaking-header">
+            <div class="part-badge-group">
+                <span class="part-badge">
+                    <i class="fa-solid fa-microphone"></i>
+                    PART 01 / SPEAKING
+                </span>
+            </div>
+
+            <h1 class="speaking-title">Introduction & Interview</h1>
+
+            <p class="speaking-subtitle">
+                In Part 1, the examiner asks general questions about yourself, your home, studies, work, and everyday topics. First try answering all questions on your own, then check the sample answers at the bottom of the page.
+            </p>
+        </div>
+
+
+        <!-- SAMPLE RESOURCES SECTION -->
+        <section class="sample-resources-section">
+
+            <div class="section-header-row">
+                <div class="resources-heading">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>SAMPLE RESOURCES</span>
+                </div>
+                <span class="resource-badge">Official IELTS Study Materials</span>
+            </div>
+
+            <div class="resource-options-grid">
+
+                <!-- 01 — LISTEN (SAMPLE RECORDING) -->
+                <div class="resource-card">
+                    <div class="resource-card-header">
+                        <div class="option-num-title">
+                            <span class="option-num">01 — LISTEN</span>
+                            <span>Official Sample Recording</span>
+                        </div>
+                        <span class="resource-badge">Part 1 MP3</span>
+                    </div>
+
+                    <div class="custom-audio-box">
+                        <audio id="audioPart1" preload="auto">
+                            <source src="audio/ielts-speaking-part-1-sample-recording.mp3" type="audio/mpeg">
+                            Your browser does not support HTML audio player.
+                        </audio>
+
+                        <div class="audio-controls-row">
+                            <button class="play-pause-btn" aria-label="Play Audio">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+
+                            <div class="audio-progress-container">
+                                <input type="range" class="audio-slider" min="0" max="100" value="0" step="0.1">
+                                <div class="audio-time-display">
+                                    <span class="current-time">0:00</span>
+                                    <span class="total-time">0:00</span>
+                                </div>
+                            </div>
+
+                            <div class="audio-volume-box">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 02 — READ (SAMPLE TRANSCRIPT) -->
+                <div class="resource-card">
+                    <div class="resource-card-header">
+                        <div class="option-num-title">
+                            <span class="option-num">02 — READ</span>
+                            <span>Official Sample Transcript</span>
+                        </div>
+                    </div>
+
+                    <button class="toggle-transcript-btn" data-target="transcriptPanelPart1">
+                        <i class="fa-regular fa-file-lines"></i>
+                        Read Transcript
+                    </button>
+
+                    <div class="transcript-panel" id="transcriptPanelPart1">
+                        
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag examiner">EXAMINER</span>
+                            <div class="dialogue-text">
+                                "Now, in this first part, I'd like to ask you some questions about yourself. Let's talk about your town or village. Can you describe the area where you live?"
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag candidate">CANDIDATE</span>
+                            <div class="dialogue-text">
+                                "It's quite a small village located near the coast in the south. It's known for its peaceful atmosphere, green landscapes, and close-knit community where most residents know each other."
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag examiner">EXAMINER</span>
+                            <div class="dialogue-text">
+                                "What do you like most about living there?"
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag candidate">CANDIDATE</span>
+                            <div class="dialogue-text">
+                                "What I enjoy most is the tranquil environment and fresh air, especially compared to big cities. There is also a vibrant local market every weekend where people gather."
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag examiner">EXAMINER</span>
+                            <div class="dialogue-text">
+                                "Let's talk about your accommodation. Do you live in a house or an apartment?"
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag candidate">CANDIDATE</span>
+                            <div class="dialogue-text">
+                                "I live in a traditional two-story house with my family. It has a spacious garden in the front where we spend time outdoors during the evenings."
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag examiner">EXAMINER</span>
+                            <div class="dialogue-text">
+                                "Which room in your house do you like the best?"
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag candidate">CANDIDATE</span>
+                            <div class="dialogue-text">
+                                "My study room is definitely my favorite. It gets plenty of natural light, and it gives me a quiet space to focus on my coursework and projects."
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE QUESTIONS SECTION -->
+        <section class="practice-section">
+
+            <div class="practice-section-heading">
+                <h2 style="font-size: 22px; font-weight: 800; color: var(--dark);">PRACTICE QUESTIONS</h2>
+                <p style="color: var(--muted); font-size: 14px;">Speak your answer out loud for each question first. Sample answers are available at the bottom of the page.</p>
+            </div>
+
+
+            <!-- TOPIC 1: HOMETOWN OR VILLAGE -->
+            <div class="topic-group">
+                <div class="topic-title">HOMETOWN OR VILLAGE</div>
+
+                <!-- Q1 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">01</span>
+                            <span class="question-text">Where is your hometown located?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">02</span>
+                            <span class="question-text">What do you like about your hometown?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">03</span>
+                            <span class="question-text">Has your hometown changed much in recent years?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">04</span>
+                            <span class="question-text">Would you recommend your hometown to visitors?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- TOPIC 2: ACCOMMODATION -->
+            <div class="topic-group">
+                <div class="topic-title">ACCOMMODATION</div>
+
+                <!-- Q5 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">05</span>
+                            <span class="question-text">Do you live in a house or an apartment?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">06</span>
+                            <span class="question-text">What is your favorite room in your home?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- SAMPLE ANSWERS SECTION (AT THE BOTTOM) -->
+        <section class="sample-answers-section" id="sampleAnswersSection" style="margin-top: 50px; padding: 32px; background: white; border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow);">
+            
+            <div class="section-header-row" style="margin-bottom: 20px;">
+                <div class="resources-heading">
+                    <i class="fa-solid fa-lightbulb" style="color: var(--primary);"></i>
+                    <span>SAMPLE ANSWERS & RESPONSES</span>
+                </div>
+                <span class="resource-badge">Answer Key / Reference</span>
+            </div>
+
+            <p style="color: var(--muted); font-size: 14px; margin-bottom: 30px;">
+                Review the official sample answers below to compare your vocabulary, sentence structure, and fluency after trying the questions above.
+            </p>
+
+            <div class="answers-list" style="display: flex; flex-direction: column; gap: 20px;">
+
+                <!-- Ans 1 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 01: Where is your hometown located?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "My hometown is located in the northern region of the country, nestled near a scenic mountain valley. It is well-connected to nearby metropolitan areas while retaining a serene, natural charm."
+                    </div>
+                </div>
+
+                <!-- Ans 2 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 02: What do you like about your hometown?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "I particularly appreciate the hospitable community and the clean, pollution-free environment. Additionally, it has rich historical landmarks that attract visitors throughout the year."
+                    </div>
+                </div>
+
+                <!-- Ans 3 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 03: Has your hometown changed much in recent years?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "Yes, significantly. Over the past decade, improved public infrastructure, better internet connectivity, and modern educational institutions have transformed it into a thriving sub-urban hub."
+                    </div>
+                </div>
+
+                <!-- Ans 4 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 04: Would you recommend your hometown to visitors?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "Absolutely! Anyone interested in local culture, traditional cuisine, and scenic nature trails would thoroughly enjoy visiting my hometown."
+                    </div>
+                </div>
+
+                <!-- Ans 5 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 05: Do you live in a house or an apartment?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "I live in a modern apartment complex on the fifth floor. It offers great views of the city skyline and features modern amenities like high-speed elevators and 24/7 security."
+                    </div>
+                </div>
+
+                <!-- Ans 6 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 06: What is your favorite room in your home?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "My bedroom is my absolute favorite. It is personalized with my study desk, books, and soft lighting, making it the perfect spot for relaxing and studying."
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PAGE NAVIGATION FOOTER -->
+        <div class="page-nav-footer">
+            <a href="speaking.html" class="nav-link-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Speaking Hub
+            </a>
+
+            <a href="speaking-part2.html" class="nav-link-btn primary">
+                Next → Part 2
+            </a>
+        </div>
+
+    </main>
+
+    <!-- JS -->
+    <script src="speaking.js"></script>
+
+</body>
+
+</html>

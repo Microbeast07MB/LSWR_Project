@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking Part 2 — Individual Long Turn | EngLish</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="listening-navbar">
+        <a href="speaking.html" class="back-home">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Speaking Hub
+        </a>
+
+        <div class="listening-logo">
+            <i class="fa-solid fa-language"></i>
+            Eng<span>Lish</span>
+        </div>
+
+        <div class="speaking-nav-pills">
+            <a href="speaking-part1.html">Part 1</a>
+            <a href="speaking-part2.html" class="active">Part 2</a>
+            <a href="speaking-part3.html">Part 3</a>
+        </div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="speaking-container">
+
+        <!-- HEADER SECTION -->
+        <div class="speaking-header">
+            <div class="part-badge-group">
+                <span class="part-badge">
+                    <i class="fa-solid fa-stopwatch"></i>
+                    PART 02 / SPEAKING
+                </span>
+            </div>
+
+            <h1 class="speaking-title">Individual Long Turn</h1>
+
+            <p class="speaking-subtitle">
+                In Part 2, you practice speaking continuously on a specific topic for 1 to 2 minutes. First try answering all questions on your own, then review the sample answers at the bottom.
+            </p>
+        </div>
+
+
+        <!-- SAMPLE RESOURCES SECTION -->
+        <section class="sample-resources-section">
+
+            <div class="section-header-row">
+                <div class="resources-heading">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>SAMPLE RESOURCES</span>
+                </div>
+                <span class="resource-badge">Official IELTS Study Materials</span>
+            </div>
+
+            <div class="resource-options-grid">
+
+                <!-- 01 — LISTEN (SAMPLE RECORDING) -->
+                <div class="resource-card">
+                    <div class="resource-card-header">
+                        <div class="option-num-title">
+                            <span class="option-num">01 — LISTEN</span>
+                            <span>Official Sample Recording</span>
+                        </div>
+                        <span class="resource-badge">Part 2 MP3</span>
+                    </div>
+
+                    <div class="custom-audio-box">
+                        <audio id="audioPart2" preload="auto">
+                            <source src="audio/ielts-speaking-part-2-sample-recording.mp3" type="audio/mpeg">
+                            Your browser does not support HTML audio player.
+                        </audio>
+
+                        <div class="audio-controls-row">
+                            <button class="play-pause-btn" aria-label="Play Audio">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+
+                            <div class="audio-progress-container">
+                                <input type="range" class="audio-slider" min="0" max="100" value="0" step="0.1">
+                                <div class="audio-time-display">
+                                    <span class="current-time">0:00</span>
+                                    <span class="total-time">0:00</span>
+                                </div>
+                            </div>
+
+                            <div class="audio-volume-box">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 02 — READ (SAMPLE TRANSCRIPT) -->
+                <div class="resource-card">
+                    <div class="resource-card-header">
+                        <div class="option-num-title">
+                            <span class="option-num">02 — READ</span>
+                            <span>Official Sample Transcript</span>
+                        </div>
+                    </div>
+
+                    <button class="toggle-transcript-btn" data-target="transcriptPanelPart2">
+                        <i class="fa-regular fa-file-lines"></i>
+                        Read Transcript
+                    </button>
+
+                    <div class="transcript-panel" id="transcriptPanelPart2">
+                        
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag examiner">EXAMINER</span>
+                            <div class="dialogue-text">
+                                "Now, I'm going to give you a topic and I'd like you to talk about it for 1 to 2 minutes. Before you talk, you'll have one minute to think about what you're going to say. You can make some notes if you wish. Here is your topic: Describe something you own which is very important to you."
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag candidate">CANDIDATE</span>
+                            <div class="dialogue-text">
+                                "I'd like to talk about my laptop, which is an item of immense personal and practical importance to me. I received it as a graduation gift from my parents when I enrolled in my engineering degree three years ago.<br><br>I use it virtually every single day for programming, writing technical documentation, attending online lectures, and working on collaborative team projects. What makes it so vital to me is not just its monetary value, but the fact that all my academic work, code repositories, and research files are stored inside it. Without it, maintaining my daily productivity as a student would be extremely difficult."
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag examiner">EXAMINER</span>
+                            <div class="dialogue-text">
+                                "Thank you. Is it valuable in terms of money?"
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag candidate">CANDIDATE</span>
+                            <div class="dialogue-text">
+                                "Monetarily, it is fairly high-end, but its true worth to me is invaluable because of the essential project data and learning resources contained within."
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag examiner">EXAMINER</span>
+                            <div class="dialogue-text">
+                                "Would it be easy to replace?"
+                            </div>
+                        </div>
+
+                        <div class="dialogue-turn">
+                            <span class="speaker-tag candidate">CANDIDATE</span>
+                            <div class="dialogue-text">
+                                "While I could purchase a new hardware device, re-configuring my development environment and restoring all my local files would take considerable effort."
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE QUESTIONS SECTION -->
+        <section class="practice-section">
+
+            <div class="practice-section-heading">
+                <h2 style="font-size: 22px; font-weight: 800; color: var(--dark);">PRACTICE QUESTIONS</h2>
+                <p style="color: var(--muted); font-size: 14px;">Try answering the questions below out loud on your own first. Scroll to the bottom to check the sample answers.</p>
+            </div>
+
+            <div class="topic-group">
+                <div class="topic-title">PART 2 PRACTICE QUESTIONS</div>
+
+                <!-- Q1 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">01</span>
+                            <span class="question-text">Is it valuable in terms of money?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">02</span>
+                            <span class="question-text">Would it be easy to replace?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">03</span>
+                            <span class="question-text">What kind of personal possessions are most popular among young people?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="speaking-question-card">
+                    <div class="question-header-row">
+                        <div class="question-num-text">
+                            <span class="q-badge">04</span>
+                            <span class="question-text">Why do some people hold sentimental value towards old items?</span>
+                        </div>
+                        <a href="#sampleAnswersSection" class="show-sample-btn" style="text-decoration: none;">View Answer Below ↓</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SAMPLE ANSWERS SECTION (AT THE BOTTOM) -->
+        <section class="sample-answers-section" id="sampleAnswersSection" style="margin-top: 50px; padding: 32px; background: white; border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow);">
+            
+            <div class="section-header-row" style="margin-bottom: 20px;">
+                <div class="resources-heading">
+                    <i class="fa-solid fa-lightbulb" style="color: var(--primary);"></i>
+                    <span>SAMPLE ANSWERS & RESPONSES</span>
+                </div>
+                <span class="resource-badge">Answer Key / Reference</span>
+            </div>
+
+            <p style="color: var(--muted); font-size: 14px; margin-bottom: 30px;">
+                Compare your fluency, vocabulary, and response structure with the official sample answers below.
+            </p>
+
+            <div class="answers-list" style="display: flex; flex-direction: column; gap: 20px;">
+
+                <!-- Ans 1 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 01: Is it valuable in terms of money?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "Yes, financially it was quite a significant purchase. However, its emotional and functional value far exceeds its original monetary cost because of how essential it is to my daily studies."
+                    </div>
+                </div>
+
+                <!-- Ans 2 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 02: Would it be easy to replace?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "Buying another laptop wouldn't be difficult, but replacing all my custom software configurations, project notes, and development setups would definitely require a lot of time and effort."
+                    </div>
+                </div>
+
+                <!-- Ans 3 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 03: What kind of personal possessions are most popular among young people?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "Smartphones, laptops, and wireless audio devices are by far the most popular. Young people place a high premium on portable technology that enables communication, entertainment, and remote productivity."
+                    </div>
+                </div>
+
+                <!-- Ans 4 -->
+                <div class="answer-item-card" style="background: #f8f7ff; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 14px 14px 0;">
+                    <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; text-transform: uppercase;">
+                        Question 04: Why do some people hold sentimental value towards old items?
+                    </div>
+                    <div style="font-size: 15px; color: var(--dark); line-height: 1.6;">
+                        "Older items often serve as physical connections to past memories, loved ones, or significant life milestones. The sentimental value comes from the story behind the object rather than its material worth."
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PAGE NAVIGATION FOOTER -->
+        <div class="page-nav-footer">
+            <a href="speaking-part1.html" class="nav-link-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                ← Part 1
+            </a>
+
+            <a href="speaking-part3.html" class="nav-link-btn primary">
+                Next → Part 3
+            </a>
+        </div>
+
+    </main>
+
+    <!-- JS -->
+    <script src="speaking.js"></script>
+
+</body>
+
+</html>
