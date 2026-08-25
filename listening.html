@@ -40,8 +40,8 @@
         </div>
 
         <div class="question-number" id="questionNumber">
-           Question 1 of 3
-       </div>
+            Task 1 of 2 (Questions 1–8)
+        </div>
 
     </header>
 
@@ -56,410 +56,409 @@
                 LISTENING PRACTICE
             </div>
 
-            <h1>Listen carefully</h1>
+            <h1 id="pageTitle">Listen carefully</h1>
 
-            <p class="listening-description">
+            <p class="listening-description" id="pageDesc">
                 Play the audio and choose the correct answer.
             </p>
 
 
-           <!-- AUDIO -->
-<div class="audio-box">
+            <!-- AUDIO FOR TASK 1 -->
+            <div class="audio-box" id="audioBoxTask1">
 
-    <div class="audio-icon">
-        <i class="fa-solid fa-headphones"></i>
-    </div>
+                <div class="audio-icon">
+                    <i class="fa-solid fa-headphones"></i>
+                </div>
 
-    <audio id="audioPlayer" controls>
-        <source src="audio/task-1_audio.mp3" type="audio/mpeg">
-        Your browser does not support audio.
-    </audio>
+                <audio id="audioPlayer" controls>
+                    <source src="audio/task-1_audio.mp3" type="audio/mpeg">
+                    Your browser does not support audio.
+                </audio>
 
-</div>
-
-
-<!-- FORM COMPLETION TASK -->
-
-<div class="form-task">
-
-    <div class="task-heading">
-
-        <span class="task-number">Questions 1–8</span>
-
-        <h2>PACKHAM'S SHIPPING AGENTS</h2>
-
-        <p>
-            Complete the form below.
-        </p>
-
-        <p class="instruction">
-            Write NO MORE THAN THREE WORDS AND/OR A NUMBER
-            for each answer.
-        </p>
-
-    </div>
+            </div>
 
 
-    <!-- FORM -->
+            <!-- FORM COMPLETION TASK (TASK 1) -->
 
-    <div class="shipping-form">
+            <div class="form-task" id="task1">
+
+                <div class="task-heading">
+
+                    <span class="task-number">Questions 1–8</span>
+
+                    <h2>PACKHAM'S SHIPPING AGENTS</h2>
+
+                    <p>
+                        Complete the form below.
+                    </p>
+
+                    <p class="instruction">
+                        Write NO MORE THAN THREE WORDS AND/OR A NUMBER
+                        for each answer.
+                    </p>
+
+                </div>
 
 
-        <!-- CUSTOMER DETAILS -->
+                <!-- FORM -->
 
-        <div class="form-section">
-
-            <h3>Customer details</h3>
+                <div class="shipping-form">
 
 
-            <div class="form-row">
+                    <!-- CUSTOMER DETAILS -->
 
-                <label>
-                    Customer name:
-                </label>
+                    <div class="form-section">
 
-                <span>Jacob</span>
+                        <h3>Customer details</h3>
 
-                <input
-                    type="text"
-                    id="answer1"
-                    placeholder="Answer 1"
+
+                        <div class="form-row">
+
+                            <label>
+                                Customer name:
+                            </label>
+
+                            <span>Jacob</span>
+
+                            <input
+                                type="text"
+                                id="answer1"
+                                placeholder="Answer 1"
+                            >
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label>
+                                College:
+                            </label>
+
+                            <input
+                                type="text"
+                                id="answer2"
+                                placeholder="Answer 2"
+                            >
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label>
+                                Postcode:
+                            </label>
+
+                            <input
+                                type="text"
+                                id="answer3"
+                                placeholder="Answer 3"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BOX SIZE -->
+
+                    <div class="form-section">
+
+                        <h3>Size of box</h3>
+
+
+                        <div class="form-row">
+
+                            <label>Length:</label>
+
+                            <span>1.5 m</span>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label>Width:</label>
+
+                            <input
+                                type="text"
+                                id="answer4"
+                                placeholder="Answer 4"
+                            >
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label>Height:</label>
+
+                            <input
+                                type="text"
+                                id="answer5"
+                                placeholder="Answer 5"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONTENTS -->
+
+                    <div class="form-section">
+
+                        <h3>Contents of box</h3>
+
+
+                        <div class="form-row">
+
+                            <label>• clothes</label>
+
+                        </div>
+
+
+                        <div class="form-row answer-row">
+
+                            <label>•</label>
+                        
+                            <input
+                                type="text"
+                                id="answer6"
+                                placeholder="Answer 6"
+                            >
+
+                        </div>
+
+
+                        <div class="form-row answer-row">
+                        
+                            <label>•</label>
+                        
+                            <input
+                                type="text"
+                                id="answer7"
+                                placeholder="Answer 7"
+                            >
+                        
+                        </div>
+
+                    </div>
+
+
+                    <!-- VALUE -->
+
+                    <div class="form-section">
+
+                        <h3>Total value</h3>
+
+                        <div class="form-row answer-row">
+                        
+                            <label>£</label>
+                        
+                            <input
+                                type="text"
+                                id="answer8"
+                                placeholder="Answer 8"
+                            >
+                        
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- BUTTON -->
+                <button class="next-question-btn" id="submitBtn">
+                    Submit Answers
+                    <i class="fa-solid fa-check"></i>
+                </button>
+
+            </div>
+
+
+            <!-- =========================
+                 TASK 2 - MULTIPLE CHOICE
+            ========================= -->
+
+            <div class="multiple-choice-task" id="task2" style="display: none;">
+
+                <div class="task-heading">
+
+                    <span class="task-number">
+                        Questions 9–10
+                    </span>
+
+                    <h2>PACKHAM'S SHIPPING AGENTS</h2>
+
+                    <p>
+                        Choose the correct letter, A, B or C.
+                    </p>
+
+                </div>
+
+
+                <!-- AUDIO -->
+
+                <div class="audio-box">
+
+                    <div class="audio-icon">
+                        <i class="fa-solid fa-headphones"></i>
+                    </div>
+
+                    <audio id="audioPlayer2" controls>
+
+                        <source
+                            src="audio/task-2_audio.mp3"
+                            type="audio/mpeg"
+                        >
+
+                        Your browser does not support audio.
+
+                    </audio>
+
+                </div>
+
+
+                <!-- QUESTION 9 -->
+
+                <div class="mc-question">
+
+                    <div class="question-title">
+
+                        <span class="question-label">9</span>
+
+                        <h3>Type of insurance chosen</h3>
+
+                    </div>
+
+
+                    <label class="mc-option">
+
+                        <input
+                            type="radio"
+                            name="question9"
+                            value="A"
+                        >
+
+                        <span class="option-letter">A</span>
+
+                        <span>Economy</span>
+
+                    </label>
+
+
+                    <label class="mc-option">
+
+                        <input
+                            type="radio"
+                            name="question9"
+                            value="B"
+                        >
+
+                        <span class="option-letter">B</span>
+
+                        <span>Standard</span>
+
+                    </label>
+
+
+                    <label class="mc-option">
+
+                        <input
+                            type="radio"
+                            name="question9"
+                            value="C"
+                        >
+
+                        <span class="option-letter">C</span>
+
+                        <span>Premium</span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- QUESTION 10 -->
+
+                <div class="mc-question">
+
+                    <div class="question-title">
+
+                        <span class="question-label">10</span>
+
+                        <h3>Customer wants goods delivered to</h3>
+
+                    </div>
+
+
+                    <label class="mc-option">
+
+                        <input
+                            type="radio"
+                            name="question10"
+                            value="A"
+                        >
+
+                        <span class="option-letter">A</span>
+
+                        <span>port</span>
+
+                    </label>
+
+
+                    <label class="mc-option">
+
+                        <input
+                            type="radio"
+                            name="question10"
+                            value="B"
+                        >
+
+                        <span class="option-letter">B</span>
+
+                        <span>home</span>
+
+                    </label>
+
+
+                    <label class="mc-option">
+
+                        <input
+                            type="radio"
+                            name="question10"
+                            value="C"
+                        >
+
+                        <span class="option-letter">C</span>
+
+                        <span>depot</span>
+
+                    </label>
+
+                </div>
+
+
+                <button
+                    class="next-question-btn"
+                    id="submitTask2"
                 >
 
-            </div>
+                    Submit Test
+                    <i class="fa-solid fa-check"></i>
 
-
-            <div class="form-row">
-
-                <label>
-                    College:
-                </label>
-
-                <input
-                    type="text"
-                    id="answer2"
-                    placeholder="Answer 2"
-                >
-
-                <span>College</span>
+                </button>
 
             </div>
 
-
-            <div class="form-row">
-
-                <label>
-                    Postcode:
-                </label>
-
-                <input
-                    type="text"
-                    id="answer3"
-                    placeholder="Answer 3"
-                >
-
-            </div>
-
-        </div>
-
-
-        <!-- BOX SIZE -->
-
-        <div class="form-section">
-
-            <h3>Size of box</h3>
-
-
-            <div class="form-row">
-
-                <label>Length:</label>
-
-                <span>1.5 m</span>
-
-            </div>
-
-
-            <div class="form-row">
-
-                <label>Width:</label>
-
-                <input
-                    type="text"
-                    id="answer4"
-                    placeholder="Answer 4"
-                >
-
-            </div>
-
-
-            <div class="form-row">
-
-                <label>Height:</label>
-
-                <input
-                    type="text"
-                    id="answer5"
-                    placeholder="Answer 5"
-                >
-
-            </div>
-
-        </div>
-
-
-        <!-- CONTENTS -->
-
-        <div class="form-section">
-
-            <h3>Contents of box</h3>
-
-
-            <div class="form-row">
-
-                <label>• clothes</label>
-
-            </div>
-
-
-            <div class="form-row answer-row">
-
-                <label>•</label>
-            
-                <input
-                    type="text"
-                    id="answer6"
-                    placeholder="Answer 6"
-    >
-
-             </div>
-
-
-            <div class="form-row answer-row">
-            
-                <label>•</label>
-            
-                <input
-                    type="text"
-                    id="answer7"
-                    placeholder="Answer 7"
-                >
-            
-            </div>
-
-        </div>
-
-
-        <!-- VALUE -->
-
-        <div class="form-section">
-
-            <h3>Total value</h3>
-
-            <div class="form-row answer-row">
-            
-                <label>£</label>
-            
-                <input
-                    type="text"
-                    id="answer8"
-                    placeholder="Answer 8"
-                >
-            
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- BUTTON -->
-<button class="next-question-btn" id="submitBtn">
-
-    Submit Answers
-    <i class="fa-solid fa-check"></i>
+            <!-- CONTAINER FOR FINAL SUMMARY -->
+            <div id="finalSummary" style="display: none;"></div>
 
         </section>
 
     </main>
-
-
-
-<!-- =========================
-     TASK 2 - MULTIPLE CHOICE
-========================= -->
-
-<div class="multiple-choice-task" id="task2">
-
-    <div class="task-heading">
-
-        <span class="task-number">
-            Questions 9–10
-        </span>
-
-        <h2>PACKHAM'S SHIPPING AGENTS</h2>
-
-        <p>
-            Choose the correct letter, A, B or C.
-        </p>
-
-    </div>
-
-
-    <!-- AUDIO -->
-
-    <div class="audio-box">
-
-        <div class="audio-icon">
-            <i class="fa-solid fa-headphones"></i>
-        </div>
-
-        <audio id="audioPlayer2" controls>
-
-            <source
-                src="audio/task-2_audio.mp3"
-                type="audio/mpeg"
-            >
-
-            Your browser does not support audio.
-
-        </audio>
-
-    </div>
-
-
-    <!-- QUESTION 9 -->
-
-    <div class="mc-question">
-
-        <div class="question-title">
-
-            <span class="question-label">9</span>
-
-            <h3>Type of insurance chosen</h3>
-
-        </div>
-
-
-        <label class="mc-option">
-
-            <input
-                type="radio"
-                name="question9"
-                value="A"
-            >
-
-            <span class="option-letter">A</span>
-
-            <span>Economy</span>
-
-        </label>
-
-
-        <label class="mc-option">
-
-            <input
-                type="radio"
-                name="question9"
-                value="B"
-            >
-
-            <span class="option-letter">B</span>
-
-            <span>Standard</span>
-
-        </label>
-
-
-        <label class="mc-option">
-
-            <input
-                type="radio"
-                name="question9"
-                value="C"
-            >
-
-            <span class="option-letter">C</span>
-
-            <span>Premium</span>
-
-        </label>
-
-    </div>
-
-
-    <!-- QUESTION 10 -->
-
-    <div class="mc-question">
-
-        <div class="question-title">
-
-            <span class="question-label">10</span>
-
-            <h3>Customer wants goods delivered to</h3>
-
-        </div>
-
-
-        <label class="mc-option">
-
-            <input
-                type="radio"
-                name="question10"
-                value="A"
-            >
-
-            <span class="option-letter">A</span>
-
-            <span>port</span>
-
-        </label>
-
-
-        <label class="mc-option">
-
-            <input
-                type="radio"
-                name="question10"
-                value="B"
-            >
-
-            <span class="option-letter">B</span>
-
-            <span>home</span>
-
-        </label>
-
-
-        <label class="mc-option">
-
-            <input
-                type="radio"
-                name="question10"
-                value="C"
-            >
-
-            <span class="option-letter">C</span>
-
-            <span>depot</span>
-
-        </label>
-
-    </div>
-
-
-    <button
-        class="next-question-btn"
-        id="submitTask2"
-    >
-
-        Submit Test
-        <i class="fa-solid fa-check"></i>
-
-    </button>
-
-</div>
 
     <script src="listening.js"></script>
 

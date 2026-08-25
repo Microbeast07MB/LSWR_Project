@@ -124,17 +124,7 @@ document.addEventListener("keydown", (event) => {
 
 modalStart.addEventListener("click", () => {
 
-    /*
-       Later replace this with:
-
-       window.location.href = "test.html";
-
-       For now we display a message.
-    */
-
-    alert(
-        "IELTS Assessment module will open here."
-    );
+    window.location.href = "listening.html";
 
 });
 
