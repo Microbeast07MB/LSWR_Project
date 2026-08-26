@@ -23,9 +23,9 @@
 
     <!-- TOP NAVBAR -->
     <header class="listening-navbar">
-        <a href="reading-selection.html" class="back-home">
+        <a href="index.html" class="back-home" id="readingBackBtn">
             <i class="fa-solid fa-arrow-left"></i>
-            Back to Reading Hub
+            <span id="backBtnText">Back to Home</span>
         </a>
 
         <div class="listening-logo">
@@ -49,123 +49,318 @@
     <!-- MAIN CONTENT -->
     <main class="reading-container">
 
-        <!-- HEADER SECTION -->
-        <div class="reading-header">
-            <div class="part-badge-group" style="justify-content: center;">
-                <span class="part-badge" id="typeHeaderBadge">
-                    <i class="fa-solid fa-book"></i>
-                    IELTS READING PRACTICE
-                </span>
-            </div>
-
-            <h1 class="speaking-title" id="typeHeaderTitle" style="font-size: 36px;">Test Your Reading Skills</h1>
-
-            <p class="speaking-subtitle" id="typeHeaderSubtitle" style="max-width: 650px; margin: 0 auto;">
-                Read the passage carefully and answer the questions below.
-            </p>
-        </div>
-
-
-        <!-- 1. READING PASSAGE CARD -->
-        <section class="reading-passage-card" id="passageCard">
-            
-            <div class="passage-header-meta">
-                <span class="passage-meta-tag" id="passageCategoryTag">
-                    <i class="fa-regular fa-file-lines"></i>
-                    Reading Passage
-                </span>
-                <div class="passage-word-count" id="passageMetaNote">
-                    <i class="fa-solid fa-book-open-reader"></i>
-                    Official IELTS Sample Task
-                </div>
-            </div>
-
-            <h2 class="passage-title-main" id="passageMainTitle">Passage Title</h2>
-
-            <div class="reading-body-text" id="passageBodyContainer">
-                <!-- Dynamic passage paragraphs inserted here -->
-            </div>
-
-        </section>
-
-
-        <!-- 2. QUESTIONS WITH DIRECT ON-QUESTION INTERACTION -->
-        <section class="reading-questions-card">
-
-            <div class="questions-section-heading">
-                <div class="resources-heading">
-                    <i class="fa-solid fa-list-check"></i>
-                    <span id="questionsCountTitle">PRACTICE QUESTIONS</span>
-                </div>
-                <span class="resource-badge" id="questionsFormatBadge">Direct Answer Selection</span>
-            </div>
-
-            <div class="question-group-header" id="instructionsBox" style="margin-bottom: 25px;">
-                <div class="question-group-title" id="instructionsTitle">Instructions</div>
-                <div class="question-group-instruct" id="instructionsDetail">Complete each question below based on the text.</div>
-            </div>
-
-            <form id="readingTestForm" onsubmit="event.preventDefault(); submitActiveTest();">
-                
-                <!-- DYNAMIC CONTAINER WHERE ACTIVE QUESTION SET IS RENDERED -->
-                <div id="dynamicQuestionsContainer"></div>
-
-                <!-- SUBMIT BUTTON -->
-                <div class="submit-container" style="margin-top: 35px;">
-                    <button type="submit" class="submit-reading-btn" id="submitReadingBtn">
-                        Submit Answers
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                    <small style="color: var(--muted); font-size: 13px;" id="marksDetailText">1 mark per correct answer</small>
-                </div>
-
-            </form>
-
-            <!-- SCORE RESULT PANEL -->
-            <div class="score-result-card" id="scoreResultCard">
-                <div class="score-header-box">
-                    <span class="part-badge" style="margin-bottom: 8px;">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        PRACTICE RESULT
+        <!-- READING HUB SELECTION GRID (Shown when no ?type= is in URL) -->
+        <div id="readingHubSection" style="display: none;">
+            <div class="speaking-header" style="text-align: center; margin-bottom: 50px;">
+                <div class="part-badge-group" style="justify-content: center;">
+                    <span class="part-badge">
+                        <i class="fa-solid fa-book"></i>
+                        IELTS READING PRACTICE
                     </span>
-                    <h3 style="font-size: 20px; font-weight: 800; color: var(--dark);">Your Score</h3>
-                    <div class="score-number-display" id="scoreValueDisplay">0 / 0</div>
-                    <p class="score-feedback-text" id="scoreFeedbackText">Review your results below to see your performance on each question.</p>
                 </div>
 
-                <div class="score-review-list" id="scoreReviewList">
-                    <!-- Dynamic review items populated upon submission -->
-                </div>
+                <h1 class="speaking-title" style="font-size: 38px;">Test Your Reading Skills</h1>
 
-                <div style="text-align: center;">
-                    <button type="button" class="reset-quiz-btn" onclick="resetActiveQuiz()">
-                        <i class="fa-solid fa-rotate-left"></i>
-                        Try Again
-                    </button>
-                </div>
+                <p class="speaking-subtitle" style="max-width: 620px; margin: 0 auto;">
+                    Choose a question type below to practice different IELTS Reading question formats using authentic test materials.
+                </p>
             </div>
 
-        </section>
+            <div class="reading-types-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin-bottom: 50px;">
 
+                <!-- CARD 1: FLOW-CHART COMPLETION -->
+                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=flowchart'">
+                    <div>
+                        <div style="width: 60px; height: 60px; border-radius: 16px; background: var(--light-purple); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                            <i class="fa-solid fa-diagram-project"></i>
+                        </div>
 
-        <!-- SOURCE CREDIT NOTE -->
-        <div style="text-align: center; margin-top: 40px; margin-bottom: 20px; font-size: 13px; color: var(--muted);">
-            <i class="fa-solid fa-circle-info" style="margin-right: 6px;"></i>
-            Source: <strong>IELTS.org</strong> — IELTS General Training Reading Sample Tasks
+                        <span style="font-size: 13px; font-weight: 800; color: var(--primary); letter-spacing: 0.8px; text-transform: uppercase;">Question Type 01</span>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Flow-chart Completion</h3>
+                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                            Complete the flow-chart using words from the reading passage.
+                        </p>
+                    </div>
+
+                    <a href="reading.html?type=flowchart" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
+                        Start Practice
+                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                    </a>
+                </div>
+
+                <!-- CARD 2: TRUE / FALSE / NOT GIVEN -->
+                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=tfn'">
+                    <div>
+                        <div style="width: 60px; height: 60px; border-radius: 16px; background: #ecfdf3; color: #027a48; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+
+                        <span style="font-size: 13px; font-weight: 800; color: #027a48; letter-spacing: 0.8px; text-transform: uppercase;">Question Type 02</span>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">True / False / Not Given</h3>
+                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                            Decide whether each statement agrees with the information in the passage.
+                        </p>
+                    </div>
+
+                    <a href="reading.html?type=tfn" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
+                        Start Practice
+                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                    </a>
+                </div>
+
+                <!-- CARD 3: MATCHING FEATURES -->
+                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=features'">
+                    <div>
+                        <div style="width: 60px; height: 60px; border-radius: 16px; background: #eff8ff; color: #175cd3; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+
+                        <span style="font-size: 13px; font-weight: 800; color: #175cd3; letter-spacing: 0.8px; text-transform: uppercase;">Question Type 03</span>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Matching Features</h3>
+                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                            Match statements with the appropriate person, country, advertisement, or feature.
+                        </p>
+                    </div>
+
+                    <a href="reading.html?type=features" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
+                        Start Practice
+                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                    </a>
+                </div>
+
+                <!-- CARD 4: MATCHING HEADINGS -->
+                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=headings'">
+                    <div>
+                        <div style="width: 60px; height: 60px; border-radius: 16px; background: #fffaeb; color: #b54708; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                            <i class="fa-solid fa-heading"></i>
+                        </div>
+
+                        <span style="font-size: 13px; font-weight: 800; color: #b54708; letter-spacing: 0.8px; text-transform: uppercase;">Question Type 04</span>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Matching Headings</h3>
+                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                            Choose the most appropriate heading for each paragraph.
+                        </p>
+                    </div>
+
+                    <a href="reading.html?type=headings" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
+                        Start Practice
+                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                    </a>
+                </div>
+
+                <!-- CARD 5: NOTE COMPLETION -->
+                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=notes'">
+                    <div>
+                        <div style="width: 60px; height: 60px; border-radius: 16px; background: #f0f4ff; color: #2e5aac; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+
+                        <span style="font-size: 13px; font-weight: 800; color: #2e5aac; letter-spacing: 0.8px; text-transform: uppercase;">Question Type 05</span>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Note Completion</h3>
+                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                            Complete the notes using words from the reading passage.
+                        </p>
+                    </div>
+
+                    <a href="reading.html?type=notes" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
+                        Start Practice
+                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                    </a>
+                </div>
+
+                <!-- CARD 6: SENTENCE COMPLETION -->
+                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=completion'">
+                    <div>
+                        <div style="width: 60px; height: 60px; border-radius: 16px; background: #f0fdf9; color: #0e9384; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </div>
+
+                        <span style="font-size: 13px; font-weight: 800; color: #0e9384; letter-spacing: 0.8px; text-transform: uppercase;">Question Type 06</span>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Sentence Completion</h3>
+                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                            Complete the sentences using words from the passage.
+                        </p>
+                    </div>
+
+                    <a href="reading.html?type=completion" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
+                        Start Practice
+                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                    </a>
+                </div>
+
+                <!-- CARD 7: SHORT-ANSWER QUESTIONS -->
+                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=short-answer'">
+                    <div>
+                        <div style="width: 60px; height: 60px; border-radius: 16px; background: #fff4ed; color: #b42318; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                            <i class="fa-solid fa-file-circle-question"></i>
+                        </div>
+
+                        <span style="font-size: 13px; font-weight: 800; color: #b42318; letter-spacing: 0.8px; text-transform: uppercase;">Question Type 07</span>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Short-answer Questions</h3>
+                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                            Answer questions using information from the reading passage.
+                        </p>
+                    </div>
+
+                    <a href="reading.html?type=short-answer" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
+                        Start Practice
+                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                    </a>
+                </div>
+
+                <!-- CARD 8: SUMMARY COMPLETION -->
+                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=summary'">
+                    <div>
+                        <div style="width: 60px; height: 60px; border-radius: 16px; background: #f4f3ff; color: #5925dc; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                            <i class="fa-solid fa-align-left"></i>
+                        </div>
+
+                        <span style="font-size: 13px; font-weight: 800; color: #5925dc; letter-spacing: 0.8px; text-transform: uppercase;">Question Type 08</span>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Summary Completion</h3>
+                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                            Complete the summary using words from the reading passage.
+                        </p>
+                    </div>
+
+                    <a href="reading.html?type=summary" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
+                        Start Practice
+                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- PAGE NAVIGATION FOOTER (FOR HUB) -->
+            <div class="page-nav-footer">
+                <a href="index.html" class="nav-link-btn">
+                    <i class="fa-solid fa-house"></i>
+                    Back to Home Page
+                </a>
+            </div>
         </div>
 
+        <!-- READING PROBLEM TASK VIEW (Shown when ?type= is in URL) -->
+        <div id="readingProblemSection">
 
-        <!-- PAGE NAVIGATION FOOTER -->
-        <div class="page-nav-footer">
-            <a href="reading-selection.html" class="nav-link-btn">
-                <i class="fa-solid fa-layer-group"></i>
-                Back to Reading Hub
-            </a>
+            <!-- HEADER SECTION -->
+            <div class="reading-header">
+                <div class="part-badge-group" style="justify-content: center;">
+                    <span class="part-badge" id="typeHeaderBadge">
+                        <i class="fa-solid fa-book"></i>
+                        IELTS READING PRACTICE
+                    </span>
+                </div>
 
-            <a href="index.html" class="nav-link-btn">
-                <i class="fa-solid fa-house"></i>
-                Back to Home Page
-            </a>
+                <h1 class="speaking-title" id="typeHeaderTitle" style="font-size: 36px;">Test Your Reading Skills</h1>
+
+                <p class="speaking-subtitle" id="typeHeaderSubtitle" style="max-width: 650px; margin: 0 auto;">
+                    Read the passage carefully and answer the questions below.
+                </p>
+            </div>
+
+
+            <!-- 1. READING PASSAGE CARD -->
+            <section class="reading-passage-card" id="passageCard">
+                
+                <div class="passage-header-meta">
+                    <span class="passage-meta-tag" id="passageCategoryTag">
+                        <i class="fa-regular fa-file-lines"></i>
+                        Reading Passage
+                    </span>
+                    <div class="passage-word-count" id="passageMetaNote">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                        Official IELTS Sample Task
+                    </div>
+                </div>
+
+                <h2 class="passage-title-main" id="passageMainTitle">Passage Title</h2>
+
+                <div class="reading-body-text" id="passageBodyContainer">
+                    <!-- Dynamic passage paragraphs inserted here -->
+                </div>
+
+            </section>
+
+
+            <!-- 2. QUESTIONS WITH DIRECT ON-QUESTION INTERACTION -->
+            <section class="reading-questions-card">
+
+                <div class="questions-section-heading">
+                    <div class="resources-heading">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span id="questionsCountTitle">PRACTICE QUESTIONS</span>
+                    </div>
+                    <span class="resource-badge" id="questionsFormatBadge">Direct Answer Selection</span>
+                </div>
+
+                <div class="question-group-header" id="instructionsBox" style="margin-bottom: 25px;">
+                    <div class="question-group-title" id="instructionsTitle">Instructions</div>
+                    <div class="question-group-instruct" id="instructionsDetail">Complete each question below based on the text.</div>
+                </div>
+
+                <form id="readingTestForm" onsubmit="event.preventDefault(); submitActiveTest();">
+                    
+                    <!-- DYNAMIC CONTAINER WHERE ACTIVE QUESTION SET IS RENDERED -->
+                    <div id="dynamicQuestionsContainer"></div>
+
+                    <!-- SUBMIT BUTTON -->
+                    <div class="submit-container" style="margin-top: 35px;">
+                        <button type="submit" class="submit-reading-btn" id="submitReadingBtn">
+                            Submit Answers
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <small style="color: var(--muted); font-size: 13px;" id="marksDetailText">1 mark per correct answer</small>
+                    </div>
+
+                </form>
+
+                <!-- SCORE RESULT PANEL -->
+                <div class="score-result-card" id="scoreResultCard">
+                    <div class="score-header-box">
+                        <span class="part-badge" style="margin-bottom: 8px;">
+                            <i class="fa-solid fa-chart-simple"></i>
+                            PRACTICE RESULT
+                        </span>
+                        <h3 style="font-size: 20px; font-weight: 800; color: var(--dark);">Your Score</h3>
+                        <div class="score-number-display" id="scoreValueDisplay">0 / 0</div>
+                        <p class="score-feedback-text" id="scoreFeedbackText">Review your results below to see your performance on each question.</p>
+                    </div>
+
+                    <div class="score-review-list" id="scoreReviewList">
+                        <!-- Dynamic review items populated upon submission -->
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button type="button" class="reset-quiz-btn" onclick="resetActiveQuiz()">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            Try Again
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- SOURCE CREDIT NOTE -->
+            <div style="text-align: center; margin-top: 40px; margin-bottom: 20px; font-size: 13px; color: var(--muted);">
+                <i class="fa-solid fa-circle-info" style="margin-right: 6px;"></i>
+                Source: <strong>IELTS.org</strong> — IELTS General Training Reading Sample Tasks
+            </div>
+
+
+            <!-- PAGE NAVIGATION FOOTER -->
+            <div class="page-nav-footer">
+                <a href="reading.html" class="nav-link-btn">
+                    <i class="fa-solid fa-layer-group"></i>
+                    Back to Reading Hub
+                </a>
+
+                <a href="index.html" class="nav-link-btn">
+                    <i class="fa-solid fa-house"></i>
+                    Back to Home Page
+                </a>
+            </div>
+
         </div>
 
     </main>
@@ -515,20 +710,36 @@
             const params = new URLSearchParams(window.location.search);
             const requestedType = params.get("type");
 
+            const hubSec = document.getElementById("readingHubSection");
+            const probSec = document.getElementById("readingProblemSection");
+            const backBtn = document.getElementById("readingBackBtn");
+            const backText = document.getElementById("backBtnText");
+
             if (requestedType && READING_DATA[requestedType]) {
                 currentType = requestedType;
+                if (hubSec) hubSec.style.display = "none";
+                if (probSec) probSec.style.display = "block";
+                if (backBtn) backBtn.href = "reading.html";
+                if (backText) backText.textContent = "Back to Reading Hub";
+
+                // Highlight Active Nav Pill
+                document.querySelectorAll(".reading-nav-pills a").forEach(pill => {
+                    pill.classList.remove("active");
+                });
+                const activePill = document.getElementById(`pill-${currentType}`);
+                if (activePill) activePill.classList.add("active");
+
+                renderCurrentTask();
             } else {
-                currentType = "flowchart";
+                if (hubSec) hubSec.style.display = "block";
+                if (probSec) probSec.style.display = "none";
+                if (backBtn) backBtn.href = "index.html";
+                if (backText) backText.textContent = "Back to Home";
+
+                document.querySelectorAll(".reading-nav-pills a").forEach(pill => {
+                    pill.classList.remove("active");
+                });
             }
-
-            // Highlight Active Nav Pill
-            document.querySelectorAll(".reading-nav-pills a").forEach(pill => {
-                pill.classList.remove("active");
-            });
-            const activePill = document.getElementById(`pill-${currentType}`);
-            if (activePill) activePill.classList.add("active");
-
-            renderCurrentTask();
         });
 
         // ==========================================
