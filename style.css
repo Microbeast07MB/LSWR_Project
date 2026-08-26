@@ -4523,42 +4523,101 @@ footer {
     box-shadow: var(--shadow);
 }
 
-.script-tabs-bar {
+/* CANDIDATE SCRIPT ORIGINAL PDF IMAGE DISPLAY */
+
+.candidate-script-image-card {
+    background: #ffffff;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 20px;
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 12px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 18px rgba(16, 24, 40, 0.04);
 }
 
-.script-tab-btn {
+.candidate-script-toolbar {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #f8fafc;
+    border: 1px solid #eaecf0;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.candidate-script-tag {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 9px 18px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: #f8fafc;
-    color: var(--text);
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.script-tab-btn:hover {
-    border-color: var(--primary);
     color: var(--primary);
 }
 
-.script-tab-btn.active {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
+.candidate-script-tag i {
+    font-size: 14px;
 }
 
-/* CANDIDATE SCRIPT PAPER (LINED NOTEBOOK STYLE) */
+.expand-image-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.expand-image-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--light-purple);
+}
+
+.candidate-script-image-wrapper {
+    width: 100%;
+    max-width: 800px;
+    background: #ffffff;
+    border: 1.5px solid #d0d5dd;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(16, 24, 40, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.candidate-script-image-wrapper:hover {
+    box-shadow: 0 10px 28px rgba(16, 24, 40, 0.12);
+}
+
+.candidate-script-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.candidate-script-page-divider {
+    width: 100%;
+    max-width: 800px;
+    height: 1px;
+    background: var(--border);
+    margin: 10px 0;
+}
+
+/* CANDIDATE SCRIPT PAPER (LEGACY NOTEBOOK STYLE - RETAINED FOR COMPATIBILITY) */
 
 .candidate-notebook-paper {
     background: #fffefb;

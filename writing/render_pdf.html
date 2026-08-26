@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Page Extractor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+</head>
+<body>
+    <h1>Extracting PDF Pages...</h1>
+    <div id="status">Loading PDF...</div>
+    <div id="canvases"></div>
+
+    <script>
+        window.extractedData = {};
+        window.isReady = false;
+
+        async function extract() {
+            try {
+                const pdf = await pdfjsLib.getDocument('Writing sample 1.pdf').promise;
+                document.getElementById('status').innerText = `PDF Loaded. Total pages: ${pdf.numPages}`;
+                
+                const targetPages = [8, 10, 16, 17, 20];
+                for (const pageNum of targetPages) {
+                    const page = await pdf.getPage(pageNum);
+                    const viewport = page.getViewport({ scale: 2.5 }); // High-res scale
+                    const canvas = document.createElement('canvas');
+                    canvas.id = 'canvas_' + pageNum;
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    const ctx = canvas.getContext('2d');
+                    
+                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                    document.getElementById('canvases').appendChild(canvas);
+                    
+                    window.extractedData[pageNum] = canvas.toDataURL('image/png');
+                    document.getElementById('status').innerText = `Rendered page ${pageNum} (${viewport.width}x${viewport.height})`;
+                }
+                window.isReady = true;
+                document.getElementById('status').innerText = 'All target pages rendered successfully!';
+            } catch (err) {
+                document.getElementById('status').innerText = 'Error: ' + err.message;
+                console.error(err);
+            }
+        }
+
+        window.onload = extract;
+    </script>
+</body>
+</html>
