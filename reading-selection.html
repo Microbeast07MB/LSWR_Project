@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IELTS Reading Practice Hub - Choose a question type to test your reading comprehension with official sample tasks.">
+    <title>Reading Practice Hub | EngLish</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="listening-navbar">
+        <a href="index.html" class="back-home">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="listening-logo">
+            <i class="fa-solid fa-language"></i>
+            Eng<span>Lish</span>
+        </div>
+
+        <div class="reading-nav-pills">
+            <a href="reading.html?type=flowchart">Flow-chart</a>
+            <a href="reading.html?type=tfn">True/False/NG</a>
+            <a href="reading.html?type=features">Features</a>
+            <a href="reading.html?type=headings">Headings</a>
+            <a href="reading.html?type=notes">Notes</a>
+            <a href="reading.html?type=completion">Sentences</a>
+            <a href="reading.html?type=short-answer">Short Answer</a>
+            <a href="reading.html?type=summary">Summary</a>
+        </div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="speaking-container">
+
+        <!-- HEADER SECTION -->
+        <div class="speaking-header" style="text-align: center; margin-bottom: 50px;">
+            <div class="part-badge-group" style="justify-content: center;">
+                <span class="part-badge">
+                    <i class="fa-solid fa-book"></i>
+                    IELTS READING PRACTICE
+                </span>
+            </div>
+
+            <h1 class="speaking-title" style="font-size: 38px;">Test Your Reading Skills</h1>
+
+            <p class="speaking-subtitle" style="max-width: 620px; margin: 0 auto;">
+                Choose a question type below to practice different IELTS Reading question formats using authentic test materials.
+            </p>
+        </div>
+
+
+        <!-- READING QUESTION-TYPES SELECTION GRID (2-COLUMN RESPONSIVE) -->
+        <div class="reading-types-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 40px;">
+
+            <!-- CARD 1: FLOW-CHART COMPLETION -->
+            <div class="speaking-part-card" onclick="window.location.href='reading.html?type=flowchart'" style="background: white; border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease; cursor: pointer;">
+                <div>
+                    <div style="width: 50px; height: 50px; border-radius: 14px; background: var(--light-purple); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px;">
+                        <i class="fa-solid fa-diagram-project"></i>
+                    </div>
+
+                    <span style="font-size: 12px; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; text-transform: uppercase;">Question Type 01</span>
+                    <h3 style="font-size: 22px; font-weight: 800; color: var(--dark); margin: 6px 0 12px 0;">Flow-chart Completion</h3>
+                    <p style="color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 25px;">
+                        Complete the flow-chart using words from the reading passage.
+                    </p>
+                </div>
+
+                <a href="reading.html?type=flowchart" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px;">
+                    Start Practice
+                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                </a>
+            </div>
+
+            <!-- CARD 2: TRUE / FALSE / NOT GIVEN -->
+            <div class="speaking-part-card" onclick="window.location.href='reading.html?type=tfn'" style="background: white; border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease; cursor: pointer;">
+                <div>
+                    <div style="width: 50px; height: 50px; border-radius: 14px; background: #ecfdf3; color: #027a48; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px;">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+
+                    <span style="font-size: 12px; font-weight: 800; color: #027a48; letter-spacing: 0.5px; text-transform: uppercase;">Question Type 02</span>
+                    <h3 style="font-size: 22px; font-weight: 800; color: var(--dark); margin: 6px 0 12px 0;">True / False / Not Given</h3>
+                    <p style="color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 25px;">
+                        Decide whether each statement agrees with the information in the passage.
+                    </p>
+                </div>
+
+                <a href="reading.html?type=tfn" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px;">
+                    Start Practice
+                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                </a>
+            </div>
+
+            <!-- CARD 3: MATCHING FEATURES -->
+            <div class="speaking-part-card" onclick="window.location.href='reading.html?type=features'" style="background: white; border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease; cursor: pointer;">
+                <div>
+                    <div style="width: 50px; height: 50px; border-radius: 14px; background: #eff8ff; color: #175cd3; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px;">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+
+                    <span style="font-size: 12px; font-weight: 800; color: #175cd3; letter-spacing: 0.5px; text-transform: uppercase;">Question Type 03</span>
+                    <h3 style="font-size: 22px; font-weight: 800; color: var(--dark); margin: 6px 0 12px 0;">Matching Features</h3>
+                    <p style="color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 25px;">
+                        Match statements with the appropriate person, country, advertisement, or feature.
+                    </p>
+                </div>
+
+                <a href="reading.html?type=features" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px;">
+                    Start Practice
+                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                </a>
+            </div>
+
+            <!-- CARD 4: MATCHING HEADINGS -->
+            <div class="speaking-part-card" onclick="window.location.href='reading.html?type=headings'" style="background: white; border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease; cursor: pointer;">
+                <div>
+                    <div style="width: 50px; height: 50px; border-radius: 14px; background: #fffaeb; color: #b54708; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px;">
+                        <i class="fa-solid fa-heading"></i>
+                    </div>
+
+                    <span style="font-size: 12px; font-weight: 800; color: #b54708; letter-spacing: 0.5px; text-transform: uppercase;">Question Type 04</span>
+                    <h3 style="font-size: 22px; font-weight: 800; color: var(--dark); margin: 6px 0 12px 0;">Matching Headings</h3>
+                    <p style="color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 25px;">
+                        Choose the most appropriate heading for each paragraph.
+                    </p>
+                </div>
+
+                <a href="reading.html?type=headings" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px;">
+                    Start Practice
+                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                </a>
+            </div>
+
+            <!-- CARD 5: NOTE COMPLETION -->
+            <div class="speaking-part-card" onclick="window.location.href='reading.html?type=notes'" style="background: white; border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease; cursor: pointer;">
+                <div>
+                    <div style="width: 50px; height: 50px; border-radius: 14px; background: #f0f4ff; color: #2e5aac; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px;">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+
+                    <span style="font-size: 12px; font-weight: 800; color: #2e5aac; letter-spacing: 0.5px; text-transform: uppercase;">Question Type 05</span>
+                    <h3 style="font-size: 22px; font-weight: 800; color: var(--dark); margin: 6px 0 12px 0;">Note Completion</h3>
+                    <p style="color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 25px;">
+                        Complete the notes using words from the reading passage.
+                    </p>
+                </div>
+
+                <a href="reading.html?type=notes" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px;">
+                    Start Practice
+                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                </a>
+            </div>
+
+            <!-- CARD 6: SENTENCE COMPLETION -->
+            <div class="speaking-part-card" onclick="window.location.href='reading.html?type=completion'" style="background: white; border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease; cursor: pointer;">
+                <div>
+                    <div style="width: 50px; height: 50px; border-radius: 14px; background: #f0fdf9; color: #0e9384; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px;">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+
+                    <span style="font-size: 12px; font-weight: 800; color: #0e9384; letter-spacing: 0.5px; text-transform: uppercase;">Question Type 06</span>
+                    <h3 style="font-size: 22px; font-weight: 800; color: var(--dark); margin: 6px 0 12px 0;">Sentence Completion</h3>
+                    <p style="color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 25px;">
+                        Complete the sentences using words from the passage.
+                    </p>
+                </div>
+
+                <a href="reading.html?type=completion" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px;">
+                    Start Practice
+                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                </a>
+            </div>
+
+            <!-- CARD 7: SHORT-ANSWER QUESTIONS -->
+            <div class="speaking-part-card" onclick="window.location.href='reading.html?type=short-answer'" style="background: white; border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease; cursor: pointer;">
+                <div>
+                    <div style="width: 50px; height: 50px; border-radius: 14px; background: #fff4ed; color: #b42318; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px;">
+                        <i class="fa-solid fa-file-circle-question"></i>
+                    </div>
+
+                    <span style="font-size: 12px; font-weight: 800; color: #b42318; letter-spacing: 0.5px; text-transform: uppercase;">Question Type 07</span>
+                    <h3 style="font-size: 22px; font-weight: 800; color: var(--dark); margin: 6px 0 12px 0;">Short-answer Questions</h3>
+                    <p style="color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 25px;">
+                        Answer questions using information from the reading passage.
+                    </p>
+                </div>
+
+                <a href="reading.html?type=short-answer" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px;">
+                    Start Practice
+                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                </a>
+            </div>
+
+            <!-- CARD 8: SUMMARY COMPLETION -->
+            <div class="speaking-part-card" onclick="window.location.href='reading.html?type=summary'" style="background: white; border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease; cursor: pointer;">
+                <div>
+                    <div style="width: 50px; height: 50px; border-radius: 14px; background: #f4f3ff; color: #5925dc; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px;">
+                        <i class="fa-solid fa-align-left"></i>
+                    </div>
+
+                    <span style="font-size: 12px; font-weight: 800; color: #5925dc; letter-spacing: 0.5px; text-transform: uppercase;">Question Type 08</span>
+                    <h3 style="font-size: 22px; font-weight: 800; color: var(--dark); margin: 6px 0 12px 0;">Summary Completion</h3>
+                    <p style="color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 25px;">
+                        Complete the summary using words from the reading passage.
+                    </p>
+                </div>
+
+                <a href="reading.html?type=summary" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px;">
+                    Start Practice
+                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                </a>
+            </div>
+
+        </div>
+
+
+        <!-- SOURCE CREDIT NOTE -->
+        <div style="text-align: center; margin-bottom: 30px; font-size: 13px; color: var(--muted);">
+            <i class="fa-solid fa-circle-info" style="margin-right: 6px;"></i>
+            Source: <strong>IELTS.org</strong> — IELTS General Training Reading Sample Tasks
+        </div>
+
+
+        <!-- PAGE NAVIGATION FOOTER -->
+        <div class="page-nav-footer">
+            <a href="index.html" class="nav-link-btn">
+                <i class="fa-solid fa-house"></i>
+                Back to Home Page
+            </a>
+        </div>
+
+    </main>
+
+</body>
+
+</html>

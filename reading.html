@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IELTS General Training Reading Practice - Authentic sample tasks with direct on-question answering.">
+    <title>IELTS Reading Practice | EngLish</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="listening-navbar">
+        <a href="reading-selection.html" class="back-home">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Reading Hub
+        </a>
+
+        <div class="listening-logo">
+            <i class="fa-solid fa-language"></i>
+            Eng<span>Lish</span>
+        </div>
+
+        <div class="reading-nav-pills" id="readingNavPills">
+            <a href="reading.html?type=flowchart" id="pill-flowchart">Flow-chart</a>
+            <a href="reading.html?type=tfn" id="pill-tfn">True/False/NG</a>
+            <a href="reading.html?type=features" id="pill-features">Features</a>
+            <a href="reading.html?type=headings" id="pill-headings">Headings</a>
+            <a href="reading.html?type=notes" id="pill-notes">Notes</a>
+            <a href="reading.html?type=completion" id="pill-completion">Sentences</a>
+            <a href="reading.html?type=short-answer" id="pill-short-answer">Short Answer</a>
+            <a href="reading.html?type=summary" id="pill-summary">Summary</a>
+        </div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="reading-container">
+
+        <!-- HEADER SECTION -->
+        <div class="reading-header">
+            <div class="part-badge-group" style="justify-content: center;">
+                <span class="part-badge" id="typeHeaderBadge">
+                    <i class="fa-solid fa-book"></i>
+                    IELTS READING PRACTICE
+                </span>
+            </div>
+
+            <h1 class="speaking-title" id="typeHeaderTitle" style="font-size: 36px;">Test Your Reading Skills</h1>
+
+            <p class="speaking-subtitle" id="typeHeaderSubtitle" style="max-width: 650px; margin: 0 auto;">
+                Read the passage carefully and answer the questions below.
+            </p>
+        </div>
+
+
+        <!-- 1. READING PASSAGE CARD -->
+        <section class="reading-passage-card" id="passageCard">
+            
+            <div class="passage-header-meta">
+                <span class="passage-meta-tag" id="passageCategoryTag">
+                    <i class="fa-regular fa-file-lines"></i>
+                    Reading Passage
+                </span>
+                <div class="passage-word-count" id="passageMetaNote">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                    Official IELTS Sample Task
+                </div>
+            </div>
+
+            <h2 class="passage-title-main" id="passageMainTitle">Passage Title</h2>
+
+            <div class="reading-body-text" id="passageBodyContainer">
+                <!-- Dynamic passage paragraphs inserted here -->
+            </div>
+
+        </section>
+
+
+        <!-- 2. QUESTIONS WITH DIRECT ON-QUESTION INTERACTION -->
+        <section class="reading-questions-card">
+
+            <div class="questions-section-heading">
+                <div class="resources-heading">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span id="questionsCountTitle">PRACTICE QUESTIONS</span>
+                </div>
+                <span class="resource-badge" id="questionsFormatBadge">Direct Answer Selection</span>
+            </div>
+
+            <div class="question-group-header" id="instructionsBox" style="margin-bottom: 25px;">
+                <div class="question-group-title" id="instructionsTitle">Instructions</div>
+                <div class="question-group-instruct" id="instructionsDetail">Complete each question below based on the text.</div>
+            </div>
+
+            <form id="readingTestForm" onsubmit="event.preventDefault(); submitActiveTest();">
+                
+                <!-- DYNAMIC CONTAINER WHERE ACTIVE QUESTION SET IS RENDERED -->
+                <div id="dynamicQuestionsContainer"></div>
+
+                <!-- SUBMIT BUTTON -->
+                <div class="submit-container" style="margin-top: 35px;">
+                    <button type="submit" class="submit-reading-btn" id="submitReadingBtn">
+                        Submit Answers
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <small style="color: var(--muted); font-size: 13px;" id="marksDetailText">1 mark per correct answer</small>
+                </div>
+
+            </form>
+
+            <!-- SCORE RESULT PANEL -->
+            <div class="score-result-card" id="scoreResultCard">
+                <div class="score-header-box">
+                    <span class="part-badge" style="margin-bottom: 8px;">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        PRACTICE RESULT
+                    </span>
+                    <h3 style="font-size: 20px; font-weight: 800; color: var(--dark);">Your Score</h3>
+                    <div class="score-number-display" id="scoreValueDisplay">0 / 0</div>
+                    <p class="score-feedback-text" id="scoreFeedbackText">Review your results below to see your performance on each question.</p>
+                </div>
+
+                <div class="score-review-list" id="scoreReviewList">
+                    <!-- Dynamic review items populated upon submission -->
+                </div>
+
+                <div style="text-align: center;">
+                    <button type="button" class="reset-quiz-btn" onclick="resetActiveQuiz()">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        Try Again
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- SOURCE CREDIT NOTE -->
+        <div style="text-align: center; margin-top: 40px; margin-bottom: 20px; font-size: 13px; color: var(--muted);">
+            <i class="fa-solid fa-circle-info" style="margin-right: 6px;"></i>
+            Source: <strong>IELTS.org</strong> — IELTS General Training Reading Sample Tasks
+        </div>
+
+
+        <!-- PAGE NAVIGATION FOOTER -->
+        <div class="page-nav-footer">
+            <a href="reading-selection.html" class="nav-link-btn">
+                <i class="fa-solid fa-layer-group"></i>
+                Back to Reading Hub
+            </a>
+
+            <a href="index.html" class="nav-link-btn">
+                <i class="fa-solid fa-house"></i>
+                Back to Home Page
+            </a>
+        </div>
+
+    </main>
+
+
+    <!-- JAVASCRIPT DATA & LOGIC DIRECT FROM PDF -->
+    <script>
+        // =========================================================================
+        // AUTHENTIC IELTS GENERAL TRAINING READING DATA FROM Reading sample 1(2).pdf
+        // =========================================================================
+        const READING_DATA = {
+            // -------------------------------------------------------------
+            // 1. FLOW-CHART COMPLETION (Original IELTS Q33–40 -> Site Q1–8)
+            // -------------------------------------------------------------
+            "flowchart": {
+                name: "Flow-chart Completion",
+                badge: "QUESTION TYPE 01 / FLOW-CHART COMPLETION",
+                title: "Flow-chart Completion Practice",
+                subtitle: "Complete the flow-chart below using words from the reading passage.",
+                passageTitle: "ROBOTS AT WORK",
+                passageCategory: "Section 3 / Newspaper Automation",
+                passage: [
+                    { label: "A", text: "The newspaper production process has come a long way from the old days when the paper was written, edited, typeset and ultimately printed in one building with the journalists working on the upper floors and the printing presses going on the ground floor. These days the editor, subeditors and journalists who put the paper together are likely to find themselves in a totally different building or maybe even in a different city. This is the situation which now prevails in Sydney. The daily paper is compiled at the editorial headquarters, known as the prepress centre, in the heart of the city, but printed far away in the suburbs at the printing centre. Here human beings are in the minority as much of the work is done by automated machines controlled by computers." },
+                    { label: "B", text: "Once the finished newspaper has been created for the next morning’s edition, all the pages are transmitted electronically from the prepress centre to the printing centre. The system of transmission is an update on the sophisticated page facsimile system already in use on many other newspapers. An imagesetter at the printing centre delivers the pages as film. Each page takes less than a minute to produce, although for colour pages four versions, once each for black, cyan, magenta and yellow are sent. The pages are then processed into photographic negatives and the film is used to produce aluminium printing plates ready for the presses." },
+                    { label: "C", text: "A procession of automated vehicles is busy at the new printing centre where the Sydney Morning Herald is printed each day. With lights flashing and warning horns honking, the robots (to give them their correct name, the LGVs or laser guided vehicles) look for all the world like enthusiastic machines from a science fiction movie, as they follow their own random paths around the plant busily getting on with their jobs. Automation of this kind is now standard in all modern newspaper plants. The robots can detect unauthorised personnel and alert security staff immediately if they find an “intruder”; not surprisingly, tall tales are already being told about the machines starting to take on personalities of their own." },
+                    { label: "D", text: "The robots’ principal job, however, is to shift the newsprint (the printing paper) that arrives at the plant in huge reels and emerges at the other end some time later as newspapers. Once the size of the day’s paper and the publishing order are determined at head office, the information is punched into the computer and the LGVs are programmed to go about their work. The LGVs collect the appropriate size paper reels and take them where they have to go. When the press needs another reel its computer alerts the LGV system. The Sydney LGVs move busily around the press room fulfilling their two key functions to collect reels of newsprint either from the reel stripping stations, or from the racked supplies in the newsprint storage area. At the stripping station the tough wrapping that helps to protect a reel of paper from rough handling is removed. Any damaged paper is peeled off and the reel is then weighed." },
+                    { label: "E", text: "Then one of the four paster robots moves in. Specifically designed for the job, it trims the paper neatly and prepares the reel for the press. If required the reel can be loaded directly onto the press; if not needed immediately, an LGV takes it to the storage area. When the press computer calls for a reel, an LGV takes it to the reel loading area of the presses. It lifts the reel into the loading position and places it in the correct spot with complete accuracy. As each reel is used up, the press drops the heavy cardboard core into a waste bin. When the bin is full, another LGV collects it and deposits the cores into a shredder for recycling." },
+                    { label: "F", text: "The LGVs move at walking speed. Should anyone step in front of one or get too close, sensors stop the vehicle until the path is clear. The company has chosen a laser guide function system for the vehicles because, as the project development manager says “The beauty of it is that if you want to change the routes, you can work out a new route on your computer and lay it down for them to follow”. When an LGV’s batteries run low, it will take itself off line and go to the nearest battery maintenance point for replacement batteries. And all this is achieved with absolute minimum human input and a much reduced risk of injury to people working in the printing centres." },
+                    { label: "G", text: "The question newspaper workers must now ask, however is, “how long will it be before the robots are writing the newspapers as well as running the printing centre, churning out the latest edition every morning?”" }
+                ],
+                instructionsTitle: "Questions 1 – 8: Complete the flow-chart below.",
+                instructionsDetail: "Choose <strong>NO MORE THAN THREE WORDS</strong> from the text for each answer.",
+                typeLayout: "flowchart",
+                flowchartSteps: [
+                    { type: "static", text: "The newspaper is compiled at the editorial headquarters by the journalists." },
+                    { type: "arrow" },
+                    { type: "input", qid: 1, origId: 33, prefix: "The final version of the text is 1", suffix: "to the printing centre." },
+                    { type: "arrow" },
+                    { type: "static", text: "The pages arrive by facsimile." },
+                    { type: "arrow" },
+                    { type: "input", qid: 2, origId: 34, prefix: "The pages are converted into 2", suffix: "." },
+                    { type: "arrow" },
+                    { type: "input", qid: 3, origId: 35, prefix: "3", suffix: "are made for use in the printing presses." },
+                    { type: "arrow" },
+                    { type: "input", qid: 4, origId: 36, prefix: "The LGVs are 4", suffix: "by computer." },
+                    { type: "arrow" },
+                    { type: "static", text: "The LGVs collect the reels of paper." },
+                    { type: "arrow" },
+                    { type: "input", qid: 5, origId: 37, prefix: "The LGVs remove the 5", suffix: "from the reel." },
+                    { type: "arrow" },
+                    { type: "input", qid: 6, origId: 38, prefix: "The reel is 6", suffix: "." },
+                    { type: "arrow" },
+                    { type: "input", qid: 7, origId: 39, prefix: "The reel is trimmed and prepared by the 7", suffix: "." },
+                    { type: "arrow" },
+                    { 
+                        type: "split",
+                        left: "The reel is taken to the press.",
+                        right: { qid: 8, origId: 40, prefix: "The reel is taken to the 8", suffix: "." }
+                    }
+                ],
+                questions: [
+                    { id: 1, origId: 33, correct: "transmitted (electronically)", display: "transmitted (electronically)", check: (v) => { const c = cleanText(v); return c === "transmitted electronically" || c === "transmitted"; } },
+                    { id: 2, origId: 34, correct: "(photographic) film/negative(s)", display: "(photographic) film/negative(s)", check: (v) => { const c = cleanText(v); return c === "film" || c === "photographic film" || c === "negatives" || c === "photographic negatives" || c === "negative" || c === "photographic negative"; } },
+                    { id: 3, origId: 35, correct: "(aluminium) printing plates", display: "(aluminium) printing plates", check: (v) => { const c = cleanText(v); return c === "aluminium printing plates" || c === "aluminum printing plates" || c === "printing plates"; } },
+                    { id: 4, origId: 36, correct: "programmed", display: "programmed", check: (v) => cleanText(v) === "programmed" },
+                    { id: 5, origId: 37, correct: "damaged paper/wrapping", display: "damaged paper/wrapping", check: (v) => { const c = cleanText(v); return c === "damaged paper" || c === "wrapping" || c === "tough wrapping" || c === "damaged paper wrapping" || c === "damaged paper or wrapping"; } },
+                    { id: 6, origId: 38, correct: "weighed", display: "weighed", check: (v) => cleanText(v) === "weighed" },
+                    { id: 7, origId: 39, correct: "paster robot(s)", display: "paster robot(s)", check: (v) => { const c = cleanText(v); return c === "paster robot" || c === "paster robots" || c === "the paster robot" || c === "the paster robots"; } },
+                    { id: 8, origId: 40, correct: "storage area", display: "storage area (or newsprint storage area)", check: (v) => { const c = cleanText(v); return c === "storage area" || c === "the storage area" || c === "newsprint storage area"; } }
+                ]
+            },
+
+            // -------------------------------------------------------------
+            // 2. TRUE / FALSE / NOT GIVEN (Original IELTS Q1–8 -> Site Q1–8)
+            // -------------------------------------------------------------
+            "tfn": {
+                name: "True / False / Not Given",
+                badge: "QUESTION TYPE 02 / TRUE • FALSE • NOT GIVEN",
+                title: "True / False / Not Given Practice",
+                subtitle: "Decide whether each statement agrees with the information in the passage.",
+                passageTitle: "London to Brighton Bike Ride",
+                passageCategory: "Section 1 / General Information",
+                passage: [
+                    { title: "The start", text: "The bike ride starts at Clapham Common tube station.\n• Your Start Time is indicated by the colour of your body number in this pack. It is also printed on the address label of the envelope. Please arrive no earlier than 30 minutes before that time.\n• We allocate an equal number of cyclists for each Start Time to ensure a steady flow. Please keep to the time you've been given so we can keep to our schedule and avoid delaying other riders and prevent 'bunching' further down the route.\n• An Information Point, toilets and refreshment stands will be open from very early in the day." },
+                    { title: "Ride carefully", text: "We put together as many facilities as possible to help ensure you have a trouble-free day. But we also rely on you to ride safely and with due consideration for other cyclists and road users. Although many roads are closed to oncoming traffic, this is not always the case and you should be aware of the possibility that there could be vehicles coming in the opposite direction. Please do not attempt reckless overtaking whilst riding – remember it is NOT a race." },
+                    { title: "Follow all instructions", text: "Every effort is made to ensure that the route is well signed and marshalled. Please obey all directions from police and marshals on the route. If you hear a motorcycle marshal blow his/her whistle three times, move left." },
+                    { title: "Wear a helmet", text: "Every year we are delighted to see more riders wearing protective helmets, but we would like to see every cyclist on the ride wearing one. More than half of reported injuries in cycling accidents are to the head, and a helmet gives the best protection when the head hits the ground." },
+                    { title: "Attracting assistance", text: "If you have an accident, ask a marshal for help; they are in contact with the support/emergency services. To call for help from our motorcycle marshals, give a 'thumbs down' signal. The marshal will do all he/she can to help, providing he/she is not already going to a more serious accident. If a motorcycle marshal slows down to help you, but you have just stopped for a rest and don't need help, please give a 'thumbs up' signal and he/she will carry on. Remember – thumbs down means 'I need help'." },
+                    { title: "In case of breakdown", text: "Refer to your route map and make your way to a Mechanics Point. Mechanical assistance is free when you show your Rider Identity Card; you just pay for the parts." },
+                    { title: "Refreshment stops", text: "Look out for these along the route. Most are organised by voluntary clubs and their prices give you real value for money. They are also raising money for their local communities and the British Heart Foundation, so please give them your support." },
+                    { title: "Rain or shine – be prepared", text: "In the event of very bad weather, watch out for signs to wet weather stations en route. Good waterproofs, like a cycle cape, are essential. Our first aid staff can only supply bin liners and by the time you get one you may be very wet. However, the English summer is unpredictable – it may also be hot, so don't forget the sun protection cream as well!" },
+                    { title: "If you have to drop out", text: "We will try to pick up your bike for you on the day. Call Bike Events (01225 310859) no more than two weeks after the ride to arrange collection. Sorry, we cannot guarantee this service nor can we accept liability for any loss or damage to your bike. Bike Events will hold your bike for three months, after which it may be disposed of. You will be charged for all costs incurred in returning your cycle." }
+                ],
+                instructionsTitle: "Questions 1 – 8: Do the following statements agree with the information given in the text?",
+                instructionsDetail: "Select <strong>TRUE</strong> if the statement agrees with the information.<br>Select <strong>FALSE</strong> if the statement contradicts the information.<br>Select <strong>NOT GIVEN</strong> if there is no information on this.",
+                typeLayout: "tfn",
+                questions: [
+                    { id: 1, origId: 1, text: "You should not arrive more than half an hour before your allocated starting time.", correct: "TRUE", display: "TRUE" },
+                    { id: 2, origId: 2, text: "Your Rider Identity Card will be sent to you before the event.", correct: "NOT GIVEN", display: "NOT GIVEN" },
+                    { id: 3, origId: 3, text: "Some roads may have normal traffic flow on them.", correct: "TRUE", display: "TRUE" },
+                    { id: 4, origId: 4, text: "Helmets are compulsory for all participants.", correct: "FALSE", display: "FALSE" },
+                    { id: 5, origId: 5, text: "Refreshments are free to all participants during the ride.", correct: "FALSE", display: "FALSE" },
+                    { id: 6, origId: 6, text: "If you need a rest you must get off the road.", correct: "NOT GIVEN", display: "NOT GIVEN" },
+                    { id: 7, origId: 7, text: "First aid staff can provide cycle capes.", correct: "FALSE", display: "FALSE" },
+                    { id: 8, origId: 8, text: "Bike Events will charge you for the return of your bike.", correct: "TRUE", display: "TRUE" }
+                ]
+            },
+
+            // -------------------------------------------------------------
+            // 3. MATCHING FEATURES (Original IELTS Q34–40 -> Site Q1–7)
+            // -------------------------------------------------------------
+            "features": {
+                name: "Matching Features",
+                badge: "QUESTION TYPE 03 / MATCHING FEATURES",
+                title: "Matching Features Practice",
+                subtitle: "Match each statement with the correct country from the list.",
+                passageTitle: "The History of Cinema",
+                passageCategory: "Section 3 / Historical Development",
+                passage: [
+                    { text: "[Note: This is an extract from a General Training Reading text on the subject of the history of cinema. The text preceding this extract gave a general overview.]" },
+                    { text: "Although French, German, American and British pioneers have all been credited with the invention of cinema, the British and the Germans played a relatively small role in its worldwide exploitation. It was above all the French, followed closely by the Americans, who were the most passionate exporters of the new invention, helping to start cinema in China, Japan, Latin America and Russia. In terms of artistic development it was again the French and the Americans who took the lead, though in the years before the First World War, Italy, Denmark and Russia also played a part." },
+                    { text: "In the end it was the United States that was to become, and remain, the largest single market for films. By protecting their own market and pursuing a vigorous export policy, the Americans achieved a dominant position on the world market by the start of the First World War. The centre of filmmaking had moved westwards, to Hollywood, and it was films from these new Hollywood studios that flooded onto the world’s film markets in the years after the First World War, and have done so ever since. Faced with total Hollywood domination, few film industries proved competitive. The Italian industry, which had pioneered the feature film with spectacular films like “Quo Vadis?” (1913) and “Cabiria” (1914), almost collapsed. In Scandinavia, the Swedish cinema had a brief period of glory, notably with powerful epic films and comedies. Even the French cinema found itself in a difficult position. In Europe, only Germany proved industrially capable, while in the new Soviet Union and in Japan, the development of the cinema took place in conditions of commercial isolation." },
+                    { text: "Hollywood took the lead artistically as well as industrially. Hollywood films appealed because they had better constructed narratives, their special effects were more impressive, and the star system added a new dimension to screen acting. If Hollywood did not have enough of its own resources, it had a great deal of money to buy up artists and technical innovations from Europe to ensure its continued dominance over present or future competition." },
+                    { text: "From early cinema, it was only American slapstick comedy that successfully developed in both short and feature format. However, during this ‘Silent Film’ era, animation, comedy, serials and dramatic features continued to thrive, along with factual films or documentaries, which acquired an increasing distinctiveness as the period progressed. It was also at this time that the avant-garde film first achieved commercial success, this time thanks almost exclusively to the French and the occasional German film." },
+                    { text: "Of the countries which developed and maintained distinctive national cinemas in the silent period, the most important were France, Germany and the Soviet Union. Of these, the French displayed the most continuity, in spite of the war and post-war economic uncertainties. The German cinema, relatively insignificant in the pre-war years, exploded on to the world scene after 1919. Yet even they were both overshadowed by the Soviets after the 1917 Revolution. They turned their back on the past, leaving the style of the pre-war Russian cinema to the émigrés who fled westwards to escape the Revolution." },
+                    { text: "The other countries whose cinemas changed dramatically are: Britain, which had an interesting but undistinguished history in the silent period; Italy, which had a brief moment of international fame just before the war; the Scandinavian countries, particularly Denmark, which played a role in the development of silent cinema quite out of proportion to their small population; and Japan, where a cinema developed based primarily on traditional theatrical and, to a lesser extent, other art forms and only gradually adapted to western influence." }
+                ],
+                featureListTitle: "List of Countries",
+                features: [
+                    { key: "A", name: "France" },
+                    { key: "B", name: "Germany" },
+                    { key: "C", name: "USA" },
+                    { key: "D", name: "Denmark" },
+                    { key: "E", name: "Sweden" },
+                    { key: "F", name: "Japan" },
+                    { key: "G", name: "Russia" },
+                    { key: "H", name: "Italy" },
+                    { key: "I", name: "Britain" },
+                    { key: "J", name: "China" }
+                ],
+                instructionsTitle: "Questions 1 – 7: Match each statement with the correct country, A-J.",
+                instructionsDetail: "You may use any letter more than once.",
+                typeLayout: "features",
+                questions: [
+                    { id: 1, origId: 34, text: "It helped other countries develop their own film industry.", correct: "A", display: "A (France)" },
+                    { id: 2, origId: 35, text: "It was the biggest producer of films.", correct: "C", display: "C (USA)" },
+                    { id: 3, origId: 36, text: "It was first to develop the 'feature' film.", correct: "H", display: "H (Italy)" },
+                    { id: 4, origId: 37, text: "It was responsible for creating stars.", correct: "C", display: "C (USA)" },
+                    { id: 5, origId: 38, text: "It made the most money from 'avant-garde' films.", correct: "A", display: "A (France)" },
+                    { id: 6, origId: 39, text: "It made movies based more on its own culture than outside influences.", correct: "F", display: "F (Japan)" },
+                    { id: 7, origId: 40, text: "It had a great influence on silent movies, despite its size.", correct: "D", display: "D (Denmark)" }
+                ]
+            },
+
+            // -------------------------------------------------------------
+            // 4. MATCHING HEADINGS (Original IELTS Q27–32 -> Site Q1–6)
+            // -------------------------------------------------------------
+            "headings": {
+                name: "Matching Headings",
+                badge: "QUESTION TYPE 04 / MATCHING HEADINGS",
+                title: "Matching Headings Practice",
+                subtitle: "Choose the correct heading for paragraphs A, B, and D–G from the list of headings below.",
+                passageTitle: "ROBOTS AT WORK",
+                passageCategory: "Section 3 / Paragraph Matching",
+                passage: [
+                    { label: "A", text: "The newspaper production process has come a long way from the old days when the paper was written, edited, typeset and ultimately printed in one building with the journalists working on the upper floors and the printing presses going on the ground floor. These days the editor, subeditors and journalists who put the paper together are likely to find themselves in a totally different building or maybe even in a different city. This is the situation which now prevails in Sydney. The daily paper is compiled at the editorial headquarters, known as the prepress centre, in the heart of the city, but printed far away in the suburbs at the printing centre. Here human beings are in the minority as much of the work is done by automated machines controlled by computers." },
+                    { label: "B", text: "Once the finished newspaper has been created for the next morning’s edition, all the pages are transmitted electronically from the prepress centre to the printing centre. The system of transmission is an update on the sophisticated page facsimile system already in use on many other newspapers. An imagesetter at the printing centre delivers the pages as film. Each page takes less than a minute to produce, although for colour pages four versions, once each for black, cyan, magenta and yellow are sent. The pages are then processed into photographic negatives and the film is used to produce aluminium printing plates ready for the presses." },
+                    { label: "C", text: "A procession of automated vehicles is busy at the new printing centre where the Sydney Morning Herald is printed each day. With lights flashing and warning horns honking, the robots (to give them their correct name, the LGVs or laser guided vehicles) look for all the world like enthusiastic machines from a science fiction movie, as they follow their own random paths around the plant busily getting on with their jobs. Automation of this kind is now standard in all modern newspaper plants. The robots can detect unauthorised personnel and alert security staff immediately if they find an “intruder”; not surprisingly, tall tales are already being told about the machines starting to take on personalities of their own." },
+                    { label: "D", text: "The robots’ principal job, however, is to shift the newsprint (the printing paper) that arrives at the plant in huge reels and emerges at the other end some time later as newspapers. Once the size of the day’s paper and the publishing order are determined at head office, the information is punched into the computer and the LGVs are programmed to go about their work. The LGVs collect the appropriate size paper reels and take them where they have to go. When the press needs another reel its computer alerts the LGV system. The Sydney LGVs move busily around the press room fulfilling their two key functions to collect reels of newsprint either from the reel stripping stations, or from the racked supplies in the newsprint storage area. At the stripping station the tough wrapping that helps to protect a reel of paper from rough handling is removed. Any damaged paper is peeled off and the reel is then weighed." },
+                    { label: "E", text: "Then one of the four paster robots moves in. Specifically designed for the job, it trims the paper neatly and prepares the reel for the press. If required the reel can be loaded directly onto the press; if not needed immediately, an LGV takes it to the storage area. When the press computer calls for a reel, an LGV takes it to the reel loading area of the presses. It lifts the reel into the loading position and places it in the correct spot with complete accuracy. As each reel is used up, the press drops the heavy cardboard core into a waste bin. When the bin is full, another LGV collects it and deposits the cores into a shredder for recycling." },
+                    { label: "F", text: "The LGVs move at walking speed. Should anyone step in front of one or get too close, sensors stop the vehicle until the path is clear. The company has chosen a laser guide function system for the vehicles because, as the project development manager says “The beauty of it is that if you want to change the routes, you can work out a new route on your computer and lay it down for them to follow”. When an LGV’s batteries run low, it will take itself off line and go to the nearest battery maintenance point for replacement batteries. And all this is achieved with absolute minimum human input and a much reduced risk of injury to people working in the printing centres." },
+                    { label: "G", text: "The question newspaper workers must now ask, however is, “how long will it be before the robots are writing the newspapers as well as running the printing centre, churning out the latest edition every morning?”" }
+                ],
+                headingsList: [
+                    "i. Robots working together",
+                    "ii. Preparing LGVs for takeover",
+                    "iii. Looking ahead",
+                    "iv. The LGVs’ main functions",
+                    "v. Split location for newspaper production",
+                    "vi. Newspapers superseded by technology",
+                    "vii. Getting the newspaper to the printing centre",
+                    "viii. Controlling the robots",
+                    "ix. Beware of robots!"
+                ],
+                instructionsTitle: "Questions 1 – 6: Choose the correct heading for paragraphs A, B, and D–G.",
+                instructionsDetail: "Write the correct number, <strong>i–ix</strong>, for each paragraph.",
+                typeLayout: "headings",
+                questions: [
+                    { id: 1, origId: 27, text: "Paragraph A", correct: "v", display: "v (Split location for newspaper production)" },
+                    { id: 2, origId: 28, text: "Paragraph B", correct: "vii", display: "vii (Getting the newspaper to the printing centre)" },
+                    { id: 3, origId: 29, text: "Paragraph D", correct: "iv", display: "iv (The LGVs’ main functions)" },
+                    { id: 4, origId: 30, text: "Paragraph E", correct: "i", display: "i (Robots working together)" },
+                    { id: 5, origId: 31, text: "Paragraph F", correct: "viii", display: "viii (Controlling the robots)" },
+                    { id: 6, origId: 32, text: "Paragraph G", correct: "iii", display: "iii (Looking ahead)" }
+                ]
+            },
+
+            // -------------------------------------------------------------
+            // 5. NOTE COMPLETION (Original IELTS Q1–6 -> Site Q1–6)
+            // -------------------------------------------------------------
+            "notes": {
+                name: "Note Completion",
+                badge: "QUESTION TYPE 05 / NOTE COMPLETION",
+                title: "Note Completion Practice",
+                subtitle: "Complete the notes below using words from the reading passage.",
+                passageTitle: "CITY MEDIA INTERNSHIPS",
+                passageCategory: "Section 2 / Career & Employment",
+                passage: [
+                    { text: "We are a proudly Canadian organization offering six annual internships, valued at $10,000 each, to deserving persons from minority groups. We offer career assistance, and an opportunity for these individuals to demonstrate the talent they have and get hands-on experience in broadcasting. We hope that our commitment to these groups becomes an industry-wide model of acceptance. Our goal is to have the City Media family mirror the diversity that makes our nation strong." },
+                    { text: "The internship winners will work at one of our two speciality TV stations. The Connect station provides programming on regional events, while the emphasis at Transview is on instructional shows. Each intern will work in an entry-level position within an area that meets the requirements of the company and be paid at the opening rate set by the company for that position. If the assignment makes relocation necessary, a maximum $1,500 grant is provided to assist with these expenses." },
+                    { text: "Interested broadcasting applicants should provide evidence of full-time enrolment in the field of broadcasting at an accredited post-secondary institution. An official transcript from the educational institution is also required. Mature students may replace this transcript with a one-page typewritten statement of their goals. References from three teachers or employers will be necessary if the application proceeds." },
+                    { text: "Once your application is accepted, you will receive a confirmation letter by mail from Personnel. The application is then referred to a Canada-wide panel of City Media employees. These individuals are familiar with the positions that would be considered a complementary fit with your stated career path. They will put together a shortlist of promising candidates and conduct an in-person or telephone interview. The type of interview will vary with the distance of each candidate. The hiring decisions of the panel are final." },
+                    { text: "If a candidate is not eligible, the application will be removed from the competition, as will those whose applications and accompanying documents are received later than the deadline for submission. No exceptions can be made for delayed, lost or misdirected mail." }
+                ],
+                instructionsTitle: "Questions 1 – 6: Complete the notes below.",
+                instructionsDetail: "Choose <strong>ONE WORD ONLY</strong> from the text for each answer.",
+                typeLayout: "notes",
+                noteItems: [
+                    { text: "• internships:", isHeader: true },
+                    { qid: 1, origId: 1, text: "- allow minorities to gain [INPUT] and show their talents" },
+                    { qid: 2, origId: 2, text: "- further City Media’s aim to reflect the [INPUT] of people in Canada" },
+                    { text: "• internship at Transview focuses on educational broadcasting", isHeader: false },
+                    { qid: 3, origId: 3, text: "• an additional amount of money is given if [INPUT] is required" },
+                    { text: "• support application with:", isHeader: true },
+                    { qid: 4, origId: 4, text: "- proof of present [INPUT] in broadcasting studies" },
+                    { qid: 5, origId: 5, text: "- a [INPUT] issued by your school" },
+                    { text: "• a panel decides which jobs are a good fit for each intern", isHeader: false },
+                    { qid: 6, origId: 6, text: "• interview method depends on [INPUT]" },
+                    { text: "• company strict about the deadline stated for applications", isHeader: false }
+                ],
+                questions: [
+                    { id: 1, origId: 1, correct: "experience", display: "experience", check: (v) => cleanText(v) === "experience" },
+                    { id: 2, origId: 2, correct: "diversity", display: "diversity", check: (v) => cleanText(v) === "diversity" },
+                    { id: 3, origId: 3, correct: "relocation", display: "relocation", check: (v) => cleanText(v) === "relocation" },
+                    { id: 4, origId: 4, correct: "enrolment / enrollment", display: "enrolment / enrollment", check: (v) => { const c = cleanText(v); return c === "enrolment" || c === "enrollment"; } },
+                    { id: 5, origId: 5, correct: "transcript", display: "transcript", check: (v) => cleanText(v) === "transcript" },
+                    { id: 6, origId: 6, correct: "distance", display: "distance", check: (v) => cleanText(v) === "distance" }
+                ]
+            },
+
+            // -------------------------------------------------------------
+            // 6. SENTENCE COMPLETION (Original IELTS Q38–40 -> Site Q1–3)
+            // -------------------------------------------------------------
+            "completion": {
+                name: "Sentence Completion",
+                badge: "QUESTION TYPE 06 / SENTENCE COMPLETION",
+                title: "Sentence Completion Practice",
+                subtitle: "Complete the sentences below using words from the passage.",
+                passageTitle: "Understanding Bee Behaviour",
+                passageCategory: "Section 3 / Scientific Discovery",
+                passage: [
+                    { text: "[Note: This is an extract from a General Training Reading text on the subject of understanding bee behaviour. The text preceding this extract described Karl von Frisch's experiments and his conclusions about two bee dances.]" },
+                    { text: "At first, von Frisch thought the bees were responding only to the scent of the food. But what did the third dance mean? And if bees were responding only to the scent, how could they also ‘sniff down’ food hundreds of metres away from the hive*, food which was sometimes downwind? On a hunch, he started gradually moving the feeding dish further and further away and noticed as he did so that the dances of the returning scout bees also started changing. If he placed the feeding dish over nine metres away, the second type of dance, the sickle version, came into play.\nBut once he moved it past 36 metres, the scouts would then start dancing the third, quite different, waggle dance." },
+                    { text: "The measurement of the actual distance too, he concluded, was precise. For example, a feeding dish 300 metres away was indicated by 15 complete runs through the pattern in 30 seconds. When the dish was moved to 60 metres away, the number dropped to eleven." },
+                    { text: "Von Frisch noted something further. When the scout bees came home to tell their sisters about the food source, sometimes they would dance outside on the horizontal entrance platform of the hive, and sometimes on the vertical wall inside. And, depending on where they danced, the straight portion of the waggle dance would point in different directions. The outside dance was fairly easy to decode: the straight portion of the dance pointed directly to the food source, so the bees would merely have to decode the distance message and fly off in that direction to find their food." },
+                    { text: "But by studying the dance on the inner wall of the hive, von Frisch discovered a remarkable method which the dancer used to tell her sisters the direction of the food in relation to the sun. When inside the hive, the dancer cannot use the sun, so she uses gravity instead. The direction of the sun is represented by the top of the hive wall. If she runs straight up, this means that the feeding place is in the same direction as the sun. However, if, for example, the feeding place is 40º to the left of the sun, then the dancer would run 40º to the left of the vertical line. This was to be the first of von Frisch’s remarkable discoveries. Soon he would also discover a number of other remarkable facts about how bees communicate and, in doing so, revolutionise the study of animal behaviour generally." },
+                    { text: "* Hive – a ‘house’ for bees; the place where they build a nest and live" }
+                ],
+                instructionsTitle: "Questions 1 – 3: Complete the sentences below.",
+                instructionsDetail: "Choose <strong>NO MORE THAN TWO WORDS</strong> from the text for each answer.",
+                typeLayout: "sentences",
+                questions: [
+                    { id: 1, origId: 38, text: "Von Frisch discovered the difference between dance types by changing the position of the ................. .", correct: "feeding dish", display: "feeding dish", check: (v) => { const c = cleanText(v); return c === "feeding dish" || c === "the feeding dish"; } },
+                    { id: 2, origId: 39, text: "The dance outside the hive points in the direction of the ............... .", correct: "food (source)", display: "food (source)", check: (v) => { const c = cleanText(v); return c === "food" || c === "food source" || c === "the food" || c === "the food source"; } },
+                    { id: 3, origId: 40, text: "The angle of the dance from the vertical shows the angle of the food from the ............... .", correct: "sun", display: "sun", check: (v) => { const c = cleanText(v); return c === "sun" || c === "the sun"; } }
+                ]
+            },
+
+            // -------------------------------------------------------------
+            // 7. SHORT-ANSWER QUESTIONS (Original IELTS Q4–8 -> Site Q1–5)
+            // -------------------------------------------------------------
+            "short-answer": {
+                name: "Short-answer Questions",
+                badge: "QUESTION TYPE 07 / SHORT-ANSWER QUESTIONS",
+                title: "Short-answer Questions Practice",
+                subtitle: "Answer the questions below using information from the notice.",
+                passageTitle: "IMPORTANT NOTICE: PRODUCT RETURN",
+                passageCategory: "Section 2 / Product Recall Notice",
+                passage: [
+                    { text: "Fancy Foods wishes to inform the public that pieces of metal have been found in some jars of Fancy Foods Chicken Curry (Spicy). The batches of the jars involved have numbers from J6617 to J6624. The batch number is printed on the bottom of each jar." },
+                    { text: "If you have any jars with these batch numbers, please return them (preferably unopened) to the supermarket where you purchased them. You can also return them to the factory (Fancy Foods Retailers, Blacktown). Fancy Foods will pay $10 for each jar returned unopened and $5 for each jar already opened." },
+                    { text: "No payment will be made for empty jars, which do not need to be returned. However, the Retailing Manager will be interested to hear from people who have consumed chicken curry from any of the above batch numbers. In particular, it will be helpful if they can give information about the place of purchase of the product." },
+                    { text: "Jars of Fancy Foods Chicken Curry (Coconut) and Fancy Foods Chicken Curry (Mango) have not been affected and do not need to be returned." },
+                    { title: "REWARD", text: "Fancy Foods will pay a reward of $10,000 to $50,000 for information which leads to the conviction of any person found guilty of placing metal pieces in its products. If you have such information, please contact the Customer Relations Manager, Fancy Foods Retailers, Blacktown." }
+                ],
+                instructionsTitle: "Questions 1 – 5: Answer the questions below.",
+                instructionsDetail: "Choose <strong>NO MORE THAN THREE WORDS AND/OR A NUMBER</strong> from the text for each answer.",
+                typeLayout: "short-answer",
+                questions: [
+                    { id: 1, origId: 4, text: "What has been found in some Fancy Foods products?", correct: "pieces of metal", display: "pieces of metal", check: (v) => { const c = cleanText(v); return c === "pieces of metal" || c === "metal pieces" || c === "metal"; } },
+                    { id: 2, origId: 5, text: "Where can you find the batch number on the jars?", correct: "(on) the bottom", display: "(on) the bottom", check: (v) => { const c = cleanText(v); return c === "on the bottom" || c === "the bottom" || c === "bottom" || c === "on bottom"; } },
+                    { id: 3, origId: 6, text: "How much will you receive for an opened jar of contaminated Chicken Curry?", correct: "$5", display: "$5", check: (v) => { const c = cleanText(v); return c === "5" || c === "$5" || c === "5$" || c === "5 dollars" || c === "$ 5"; } },
+                    { id: 4, origId: 7, text: "If you have eaten Chicken Curry from a jar with one of the batch numbers listed, whom should you contact?", correct: "(the) Retailing Manager", display: "(the) Retailing Manager", check: (v) => { const c = cleanText(v); return c === "the retailing manager" || c === "retailing manager"; } },
+                    { id: 5, origId: 8, text: "What is the maximum reward Fancy Foods is offering for information about who contaminated their product?", correct: "$50,000", display: "$50,000", check: (v) => { const c = cleanText(v); return c === "$50000" || c === "50000" || c === "$50,000" || c === "50,000" || c === "50000 dollars" || c === "50,000 dollars" || c === "$ 50,000"; } }
+                ]
+            },
+
+            // -------------------------------------------------------------
+            // 8. SUMMARY COMPLETION (Original IELTS Q1–5 -> Site Q1–5)
+            // -------------------------------------------------------------
+            "summary": {
+                name: "Summary Completion",
+                badge: "QUESTION TYPE 08 / SUMMARY COMPLETION",
+                title: "Summary Completion Practice",
+                subtitle: "Complete the summary below using words from the reading passage.",
+                passageTitle: "Political units in the history of West Africa",
+                passageCategory: "Section 3 / West African History",
+                passage: [
+                    { text: "[Note: this is an extract from a General Training Reading text on the subject of political units in the history of West Africa.]" },
+                    { text: "Ife, perched at the edge of Nigeria’s forest, is thought to have come to prominence through its control of local products – including ivory, gold and pepper – in external trade. By AD 1300, its walled capital was at the peak of its wealth, with many shrines featuring elaborate pavements made of pieces of pottery, and a rich tradition of creating brass and terracotta sculptures, including ones of people richly adorned in ceremonial regalia. Many of these have survived. Subsistence for the large elite and artisan population appears to have been based upon small livestock and the cultivation of vegetables. Around AD 1500, the city of Ife declined, and the region’s center of power shifted to Benin without any appreciable break in cultural tradition." }
+                ],
+                instructionsTitle: "Questions 1 – 5: Complete the summary below.",
+                instructionsDetail: "Choose <strong>ONE WORD ONLY</strong> from the text for each answer.",
+                typeLayout: "summary",
+                summaryTextParts: [
+                    "The state of Ife adjoined the 1 ",
+                    " in Nigeria, and traded a variety of goods, including metals such as 2 ",
+                    " . Floors in religious buildings were made from bits of 3 ",
+                    " . There are many surviving examples of 4 ",
+                    " made of brass or terracotta. The population lived on animal products, and crops such as 5 ",
+                    " ."
+                ],
+                questions: [
+                    { id: 1, origId: 1, correct: "forest", display: "forest", check: (v) => cleanText(v) === "forest" },
+                    { id: 2, origId: 2, correct: "gold", display: "gold", check: (v) => cleanText(v) === "gold" },
+                    { id: 3, origId: 3, correct: "pottery", display: "pottery", check: (v) => cleanText(v) === "pottery" },
+                    { id: 4, origId: 4, correct: "sculptures", display: "sculptures", check: (v) => cleanText(v) === "sculptures" },
+                    { id: 5, origId: 5, correct: "vegetables", display: "vegetables", check: (v) => cleanText(v) === "vegetables" }
+                ]
+            }
+        };
+
+        // User State
+        let currentType = "flowchart";
+        let userAnswers = {};
+
+        // Helper: Clean and normalize text
+        function cleanText(val) {
+            if (!val) return "";
+            return val.trim().toLowerCase().replace(/['"]/g, "").replace(/\s+/g, " ");
+        }
+
+        // ==========================================
+        // INITIALIZATION ON PAGE LOAD
+        // ==========================================
+        window.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const requestedType = params.get("type");
+
+            if (requestedType && READING_DATA[requestedType]) {
+                currentType = requestedType;
+            } else {
+                currentType = "flowchart";
+            }
+
+            // Highlight Active Nav Pill
+            document.querySelectorAll(".reading-nav-pills a").forEach(pill => {
+                pill.classList.remove("active");
+            });
+            const activePill = document.getElementById(`pill-${currentType}`);
+            if (activePill) activePill.classList.add("active");
+
+            renderCurrentTask();
+        });
+
+        // ==========================================
+        // RENDER PASSAGE & QUESTIONS
+        // ==========================================
+        function renderCurrentTask() {
+            userAnswers = {};
+            const data = READING_DATA[currentType];
+
+            // 1. Header Information
+            document.getElementById("typeHeaderBadge").innerHTML = `<i class="fa-solid fa-book"></i> ${data.badge}`;
+            document.getElementById("typeHeaderTitle").textContent = data.title;
+            document.getElementById("typeHeaderSubtitle").textContent = data.subtitle;
+
+            // 2. Passage Information
+            document.getElementById("passageMainTitle").textContent = data.passageTitle;
+            document.getElementById("passageCategoryTag").innerHTML = `<i class="fa-regular fa-file-lines"></i> ${data.passageCategory}`;
+            
+            const passageContainer = document.getElementById("passageBodyContainer");
+            passageContainer.innerHTML = "";
+
+            data.passage.forEach(p => {
+                const textTrimmed = (p.text || "").trim();
+                const noteMatch = textTrimmed.match(/^\[Note:\s*([\s\S]+?)\]$/i);
+
+                if (noteMatch) {
+                    const noteBox = document.createElement("div");
+                    noteBox.className = "passage-note-box";
+                    noteBox.innerHTML = `
+                        <div class="passage-note-title">
+                            <i class="fa-solid fa-circle-info"></i>
+                            NOTE
+                        </div>
+                        <div class="passage-note-text">${escapeHtml(noteMatch[1].trim())}</div>
+                    `;
+                    passageContainer.appendChild(noteBox);
+                    return;
+                }
+
+                const para = document.createElement("p");
+                para.className = "reading-para";
+                let content = "";
+                if (p.label) {
+                    content += `<span class="para-label">${p.label}.</span> `;
+                }
+                if (p.title) {
+                    content += `<strong style="display:block; color:var(--dark); margin-bottom:6px; font-size:16px;">${p.title}</strong>`;
+                }
+                content += p.text.replace(/\n/g, "<br>");
+                para.innerHTML = content;
+                passageContainer.appendChild(para);
+            });
+
+            // 3. Questions Section Header
+            document.getElementById("questionsCountTitle").textContent = `${data.name.toUpperCase()} (${data.questions.length} Questions)`;
+            document.getElementById("instructionsTitle").innerHTML = data.instructionsTitle;
+            document.getElementById("instructionsDetail").innerHTML = data.instructionsDetail;
+            document.getElementById("marksDetailText").textContent = `1 mark per correct answer (Total: ${data.questions.length} marks)`;
+
+            // 4. Questions Rendering By Layout Type
+            const questionsContainer = document.getElementById("dynamicQuestionsContainer");
+            questionsContainer.innerHTML = "";
+
+            if (data.typeLayout === "flowchart") {
+                renderFlowchart(data, questionsContainer);
+            } else if (data.typeLayout === "tfn") {
+                renderTFNG(data, questionsContainer);
+            } else if (data.typeLayout === "features") {
+                renderFeatures(data, questionsContainer);
+            } else if (data.typeLayout === "headings") {
+                renderHeadings(data, questionsContainer);
+            } else if (data.typeLayout === "notes") {
+                renderNotes(data, questionsContainer);
+            } else if (data.typeLayout === "summary") {
+                renderSummary(data, questionsContainer);
+            } else {
+                renderStandardQuestions(data, questionsContainer);
+            }
+        }
+
+        // --- Flowchart Layout ---
+        function renderFlowchart(data, container) {
+            const flowBox = document.createElement("div");
+            flowBox.className = "flowchart-container";
+
+            data.flowchartSteps.forEach(step => {
+                if (step.type === "static") {
+                    flowBox.innerHTML += `
+                        <div class="flowchart-step-card initial">
+                            ${step.text}
+                        </div>
+                    `;
+                } else if (step.type === "arrow") {
+                    flowBox.innerHTML += `
+                        <div class="flowchart-arrow">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </div>
+                    `;
+                } else if (step.type === "input") {
+                    flowBox.innerHTML += `
+                        <div class="flowchart-step-card">
+                            ${step.prefix} 
+                            <input type="text" class="flowchart-inline-input" placeholder="Answer ${step.qid}" oninput="updateAnswer(${step.qid}, this.value)" required autocomplete="off">
+                            ${step.suffix}
+                        </div>
+                    `;
+                } else if (step.type === "split") {
+                    flowBox.innerHTML += `
+                        <div class="flowchart-split-row">
+                            <div class="flowchart-step-card initial">
+                                ${step.left}
+                            </div>
+                            <div class="flowchart-step-card">
+                                ${step.right.prefix} 
+                                <input type="text" class="flowchart-inline-input" style="width:140px;" placeholder="Answer ${step.right.qid}" oninput="updateAnswer(${step.right.qid}, this.value)" required autocomplete="off">
+                                ${step.right.suffix}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            container.appendChild(flowBox);
+        }
+
+        // --- True / False / Not Given Layout ---
+        function renderTFNG(data, container) {
+            data.questions.forEach(q => {
+                const qDiv = document.createElement("div");
+                qDiv.className = "reading-question-item";
+                qDiv.innerHTML = `
+                    <div class="rq-header-row">
+                        <span class="rq-badge">${q.id}</span>
+                        <div class="rq-content">
+                            <div class="rq-text">${q.text}</div>
+                            <div class="tfng-options-row">
+                                <button type="button" class="tfng-btn" onclick="selectTFNG(${q.id}, 'TRUE', this)">TRUE</button>
+                                <button type="button" class="tfng-btn" onclick="selectTFNG(${q.id}, 'FALSE', this)">FALSE</button>
+                                <button type="button" class="tfng-btn" onclick="selectTFNG(${q.id}, 'NOT GIVEN', this)">NOT GIVEN</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        // --- Matching Features Layout ---
+        function renderFeatures(data, container) {
+            // Features Reference Box
+            const featBox = document.createElement("div");
+            featBox.className = "headings-box";
+            featBox.innerHTML = `
+                <h4><i class="fa-solid fa-earth-americas" style="color: var(--primary); margin-right: 6px;"></i> ${data.featureListTitle}</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px;">
+                    ${data.features.map(f => `<div class="headings-list-item"><strong>${f.key}</strong> ${f.name}</div>`).join('')}
+                </div>
+            `;
+            container.appendChild(featBox);
+
+            // Questions
+            data.questions.forEach(q => {
+                const qDiv = document.createElement("div");
+                qDiv.className = "reading-question-item";
+                qDiv.innerHTML = `
+                    <div class="rq-header-row">
+                        <span class="rq-badge">${q.id}</span>
+                        <div class="rq-content">
+                            <div class="rq-text">${q.text}</div>
+                            <div class="direct-input-box">
+                                <select class="direct-select-input" onchange="updateAnswer(${q.id}, this.value)" required>
+                                    <option value="" disabled selected>-- Select Matching Country (A–J) --</option>
+                                    ${data.features.map(f => `<option value="${f.key}">${f.key} — ${f.name}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        // --- Matching Headings Layout ---
+        function renderHeadings(data, container) {
+            const hBox = document.createElement("div");
+            hBox.className = "headings-box";
+            hBox.innerHTML = `
+                <h4><i class="fa-solid fa-list-ol" style="color: var(--primary); margin-right: 6px;"></i> List of Headings</h4>
+                ${data.headingsList.map(h => `<div class="headings-list-item">${h}</div>`).join('')}
+            `;
+            container.appendChild(hBox);
+
+            data.questions.forEach(q => {
+                const qDiv = document.createElement("div");
+                qDiv.className = "reading-question-item";
+                qDiv.innerHTML = `
+                    <div class="rq-header-row">
+                        <span class="rq-badge">${q.id}</span>
+                        <div class="rq-content">
+                            <div class="rq-text"><strong>${q.text}</strong></div>
+                            <div class="direct-input-box">
+                                <select class="direct-select-input" onchange="updateAnswer(${q.id}, this.value)" required>
+                                    <option value="" disabled selected>-- Select Heading (i – ix) --</option>
+                                    <option value="i">i. Robots working together</option>
+                                    <option value="ii">ii. Preparing LGVs for takeover</option>
+                                    <option value="iii">iii. Looking ahead</option>
+                                    <option value="iv">iv. The LGVs’ main functions</option>
+                                    <option value="v">v. Split location for newspaper production</option>
+                                    <option value="vi">vi. Newspapers superseded by technology</option>
+                                    <option value="vii">vii. Getting the newspaper to the printing centre</option>
+                                    <option value="viii">viii. Controlling the robots</option>
+                                    <option value="ix">ix. Beware of robots!</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        // --- Notes Layout ---
+        function renderNotes(data, container) {
+            const notesCard = document.createElement("div");
+            notesCard.className = "notes-container-card";
+            notesCard.innerHTML = `<h3 class="notes-main-title">CITY MEDIA INTERNSHIPS</h3>`;
+
+            const list = document.createElement("ul");
+            list.className = "notes-bullet-list";
+
+            data.noteItems.forEach(item => {
+                const li = document.createElement("li");
+                if (item.isHeader) {
+                    li.style.fontWeight = "700";
+                    li.style.color = "var(--dark)";
+                    li.style.marginTop = "10px";
+                    li.textContent = item.text;
+                } else if (item.qid) {
+                    li.className = "notes-bullet-item";
+                    const inputHTML = `<input type="text" class="flowchart-inline-input" style="width:160px;" placeholder="Answer ${item.qid}" oninput="updateAnswer(${item.qid}, this.value)" required autocomplete="off">`;
+                    li.innerHTML = item.text.replace("[INPUT]", inputHTML);
+                } else {
+                    li.className = "notes-bullet-item";
+                    li.textContent = item.text;
+                }
+                list.appendChild(li);
+            });
+
+            notesCard.appendChild(list);
+            container.appendChild(notesCard);
+        }
+
+        // --- Summary Layout ---
+        function renderSummary(data, container) {
+            const sumCard = document.createElement("div");
+            sumCard.className = "summary-container-card";
+            sumCard.innerHTML = `<h3 style="font-family:'Manrope',sans-serif; font-size:18px; font-weight:800; color:var(--dark); margin-bottom:14px; text-transform:uppercase;">Ife</h3>`;
+
+            let sumHTML = "";
+            for (let i = 0; i < data.questions.length; i++) {
+                const qid = data.questions[i].id;
+                sumHTML += data.summaryTextParts[i];
+                sumHTML += `<input type="text" class="flowchart-inline-input" style="width:140px;" placeholder="[${qid}]" oninput="updateAnswer(${qid}, this.value)" required autocomplete="off">`;
+            }
+            sumHTML += data.summaryTextParts[data.questions.length];
+            sumCard.innerHTML += sumHTML;
+            container.appendChild(sumCard);
+        }
+
+        // --- Standard (Sentence Completion / Short Answer) Layout ---
+        function renderStandardQuestions(data, container) {
+            data.questions.forEach(q => {
+                const qDiv = document.createElement("div");
+                qDiv.className = "reading-question-item";
+                qDiv.innerHTML = `
+                    <div class="rq-header-row">
+                        <span class="rq-badge">${q.id}</span>
+                        <div class="rq-content">
+                            <div class="rq-text">${q.text}</div>
+                            <div class="direct-input-box">
+                                <input type="text" class="direct-text-input" placeholder="Type your answer here..." oninput="updateAnswer(${q.id}, this.value)" required autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        // ==========================================
+        // INTERACTION HANDLERS
+        // ==========================================
+        function updateAnswer(qid, val) {
+            userAnswers[qid] = val;
+        }
+
+        function selectTFNG(qid, value, el) {
+            userAnswers[qid] = value;
+            const parent = el.closest(".tfng-options-row");
+            parent.querySelectorAll(".tfng-btn").forEach(btn => btn.classList.remove("selected"));
+            el.classList.add("selected");
+        }
+
+        function formatUserDisplayAnswer(type, q, rawVal) {
+            if (!rawVal || !rawVal.trim()) {
+                return "(None selected)";
+            }
+            const val = rawVal.trim();
+
+            if (type === "features" && READING_DATA["features"]) {
+                const feat = READING_DATA["features"].features.find(f => f.key.toUpperCase() === val.toUpperCase());
+                if (feat) {
+                    return `${feat.key} (${feat.name})`;
+                }
+            }
+
+            if (type === "headings" && READING_DATA["headings"]) {
+                const headingItem = READING_DATA["headings"].headingsList.find(h => h.toLowerCase().startsWith(val.toLowerCase() + "."));
+                if (headingItem) {
+                    const parts = headingItem.split(". ");
+                    if (parts.length >= 2) {
+                        return `${parts[0]} (${parts.slice(1).join(". ")})`;
+                    }
+                    return headingItem;
+                }
+            }
+
+            return val;
+        }
+
+        // ==========================================
+        // SUBMIT & SCORE EVALUATION
+        // ==========================================
+        function submitActiveTest() {
+            const data = READING_DATA[currentType];
+            let score = 0;
+            const total = data.questions.length;
+            const reviewList = document.getElementById("scoreReviewList");
+            reviewList.innerHTML = "";
+
+            data.questions.forEach(q => {
+                const userVal = (userAnswers[q.id] || "").trim();
+                let isCorrect = false;
+
+                if (q.check) {
+                    isCorrect = q.check(userVal);
+                } else {
+                    isCorrect = (cleanText(userVal) === cleanText(q.correct));
+                }
+
+                if (isCorrect) score++;
+
+                const userDisplayVal = formatUserDisplayAnswer(currentType, q, userVal);
+
+                // Build Review Card
+                const card = document.createElement("div");
+                card.className = `review-item-card ${isCorrect ? 'correct' : 'incorrect'}`;
+                card.innerHTML = `
+                    <div class="review-card-header">
+                        <span class="review-q-num">Question ${q.id}</span>
+                        <span class="review-badge-status ${isCorrect ? 'correct' : 'incorrect'}">
+                            <i class="fa-solid ${isCorrect ? 'fa-check' : 'fa-xmark'}"></i>
+                            ${isCorrect ? 'Correct (+1)' : 'Incorrect (0)'}
+                        </span>
+                    </div>
+                    <div class="review-card-body">
+                        <div class="review-ans-line user-ans-line">
+                            <span class="ans-label-title">Your answer:</span>
+                            <span class="ans-text-val user-val">${escapeHtml(userDisplayVal)}</span>
+                        </div>
+                        ${!isCorrect ? `
+                        <div class="review-ans-line correct-ans-line">
+                            <span class="ans-label-title">Correct answer:</span>
+                            <span class="ans-text-val correct-val">${escapeHtml(q.display || q.correct)}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+                reviewList.appendChild(card);
+            });
+
+            // Display Score
+            document.getElementById("scoreValueDisplay").textContent = `${score} / ${total}`;
+            const feedbackText = document.getElementById("scoreFeedbackText");
+
+            if (score === total) {
+                feedbackText.textContent = "Outstanding! You got 100% of the answers correct according to the official IELTS answer key.";
+            } else if (score >= Math.ceil(total * 0.7)) {
+                feedbackText.textContent = "Great job! You achieved a solid score. Review any missed questions below.";
+            } else if (score >= Math.ceil(total * 0.5)) {
+                feedbackText.textContent = "Good effort. Review the text carefully to pinpoint exact keywords.";
+            } else {
+                feedbackText.textContent = "Keep practicing! Review the official answers below and try the task again.";
+            }
+
+            // Reveal Result Card
+            const scoreCard = document.getElementById("scoreResultCard");
+            scoreCard.style.display = "block";
+            scoreCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+
+        function resetActiveQuiz() {
+            userAnswers = {};
+            document.getElementById("readingTestForm").reset();
+            renderCurrentTask();
+            const scoreCard = document.getElementById("scoreResultCard");
+            scoreCard.style.display = "none";
+            document.querySelector(".reading-questions-card").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+    </script>
+
+</body>
+
+</html>
