@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign in to EngLish - Master English, Ace IELTS, and advance your engineering career with dedicated Listening, Speaking, Reading, and Writing practice.">
+    <title>Login | EngLish – Master English. Ace IELTS. Build Your Future.</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         TOP NAVBAR
+    ===================================================== -->
+    <header class="listening-navbar">
+        <a href="index.html" class="back-home" id="backHomeLink">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Back to Home</span>
+        </a>
+
+        <a href="index.html" class="listening-logo" style="text-decoration: none;" aria-label="EngLish Home">
+            <i class="fa-solid fa-language"></i>
+            Eng<span>Lish</span>
+        </a>
+
+        <div class="question-number" style="display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-graduation-cap" style="color: var(--primary);"></i>
+            <span>Student Portal</span>
+        </div>
+    </header>
+
+    <!-- =====================================================
+         MAIN LOGIN SECTION
+    ===================================================== -->
+    <main class="login-page-wrapper">
+        <div class="login-container">
+
+            <!-- LEFT COLUMN: BRANDING & LSRW PILLARS -->
+            <section class="login-branding-col">
+
+                <div class="login-badge">
+                    <span class="badge-dot"></span>
+                    <span>Designed for Engineering Students</span>
+                </div>
+
+                <h1 class="brand-main-heading">
+                    Master English.<br>
+                    <span>Ace IELTS.</span><br>
+                    Build Your Future.
+                </h1>
+
+                <p class="brand-subtext">
+                    Improve your Listening, Speaking, Reading and Writing skills with a platform designed for engineering students.
+                </p>
+
+                <!-- LSRW Visual Representation -->
+                <div class="lsrw-overview-container" aria-label="LSRW Skills Overview">
+                    <div class="lsrw-overview-label">The Four LSRW Pillars</div>
+                    <div class="lsrw-cards-grid">
+                        <div class="lsrw-pill-card listening">
+                            <div class="lsrw-pill-badge" aria-hidden="true">
+                                <i class="fa-solid fa-headphones"></i>
+                            </div>
+                            <div class="lsrw-pill-content">
+                                <strong>Listening</strong>
+                                <small>L1 – L8 Audio Tasks</small>
+                            </div>
+                        </div>
+
+                        <div class="lsrw-pill-card speaking">
+                            <div class="lsrw-pill-badge" aria-hidden="true">
+                                <i class="fa-solid fa-microphone"></i>
+                            </div>
+                            <div class="lsrw-pill-content">
+                                <strong>Speaking</strong>
+                                <small>Parts 1, 2 & 3 Practice</small>
+                            </div>
+                        </div>
+
+                        <div class="lsrw-pill-card reading">
+                            <div class="lsrw-pill-badge" aria-hidden="true">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <div class="lsrw-pill-content">
+                                <strong>Reading</strong>
+                                <small>8 Question Formats</small>
+                            </div>
+                        </div>
+
+                        <div class="lsrw-pill-card writing">
+                            <div class="lsrw-pill-badge" aria-hidden="true">
+                                <i class="fa-solid fa-pen-nib"></i>
+                            </div>
+                            <div class="lsrw-pill-content">
+                                <strong>Writing</strong>
+                                <small>General Tasks & Samples</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Trust Highlight -->
+                <div class="student-trust-strip">
+                    <div class="trust-avatars" aria-hidden="true">
+                        <span>🎓</span>
+                        <span>💻</span>
+                        <span>📚</span>
+                        <span>🚀</span>
+                    </div>
+                    <div class="trust-text">
+                        <strong>Interactive Practice Hub</strong><br>
+                        A smarter way to build communication confidence.
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- RIGHT COLUMN: LOGIN CARD -->
+            <section class="login-card-col">
+                <div class="login-card">
+
+                    <div class="login-card-header">
+                        <div class="login-card-icon-wrap" aria-hidden="true">
+                            <i class="fa-solid fa-user-lock"></i>
+                        </div>
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to continue your English learning journey.</p>
+                    </div>
+
+                    <!-- LOGIN FORM -->
+                    <form id="loginForm" class="login-form" novalidate>
+
+                        <!-- FIELD 1: EMAIL OR USERNAME -->
+                        <div class="form-group" id="emailGroup">
+                            <label for="emailInput" class="form-label">
+                                Email or Username
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="fa-regular fa-envelope input-leading-icon" aria-hidden="true"></i>
+                                <input
+                                    type="text"
+                                    id="emailInput"
+                                    name="username"
+                                    class="form-input"
+                                    placeholder="Enter your email or username"
+                                    autocomplete="username"
+                                    spellcheck="false"
+                                >
+                            </div>
+                            <div class="field-error" id="emailError" role="alert">
+                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                                <span>Please enter your email or username.</span>
+                            </div>
+                        </div>
+
+                        <!-- FIELD 2: PASSWORD -->
+                        <div class="form-group" id="passwordGroup">
+                            <label for="passwordInput" class="form-label">
+                                Password
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-lock input-leading-icon" aria-hidden="true"></i>
+                                <input
+                                    type="password"
+                                    id="passwordInput"
+                                    name="password"
+                                    class="form-input password-input"
+                                    placeholder="Enter your password"
+                                    autocomplete="current-password"
+                                >
+                                <button
+                                    type="button"
+                                    class="password-toggle-btn"
+                                    id="passwordToggle"
+                                    aria-label="Show password"
+                                    title="Show password"
+                                >
+                                    <i class="fa-regular fa-eye" id="toggleIcon" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="field-error" id="passwordError" role="alert">
+                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                                <span>Please enter your password.</span>
+                            </div>
+                        </div>
+
+                        <!-- REMEMBER ME & FORGOT PASSWORD -->
+                        <div class="form-options-row">
+                            <label class="remember-label" for="rememberMe">
+                                <input type="checkbox" id="rememberMe" name="remember">
+                                <span class="custom-checkbox-box" aria-hidden="true">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+                                <span class="remember-text">Remember me</span>
+                            </label>
+
+                            <a href="#forgot" class="forgot-password-link" id="forgotPasswordLink">
+                                Forgot Password?
+                            </a>
+                        </div>
+
+                        <!-- LOGIN BUTTON -->
+                        <button type="submit" class="login-submit-btn" id="loginBtn">
+                            <span>Login</span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- FRONTEND INFO NOTICE -->
+                        <div class="frontend-notice-banner" id="noticeBanner" role="status">
+                            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                            <span>Login functionality will be available soon. You can continue practicing via all the interactive LSRW modules on the platform!</span>
+                        </div>
+
+                    </form>
+
+                    <!-- CARD FOOTER -->
+                    <div class="login-card-footer">
+                        Want to start practicing now?
+                        <a href="index.html#skills">Explore LSRW Modules</a>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="login-toast" id="loginToast" role="status" aria-live="polite">
+        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+        <span class="toast-message">Password reset functionality will be available soon.</span>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="login.js"></script>
+
+</body>
+
+</html>
