@@ -291,3 +291,14 @@ buttons.forEach(button => {
     });
 
 });
+
+
+/* =====================================================
+   LOGIN BUTTON NAVIGATION
+===================================================== */
+
+document.querySelectorAll(".login-btn, .mobile-login").forEach(btn => {
+    btn.addEventListener("click", () => {
+        window.location.href = "login.html";
+    });
+});
