@@ -11,45 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function initSpeakingCompletion() {
-    const checks = [...document.querySelectorAll("[data-speaking-part]")];
-    if (checks.length) {
-        checks.forEach(check => check.addEventListener("click", event => event.stopPropagation()));
-        const session = await window.supabaseAuth?.getSession();
-        const user = session?.user;
-        if (!user) return;
-
-        const { data, error } = await window.supabaseClient
-            .from("speaking_completions")
-            .select("part, completed")
-            .eq("user_id", user.id);
-        if (error) {
-            console.error("Could not load Speaking checklist:", error.message);
-            return;
-        }
-
-        const completed = new Set((data || []).filter(row => row.completed).map(row => Number(row.part)));
-        checks.forEach(check => {
-            check.checked = completed.has(Number(check.dataset.speakingPart));
-            check.addEventListener("change", async () => {
-                check.disabled = true;
-                const { error: saveError } = await window.supabaseClient
-                    .from("speaking_completions")
-                    .upsert({
-                        user_id: user.id,
-                        part: Number(check.dataset.speakingPart),
-                        completed: check.checked,
-                        completed_at: check.checked ? new Date().toISOString() : null
-                    }, { onConflict: "user_id,part" });
-                check.disabled = false;
-                if (saveError) {
-                    check.checked = !check.checked;
-                    console.error("Could not save Speaking checklist:", saveError.message);
-                }
-                updateSpeakingMockAvailability();
-            });
-        });
-        updateSpeakingMockAvailability();
-    }
+    const checks = [...document.querySelectorAll("[data-learning-skill='speaking']")];
+    if (checks.length) updateSpeakingMockAvailability();
 
     const startMock = document.getElementById("startSpeakingMock");
     if (startMock) startMock.addEventListener("click", startSpeakingMockTest);
@@ -58,7 +21,8 @@ async function initSpeakingCompletion() {
 function updateSpeakingMockAvailability() {
     const panel = document.getElementById("speakingTestPanel");
     if (!panel) return;
-    panel.hidden = ![...document.querySelectorAll("[data-speaking-part]")].every(check => check.checked);
+    const checks = [...document.querySelectorAll("[data-learning-skill='speaking']")];
+    panel.hidden = !checks.length || !checks.every(check => check.checked);
 }
 
 function startSpeakingMockTest() {

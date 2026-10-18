@@ -24,34 +24,50 @@ create policy "Users can add their own practice results"
     to authenticated
     with check ((select auth.uid()) = user_id);
 
--- Per-user completion checklist for the three IELTS Speaking parts.
-create table if not exists public.speaking_completions (
+-- Per-user completion checklist for all Listening, Speaking, Reading and Writing items.
+create table if not exists public.learning_completions (
     user_id uuid not null references auth.users (id) on delete cascade,
-    part smallint not null check (part between 1 and 3),
+    skill text not null check (skill in ('listening', 'speaking', 'reading', 'writing')),
+    item_key text not null,
     completed boolean not null default false,
     completed_at timestamptz,
     updated_at timestamptz not null default now(),
-    primary key (user_id, part),
+    primary key (user_id, skill, item_key),
     check ((completed and completed_at is not null) or (not completed and completed_at is null))
 );
 
-alter table public.speaking_completions enable row level security;
+alter table public.learning_completions enable row level security;
 
-create policy "Users can read their own Speaking checklist"
-    on public.speaking_completions for select
+create policy "Users can read their own learning checklist"
+    on public.learning_completions for select
     to authenticated
     using ((select auth.uid()) = user_id);
 
-create policy "Users can add their own Speaking checklist"
-    on public.speaking_completions for insert
+create policy "Users can add their own learning checklist"
+    on public.learning_completions for insert
     to authenticated
     with check ((select auth.uid()) = user_id);
 
-create policy "Users can update their own Speaking checklist"
-    on public.speaking_completions for update
+create policy "Users can update their own learning checklist"
+    on public.learning_completions for update
     to authenticated
     using ((select auth.uid()) = user_id)
     with check ((select auth.uid()) = user_id);
+
+-- Allow checklist upserts through Supabase PostgREST.
+grant select, insert, update on public.learning_completions to authenticated;
+
+-- Migration for projects that already created the earlier Speaking-only table.
+-- Copies those saved checks into the shared checklist before the old table is retired.
+do $$
+begin
+    if to_regclass('public.speaking_completions') is not null then
+        insert into public.learning_completions (user_id, skill, item_key, completed, completed_at)
+        select user_id, 'speaking', 'part' || part::text, completed, completed_at
+        from public.speaking_completions
+        on conflict (user_id, skill, item_key) do nothing;
+    end if;
+end $$;
 
 -- Optional: add to public.profiles if you want to manage the IELTS target in-app.
 -- The current dashboard reads user_metadata.ielts_goal (default Band 7.5).

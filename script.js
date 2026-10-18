@@ -411,12 +411,12 @@ async function loadLearningDashboard() {
         return;
     }
 
-    const { data: speakingParts, error: speakingError } = await window.supabaseClient
-        .from("speaking_completions")
-        .select("part, completed, completed_at")
+    const { data: completions, error: completionError } = await window.supabaseClient
+        .from("learning_completions")
+        .select("skill, item_key, completed, completed_at")
         .eq("user_id", user.id)
         .eq("completed", true);
-    if (speakingError) console.error("Could not load Speaking checklist progress:", speakingError.message);
+    if (completionError) console.error("Could not load checklist progress:", completionError.message);
 
     const totals = Object.fromEntries(Object.keys(percentageNodes).map(skill => [skill, { score: 0, max: 0 }]));
     const activeDays = new Set();
@@ -431,15 +431,17 @@ async function loadLearningDashboard() {
         if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
     });
 
-    // Checklist completion counts toward Speaking progress even before a mock test is taken.
-    const completedSpeakingParts = speakingParts || [];
-    if (completedSpeakingParts.length) {
-        totals.speaking.score += completedSpeakingParts.length;
-        totals.speaking.max += 3;
-        completedSpeakingParts.forEach(row => {
-            if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
-        });
-    }
+    const checklistRows = completions || [];
+    Object.keys(totals).forEach(skill => {
+        const skillCompletions = checklistRows.filter(row => row.skill === skill);
+        const uniqueItems = new Set(skillCompletions.map(row => row.item_key));
+        const expectedItems = { listening: 8, speaking: 3, reading: 8, writing: 4 }[skill];
+        totals[skill].score += Math.min(uniqueItems.size, expectedItems);
+        totals[skill].max += expectedItems;
+    });
+    checklistRows.forEach(row => {
+        if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
+    });
 
     let overallScore = 0;
     let overallMax = 0;
@@ -479,4 +481,52 @@ async function loadLearningDashboard() {
 }
 
 loadLearningDashboard();
+
+/* Per-item completion checklists for all four learning skills. */
+document.addEventListener("DOMContentLoaded", initLearningChecklist);
+
+async function initLearningChecklist() {
+    const checks = [...document.querySelectorAll("[data-learning-skill][data-learning-item]")];
+    if (!checks.length || !window.supabaseClient || !window.supabaseAuth) return;
+    const session = await window.supabaseAuth.getSession();
+    const user = session?.user;
+    if (!user) return;
+
+    const { data, error } = await window.supabaseClient
+        .from("learning_completions")
+        .select("skill, item_key, completed")
+        .eq("user_id", user.id);
+    if (error) {
+        console.error("Could not load learning checklist:", error.message);
+        return;
+    }
+
+    const completed = new Set((data || []).filter(row => row.completed).map(row => `${row.skill}:${row.item_key}`));
+    checks.forEach(check => {
+        const skill = check.dataset.learningSkill;
+        const itemKey = check.dataset.learningItem;
+        check.checked = completed.has(`${skill}:${itemKey}`);
+        check.addEventListener("click", event => event.stopPropagation());
+        check.addEventListener("change", async () => {
+            check.disabled = true;
+            const { error: saveError } = await window.supabaseClient
+                .from("learning_completions")
+                .upsert({
+                    user_id: user.id,
+                    skill,
+                    item_key: itemKey,
+                    completed: check.checked,
+                    completed_at: check.checked ? new Date().toISOString() : null
+                }, { onConflict: "user_id,skill,item_key" });
+            check.disabled = false;
+            if (saveError) {
+                check.checked = !check.checked;
+                console.error("Could not save learning checklist:", saveError.message);
+                return;
+            }
+            if (skill === "speaking") updateSpeakingMockAvailability();
+            loadLearningDashboard();
+        });
+    });
+}
 
