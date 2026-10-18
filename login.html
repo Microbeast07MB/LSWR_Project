@@ -720,6 +720,32 @@
 
     <script>
 
+        // Supabase Auth throttles email sends across the project/provider.
+        // Keep a short browser-side cooldown to prevent repeated clicks and retries.
+        const EMAIL_SEND_COOLDOWN_MS = 60 * 1000;
+        const emailSendInFlight = new Set();
+
+        function emailCooldownKey(action, email) {
+            return `auth-email-cooldown:${action}:${email.trim().toLowerCase()}`;
+        }
+
+        function emailRateLimitMessage(error) {
+            const message = (error?.message || "").toLowerCase();
+            if (message.includes("rate limit") || message.includes("too many") || message.includes("email rate limit")) {
+                return "Supabase has temporarily limited email delivery. Wait before trying again, and check your inbox and spam folder for an email that may already have arrived. If this continues, configure a custom SMTP provider in Supabase Auth settings.";
+            }
+            return error?.message || "The request failed. Please try again later.";
+        }
+
+        function emailCooldownRemaining(action, email) {
+            const sentAt = Number(localStorage.getItem(emailCooldownKey(action, email)) || 0);
+            return Math.max(0, EMAIL_SEND_COOLDOWN_MS - (Date.now() - sentAt));
+        }
+
+        function markEmailAttempt(action, email) {
+            localStorage.setItem(emailCooldownKey(action, email), String(Date.now()));
+        }
+
         /* =========================
            ELEMENTS
         ========================= */
@@ -896,6 +922,17 @@
                 const message =
                     document.getElementById("signupMessage");
 
+                const requestKey = `signup:${email.trim().toLowerCase()}`;
+
+                if (emailSendInFlight.has(requestKey)) return;
+
+                const cooldown = emailCooldownRemaining("signup", email);
+                if (cooldown > 0) {
+                    message.textContent = `Please wait ${Math.ceil(cooldown / 1000)} seconds before trying this email again.`;
+                    message.className = "message error";
+                    return;
+                }
+
                 message.className = "message";
 
 
@@ -936,18 +973,19 @@
                 }
 
 
-                const result =
-                    await window.supabaseAuth.signUp(
-                        email,
-                        password,
-                        fullName
-                    );
+                let result;
+                emailSendInFlight.add(requestKey);
+                markEmailAttempt("signup", email);
+                try {
+                    result = await window.supabaseAuth.signUp(email, password, fullName);
+                } finally {
+                    emailSendInFlight.delete(requestKey);
+                }
 
 
                 if (result.error) {
 
-                    message.textContent =
-                        result.error.message;
+                    message.textContent = emailRateLimitMessage(result.error);
 
                     message.classList.add("error");
 
@@ -984,6 +1022,16 @@
                     const message =
                         document.getElementById("loginMessage");
 
+                    const requestKey = `reset:${email.trim().toLowerCase()}`;
+                    if (emailSendInFlight.has(requestKey)) return;
+
+                    const cooldown = emailCooldownRemaining("reset", email);
+                    if (cooldown > 0) {
+                        message.textContent = `Please wait ${Math.ceil(cooldown / 1000)} seconds before requesting another reset email.`;
+                        message.className = "message error";
+                        return;
+                    }
+
 
                     if (!email) {
 
@@ -997,16 +1045,19 @@
                     }
 
 
-                    const result =
-                        await window.supabaseAuth.resetPassword(
-                            email
-                        );
+                    let result;
+                    emailSendInFlight.add(requestKey);
+                    markEmailAttempt("reset", email);
+                    try {
+                        result = await window.supabaseAuth.resetPassword(email);
+                    } finally {
+                        emailSendInFlight.delete(requestKey);
+                    }
 
 
                     if (result.error) {
 
-                        message.textContent =
-                            result.error.message;
+                        message.textContent = emailRateLimitMessage(result.error);
 
                         message.className =
                             "message error";
