@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sign in to EngLish - Master English, Ace IELTS, and advance your engineering career with dedicated Listening, Speaking, Reading, and Writing practice.">
-    <title>Login | EngLish – Master English. Ace IELTS. Build Your Future.</title>
+    <meta name="description" content="Sign in or register for EngLish - Master English, Ace IELTS, and advance your engineering career with Supabase authentication.">
+    <title>Authentication | EngLish – Master English. Ace IELTS.</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,6 +18,11 @@
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="login.css">
+
+    <!-- Supabase JS SDK (Official CDN v2) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Configuration -->
+    <script src="supabase-config.js"></script>
 </head>
 
 <body>
@@ -43,7 +48,7 @@
     </header>
 
     <!-- =====================================================
-         MAIN LOGIN SECTION
+         MAIN AUTH SECTION
     ===================================================== -->
     <main class="login-page-wrapper">
         <div class="login-container">
@@ -128,45 +133,100 @@
 
             </section>
 
-            <!-- RIGHT COLUMN: LOGIN CARD -->
+            <!-- RIGHT COLUMN: AUTH CARD -->
             <section class="login-card-col">
                 <div class="login-card">
 
+                    <!-- CARD HEADER -->
                     <div class="login-card-header">
                         <div class="login-card-icon-wrap" aria-hidden="true">
-                            <i class="fa-solid fa-user-lock"></i>
+                            <i class="fa-solid fa-user-lock" id="cardHeaderIcon"></i>
                         </div>
-                        <h2>Welcome Back</h2>
-                        <p>Sign in to continue your English learning journey.</p>
+                        <h2 id="cardHeaderTitle">Welcome Back</h2>
+                        <p id="cardHeaderSubtitle">Sign in to continue your English learning journey.</p>
                     </div>
 
-                    <!-- LOGIN FORM -->
-                    <form id="loginForm" class="login-form" novalidate>
+                    <!-- SUPABASE CONFIG WARNING (Displayed when placeholders are still set) -->
+                    <div class="supabase-setup-alert" id="supabaseSetupAlert" role="alert" style="display: none;">
+                        <div class="setup-alert-icon">
+                            <i class="fa-solid fa-gear fa-spin"></i>
+                        </div>
+                        <div class="setup-alert-content">
+                            <strong>Supabase Setup Required</strong>
+                            <p>Open <code>supabase-config.js</code> to insert your Project URL and Anon Key to activate live authentication.</p>
+                        </div>
+                    </div>
 
-                        <!-- FIELD 1: EMAIL OR USERNAME -->
+                    <!-- TAB SWITCHER: SIGN IN / SIGN UP -->
+                    <div class="auth-tabs-nav" role="tablist" id="authTabsNav">
+                        <button type="button" class="auth-tab-btn active" id="tabSignIn" role="tab" aria-selected="true" aria-controls="loginForm">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            <span>Sign In</span>
+                        </button>
+                        <button type="button" class="auth-tab-btn" id="tabSignUp" role="tab" aria-selected="false" aria-controls="signupForm">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>Sign Up</span>
+                        </button>
+                    </div>
+
+                    <!-- DYNAMIC STATUS NOTIFICATION (Success / Error / Info) -->
+                    <div class="auth-feedback-banner" id="authFeedbackBanner" role="status" style="display: none;">
+                        <i class="fa-solid fa-circle-info feedback-icon" id="feedbackIcon"></i>
+                        <div class="feedback-text" id="feedbackText"></div>
+                        <button type="button" class="feedback-close-btn" id="feedbackCloseBtn" aria-label="Dismiss message">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <!-- ALREADY LOGGED IN STATE -->
+                    <div class="already-logged-in-box" id="alreadyLoggedInBox" style="display: none;">
+                        <div class="user-session-pill">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Active Session: <strong id="loggedInEmailLabel">user@example.com</strong></span>
+                        </div>
+                        <p class="session-desc">You are already signed in to your EngLish account.</p>
+                        <div class="session-btn-group">
+                            <a href="index.html" class="session-action-btn primary">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Go to Dashboard</span>
+                            </a>
+                            <button type="button" class="session-action-btn secondary" id="sessionSignOutBtn">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         PANEL 1: SIGN IN FORM
+                    ===================================================== -->
+                    <form id="loginForm" class="auth-form" novalidate>
+
+                        <!-- FIELD: EMAIL -->
                         <div class="form-group" id="emailGroup">
                             <label for="emailInput" class="form-label">
-                                Email or Username
+                                Email Address
                             </label>
                             <div class="input-wrapper">
                                 <i class="fa-regular fa-envelope input-leading-icon" aria-hidden="true"></i>
                                 <input
-                                    type="text"
+                                    type="email"
                                     id="emailInput"
-                                    name="username"
+                                    name="email"
                                     class="form-input"
-                                    placeholder="Enter your email or username"
-                                    autocomplete="username"
+                                    placeholder="Enter your registered email"
+                                    autocomplete="email"
                                     spellcheck="false"
+                                    required
                                 >
                             </div>
                             <div class="field-error" id="emailError" role="alert">
                                 <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-                                <span>Please enter your email or username.</span>
+                                <span>Please enter a valid email address.</span>
                             </div>
                         </div>
 
-                        <!-- FIELD 2: PASSWORD -->
+                        <!-- FIELD: PASSWORD -->
                         <div class="form-group" id="passwordGroup">
                             <label for="passwordInput" class="form-label">
                                 Password
@@ -180,6 +240,7 @@
                                     class="form-input password-input"
                                     placeholder="Enter your password"
                                     autocomplete="current-password"
+                                    required
                                 >
                                 <button
                                     type="button"
@@ -200,34 +261,152 @@
                         <!-- REMEMBER ME & FORGOT PASSWORD -->
                         <div class="form-options-row">
                             <label class="remember-label" for="rememberMe">
-                                <input type="checkbox" id="rememberMe" name="remember">
+                                <input type="checkbox" id="rememberMe" name="remember" checked>
                                 <span class="custom-checkbox-box" aria-hidden="true">
                                     <i class="fa-solid fa-check"></i>
                                 </span>
                                 <span class="remember-text">Remember me</span>
                             </label>
 
-                            <a href="#forgot" class="forgot-password-link" id="forgotPasswordLink">
+                            <button type="button" class="forgot-password-link" id="forgotPasswordLink">
                                 Forgot Password?
-                            </a>
+                            </button>
                         </div>
 
-                        <!-- LOGIN BUTTON -->
+                        <!-- SUBMIT BUTTON -->
                         <button type="submit" class="login-submit-btn" id="loginBtn">
-                            <span>Login</span>
+                            <span>Sign In</span>
                             <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                         </button>
 
-                        <!-- FRONTEND INFO NOTICE -->
-                        <div class="frontend-notice-banner" id="noticeBanner" role="status">
-                            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-                            <span>Login functionality will be available soon. You can continue practicing via all the interactive LSRW modules on the platform!</span>
+                    </form>
+
+                    <!-- =====================================================
+                         PANEL 2: SIGN UP FORM
+                    ===================================================== -->
+                    <form id="signupForm" class="auth-form" style="display: none;" novalidate>
+
+                        <!-- FIELD: FULL NAME -->
+                        <div class="form-group" id="signupNameGroup">
+                            <label for="signupNameInput" class="form-label">
+                                Full Name
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="fa-regular fa-user input-leading-icon" aria-hidden="true"></i>
+                                <input
+                                    type="text"
+                                    id="signupNameInput"
+                                    name="fullname"
+                                    class="form-input"
+                                    placeholder="e.g. Alex Johnson"
+                                    autocomplete="name"
+                                    spellcheck="false"
+                                >
+                            </div>
+                            <div class="field-error" id="signupNameError" role="alert">
+                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                                <span>Please enter your name.</span>
+                            </div>
                         </div>
+
+                        <!-- FIELD: EMAIL -->
+                        <div class="form-group" id="signupEmailGroup">
+                            <label for="signupEmailInput" class="form-label">
+                                Email Address
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="fa-regular fa-envelope input-leading-icon" aria-hidden="true"></i>
+                                <input
+                                    type="email"
+                                    id="signupEmailInput"
+                                    name="email"
+                                    class="form-input"
+                                    placeholder="name@example.com"
+                                    autocomplete="email"
+                                    spellcheck="false"
+                                    required
+                                >
+                            </div>
+                            <div class="field-error" id="signupEmailError" role="alert">
+                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                                <span>Please enter a valid email address.</span>
+                            </div>
+                        </div>
+
+                        <!-- FIELD: PASSWORD -->
+                        <div class="form-group" id="signupPasswordGroup">
+                            <label for="signupPasswordInput" class="form-label">
+                                Password
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-lock input-leading-icon" aria-hidden="true"></i>
+                                <input
+                                    type="password"
+                                    id="signupPasswordInput"
+                                    name="new-password"
+                                    class="form-input password-input"
+                                    placeholder="At least 6 characters"
+                                    autocomplete="new-password"
+                                    required
+                                >
+                                <button
+                                    type="button"
+                                    class="password-toggle-btn"
+                                    id="signupPasswordToggle"
+                                    aria-label="Show password"
+                                    title="Show password"
+                                >
+                                    <i class="fa-regular fa-eye" id="signupToggleIcon" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="field-error" id="signupPasswordError" role="alert">
+                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                                <span>Password must be at least 6 characters.</span>
+                            </div>
+                        </div>
+
+                        <!-- FIELD: CONFIRM PASSWORD -->
+                        <div class="form-group" id="signupConfirmGroup">
+                            <label for="signupConfirmInput" class="form-label">
+                                Confirm Password
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-shield-halved input-leading-icon" aria-hidden="true"></i>
+                                <input
+                                    type="password"
+                                    id="signupConfirmInput"
+                                    name="confirm-password"
+                                    class="form-input password-input"
+                                    placeholder="Re-enter your password"
+                                    autocomplete="new-password"
+                                    required
+                                >
+                                <button
+                                    type="button"
+                                    class="password-toggle-btn"
+                                    id="signupConfirmToggle"
+                                    aria-label="Show password"
+                                    title="Show password"
+                                >
+                                    <i class="fa-regular fa-eye" id="signupConfirmToggleIcon" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="field-error" id="signupConfirmError" role="alert">
+                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                                <span>Passwords do not match.</span>
+                            </div>
+                        </div>
+
+                        <!-- SUBMIT BUTTON -->
+                        <button type="submit" class="login-submit-btn" id="signupBtn">
+                            <span>Create Account</span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </button>
 
                     </form>
 
                     <!-- CARD FOOTER -->
-                    <div class="login-card-footer">
+                    <div class="login-card-footer" id="cardFooterText">
                         Want to start practicing now?
                         <a href="index.html#skills">Explore LSRW Modules</a>
                     </div>
@@ -238,13 +417,62 @@
         </div>
     </main>
 
+    <!-- =====================================================
+         FORGOT PASSWORD MODAL
+    ===================================================== -->
+    <div class="forgot-modal-backdrop" id="forgotModal" role="dialog" aria-modal="true" aria-labelledby="forgotModalTitle" style="display: none;">
+        <div class="forgot-modal-card">
+            <button type="button" class="forgot-modal-close" id="forgotModalClose" aria-label="Close dialog">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="forgot-modal-icon" aria-hidden="true">
+                <i class="fa-solid fa-key"></i>
+            </div>
+
+            <h3 id="forgotModalTitle">Reset Password</h3>
+            <p class="forgot-modal-desc">
+                Enter your registered email address below, and Supabase will send you a secure password reset link.
+            </p>
+
+            <form id="forgotForm" novalidate>
+                <div class="form-group" id="forgotEmailGroup">
+                    <label for="forgotEmailInput" class="form-label">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope input-leading-icon" aria-hidden="true"></i>
+                        <input
+                            type="email"
+                            id="forgotEmailInput"
+                            name="email"
+                            class="form-input"
+                            placeholder="Enter your registered email"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+                    <div class="field-error" id="forgotEmailError" role="alert">
+                        <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                        <span>Please enter a valid email address.</span>
+                    </div>
+                </div>
+
+                <div class="forgot-feedback" id="forgotFeedback" style="display: none;" role="status"></div>
+
+                <button type="submit" class="login-submit-btn" id="forgotSubmitBtn">
+                    <span>Send Reset Link</span>
+                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- TOAST NOTIFICATION -->
     <div class="login-toast" id="loginToast" role="status" aria-live="polite">
         <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-        <span class="toast-message">Password reset functionality will be available soon.</span>
+        <span class="toast-message">Notification</span>
     </div>
 
-    <!-- JAVASCRIPT -->
+    <!-- LOGIC SCRIPT -->
     <script src="login.js"></script>
 
 </body>

@@ -294,11 +294,85 @@ buttons.forEach(button => {
 
 
 /* =====================================================
-   LOGIN BUTTON NAVIGATION
+   SUPABASE AUTHENTICATION & NAVBAR SYNC
 ===================================================== */
 
-document.querySelectorAll(".login-btn, .mobile-login").forEach(btn => {
-    btn.addEventListener("click", () => {
-        window.location.href = "login.html";
+async function syncNavbarAuthState() {
+    const navActions = document.getElementById("navActions");
+    const mobileLoginBtn = document.getElementById("mobileLoginBtn");
+
+    if (!window.supabaseAuth || !window.isSupabaseConfigured || !window.isSupabaseConfigured()) {
+        // Supabase not configured yet - fallback navigation
+        document.querySelectorAll(".login-btn, .mobile-login").forEach(btn => {
+            btn.onclick = () => { window.location.href = "login.html"; };
+        });
+        document.querySelectorAll(".signup-btn").forEach(btn => {
+            btn.onclick = () => { window.location.href = "login.html?mode=signup"; };
+        });
+        return;
+    }
+
+    try {
+        const session = await window.supabaseAuth.getSession();
+        const user = session ? session.user : null;
+
+        if (user && navActions) {
+            const rawName = (user.user_metadata && user.user_metadata.full_name) || user.email.split("@")[0];
+            const initial = rawName.charAt(0).toUpperCase();
+
+            // Render desktop user chip
+            navActions.innerHTML = `
+                <div class="user-nav-chip" title="Signed in as ${user.email}">
+                    <div class="user-avatar-circle">${initial}</div>
+                    <span class="user-nav-name">${rawName}</span>
+                    <button class="nav-logout-btn" id="navLogoutBtn" aria-label="Sign out" title="Sign out">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </button>
+                </div>
+            `;
+
+            const navLogoutBtn = document.getElementById("navLogoutBtn");
+            if (navLogoutBtn) {
+                navLogoutBtn.addEventListener("click", async () => {
+                    navLogoutBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
+                    await window.supabaseAuth.signOut();
+                    window.location.reload();
+                });
+            }
+
+            // Render mobile user state
+            if (mobileLoginBtn) {
+                mobileLoginBtn.innerHTML = `<i class="fa-solid fa-arrow-right-from-bracket"></i> Logout (${rawName})`;
+                mobileLoginBtn.onclick = async () => {
+                    await window.supabaseAuth.signOut();
+                    window.location.reload();
+                };
+            }
+        } else {
+            // Not logged in - ensure buttons route correctly
+            document.querySelectorAll(".login-btn, .mobile-login").forEach(btn => {
+                btn.onclick = () => { window.location.href = "login.html"; };
+            });
+            document.querySelectorAll(".signup-btn").forEach(btn => {
+                btn.onclick = () => { window.location.href = "login.html?mode=signup"; };
+            });
+        }
+    } catch (err) {
+        console.error("Auth navbar sync error:", err);
+    }
+}
+
+// Run on page load
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", syncNavbarAuthState);
+} else {
+    syncNavbarAuthState();
+}
+
+// React to session change events
+if (window.supabaseAuth && typeof window.supabaseAuth.onAuthStateChange === "function") {
+    window.supabaseAuth.onAuthStateChange(() => {
+        syncNavbarAuthState();
     });
-});
+}
+

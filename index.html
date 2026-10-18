@@ -76,13 +76,13 @@
 
         <!-- Desktop Buttons -->
 
-        <div class="nav-actions">
+        <div class="nav-actions" id="navActions">
 
             <button class="login-btn" onclick="window.location.href='login.html'">
                 Login
             </button>
 
-            <button class="signup-btn">
+            <button class="signup-btn" onclick="window.location.href='login.html?mode=signup'">
                 Get Started
             </button>
 
@@ -119,7 +119,7 @@
 
     <a href="#about">About</a>
 
-    <button class="mobile-login" onclick="window.location.href='login.html'">
+    <button class="mobile-login" id="mobileLoginBtn" onclick="window.location.href='login.html'">
         Login
     </button>
 
@@ -1535,8 +1535,12 @@
 
 
 
-<!-- JavaScript -->
+<!-- Supabase JS SDK (Official CDN v2) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Supabase Configuration -->
+<script src="supabase-config.js"></script>
 
+<!-- Main Script -->
 <script src="script.js"></script>
 
 
