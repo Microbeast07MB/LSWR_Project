@@ -4,476 +4,1026 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sign in or register for EngLish - Master English, Ace IELTS, and advance your engineering career with Supabase authentication.">
-    <title>Authentication | EngLish – Master English. Ace IELTS.</title>
 
-    <!-- Google Fonts -->
+    <title>EngLish - Login</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="login.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    <!-- Supabase JS SDK (Official CDN v2) -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Supabase Configuration -->
-    <script src="supabase-config.js"></script>
+        body {
+            font-family: "Inter", sans-serif;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px 20px;
+
+            background:
+                radial-gradient(circle at top left,
+                    #eeeeff 0%,
+                    transparent 35%),
+                linear-gradient(135deg,
+                    #f8f9ff,
+                    #eef0ff);
+
+            color: #101828;
+        }
+
+        /* =========================
+           MAIN CARD
+        ========================= */
+
+        .auth-card {
+            width: 100%;
+            max-width: 470px;
+
+            background: #ffffff;
+
+            border-radius: 24px;
+
+            padding: 42px;
+
+            box-shadow:
+                0 20px 60px rgba(40, 45, 90, 0.10);
+
+            border: 1px solid #eef0f6;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .logo-box {
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 16px;
+
+            background: #f0efff;
+
+            color: #625bff;
+
+            font-size: 25px;
+
+            margin-bottom: 24px;
+
+            box-shadow:
+                0 8px 25px rgba(98, 91, 255, 0.12);
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: 800;
+
+            letter-spacing: -0.8px;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #667085;
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 28px;
+        }
+
+        /* =========================
+           TABS
+        ========================= */
+
+        .tabs {
+            width: 100%;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            padding: 4px;
+
+            background: #f1f3f7;
+
+            border-radius: 12px;
+
+            margin-bottom: 28px;
+        }
+
+        .tab {
+            border: none;
+
+            background: transparent;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            color: #667085;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .tab.active {
+            background: #ffffff;
+
+            color: #625bff;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form {
+            display: flex;
+            flex-direction: column;
+
+            gap: 18px;
+        }
+
+        .form-group {
+            width: 100%;
+        }
+
+        .form-label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #344054;
+
+            margin-bottom: 8px;
+        }
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        .input-wrapper {
+            position: relative;
+
+            width: 100%;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #98a2b3;
+
+            font-size: 16px;
+
+            pointer-events: none;
+        }
+
+        .form-input {
+            width: 100%;
+
+            height: 50px;
+
+            border: 1.5px solid #dfe3eb;
+
+            border-radius: 11px;
+
+            background: #ffffff;
+
+            padding: 0 44px;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            color: #101828;
+
+            outline: none;
+
+            transition: 0.2s ease;
+        }
+
+        .form-input::placeholder {
+            color: #98a2b3;
+        }
+
+        .form-input:focus {
+            border-color: #625bff;
+
+            box-shadow:
+                0 0 0 4px rgba(98, 91, 255, 0.10);
+        }
+
+        .password-toggle {
+            position: absolute;
+
+            right: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #98a2b3;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+        /* =========================
+           OPTIONS
+        ========================= */
+
+        .form-options {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-top: -4px;
+        }
+
+        .remember {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 13px;
+
+            color: #475467;
+
+            cursor: pointer;
+        }
+
+        .remember input {
+            width: 16px;
+            height: 16px;
+
+            accent-color: #625bff;
+        }
+
+        .forgot {
+            color: #625bff;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+        }
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .submit-btn {
+            width: 100%;
+
+            height: 52px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background: #625bff;
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            box-shadow:
+                0 10px 25px rgba(98, 91, 255, 0.22);
+
+            transition: 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #554df0;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 13px 28px rgba(98, 91, 255, 0.28);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        .message {
+            display: none;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .message.error {
+            display: block;
+
+            background: #fff1f1;
+
+            color: #d92d20;
+
+            border: 1px solid #ffd6d3;
+        }
+
+        .message.success {
+            display: block;
+
+            background: #ecfdf3;
+
+            color: #027a48;
+
+            border: 1px solid #abefc6;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            margin-top: 28px;
+
+            padding-top: 22px;
+
+            border-top: 1px solid #eef0f4;
+
+            text-align: center;
+
+            font-size: 13px;
+
+            color: #667085;
+        }
+
+        .footer a {
+            color: #625bff;
+
+            font-weight: 600;
+
+            text-decoration: none;
+        }
+
+        /* =========================
+           HIDDEN
+        ========================= */
+
+        .hidden {
+            display: none;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 520px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .auth-card {
+                padding: 30px 22px;
+
+                border-radius: 20px;
+            }
+
+            .title {
+                font-size: 26px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+            }
+
+        }
+
+        @media (max-width: 360px) {
+
+            .auth-card {
+                padding: 25px 18px;
+            }
+
+            .form-options {
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+            .remember {
+                font-size: 12px;
+            }
+
+            .forgot {
+                font-size: 12px;
+            }
+
+        }
+    </style>
 </head>
+
 
 <body>
 
-    <!-- =====================================================
-         TOP NAVBAR
-    ===================================================== -->
-    <header class="listening-navbar">
-        <a href="index.html" class="back-home" id="backHomeLink">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>Back to Home</span>
-        </a>
+    <div class="auth-card">
 
-        <a href="index.html" class="listening-logo" style="text-decoration: none;" aria-label="EngLish Home">
-            <i class="fa-solid fa-language"></i>
-            Eng<span>Lish</span>
-        </a>
+        <!-- HEADER -->
 
-        <div class="question-number" style="display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-graduation-cap" style="color: var(--primary);"></i>
-            <span>Student Portal</span>
+        <div class="logo-box">
+            👤
         </div>
-    </header>
 
-    <!-- =====================================================
-         MAIN AUTH SECTION
-    ===================================================== -->
-    <main class="login-page-wrapper">
-        <div class="login-container">
+        <h1 class="title" id="formTitle">
+            Welcome Back
+        </h1>
 
-            <!-- LEFT COLUMN: BRANDING & LSRW PILLARS -->
-            <section class="login-branding-col">
+        <p class="subtitle" id="formSubtitle">
+            Sign in to continue your English learning journey.
+        </p>
 
-                <div class="login-badge">
-                    <span class="badge-dot"></span>
-                    <span>Designed for Engineering Students</span>
-                </div>
 
-                <h1 class="brand-main-heading">
-                    Master English.<br>
-                    <span>Ace IELTS.</span><br>
-                    Build Your Future.
-                </h1>
+        <!-- TABS -->
 
-                <p class="brand-subtext">
-                    Improve your Listening, Speaking, Reading and Writing skills with a platform designed for engineering students.
-                </p>
+        <div class="tabs">
 
-                <!-- LSRW Visual Representation -->
-                <div class="lsrw-overview-container" aria-label="LSRW Skills Overview">
-                    <div class="lsrw-overview-label">The Four LSRW Pillars</div>
-                    <div class="lsrw-cards-grid">
-                        <div class="lsrw-pill-card listening">
-                            <div class="lsrw-pill-badge" aria-hidden="true">
-                                <i class="fa-solid fa-headphones"></i>
-                            </div>
-                            <div class="lsrw-pill-content">
-                                <strong>Listening</strong>
-                                <small>L1 – L8 Audio Tasks</small>
-                            </div>
-                        </div>
-
-                        <div class="lsrw-pill-card speaking">
-                            <div class="lsrw-pill-badge" aria-hidden="true">
-                                <i class="fa-solid fa-microphone"></i>
-                            </div>
-                            <div class="lsrw-pill-content">
-                                <strong>Speaking</strong>
-                                <small>Parts 1, 2 & 3 Practice</small>
-                            </div>
-                        </div>
-
-                        <div class="lsrw-pill-card reading">
-                            <div class="lsrw-pill-badge" aria-hidden="true">
-                                <i class="fa-solid fa-book-open"></i>
-                            </div>
-                            <div class="lsrw-pill-content">
-                                <strong>Reading</strong>
-                                <small>8 Question Formats</small>
-                            </div>
-                        </div>
-
-                        <div class="lsrw-pill-card writing">
-                            <div class="lsrw-pill-badge" aria-hidden="true">
-                                <i class="fa-solid fa-pen-nib"></i>
-                            </div>
-                            <div class="lsrw-pill-content">
-                                <strong>Writing</strong>
-                                <small>General Tasks & Samples</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Student Trust Highlight -->
-                <div class="student-trust-strip">
-                    <div class="trust-avatars" aria-hidden="true">
-                        <span>🎓</span>
-                        <span>💻</span>
-                        <span>📚</span>
-                        <span>🚀</span>
-                    </div>
-                    <div class="trust-text">
-                        <strong>Interactive Practice Hub</strong><br>
-                        A smarter way to build communication confidence.
-                    </div>
-                </div>
-
-            </section>
-
-            <!-- RIGHT COLUMN: AUTH CARD -->
-            <section class="login-card-col">
-                <div class="login-card">
-
-                    <!-- CARD HEADER -->
-                    <div class="login-card-header">
-                        <div class="login-card-icon-wrap" aria-hidden="true">
-                            <i class="fa-solid fa-user-lock" id="cardHeaderIcon"></i>
-                        </div>
-                        <h2 id="cardHeaderTitle">Welcome Back</h2>
-                        <p id="cardHeaderSubtitle">Sign in to continue your English learning journey.</p>
-                    </div>
-
-                    <!-- SUPABASE CONFIG WARNING (Displayed when placeholders are still set) -->
-                    <div class="supabase-setup-alert" id="supabaseSetupAlert" role="alert" style="display: none;">
-                        <div class="setup-alert-icon">
-                            <i class="fa-solid fa-gear fa-spin"></i>
-                        </div>
-                        <div class="setup-alert-content">
-                            <strong>Supabase Setup Required</strong>
-                            <p>Open <code>supabase-config.js</code> to insert your Project URL and Anon Key to activate live authentication.</p>
-                        </div>
-                    </div>
-
-                    <!-- TAB SWITCHER: SIGN IN / SIGN UP -->
-                    <div class="auth-tabs-nav" role="tablist" id="authTabsNav">
-                        <button type="button" class="auth-tab-btn active" id="tabSignIn" role="tab" aria-selected="true" aria-controls="loginForm">
-                            <i class="fa-solid fa-right-to-bracket"></i>
-                            <span>Sign In</span>
-                        </button>
-                        <button type="button" class="auth-tab-btn" id="tabSignUp" role="tab" aria-selected="false" aria-controls="signupForm">
-                            <i class="fa-solid fa-user-plus"></i>
-                            <span>Sign Up</span>
-                        </button>
-                    </div>
-
-                    <!-- DYNAMIC STATUS NOTIFICATION (Success / Error / Info) -->
-                    <div class="auth-feedback-banner" id="authFeedbackBanner" role="status" style="display: none;">
-                        <i class="fa-solid fa-circle-info feedback-icon" id="feedbackIcon"></i>
-                        <div class="feedback-text" id="feedbackText"></div>
-                        <button type="button" class="feedback-close-btn" id="feedbackCloseBtn" aria-label="Dismiss message">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-
-                    <!-- ALREADY LOGGED IN STATE -->
-                    <div class="already-logged-in-box" id="alreadyLoggedInBox" style="display: none;">
-                        <div class="user-session-pill">
-                            <i class="fa-solid fa-circle-check"></i>
-                            <span>Active Session: <strong id="loggedInEmailLabel">user@example.com</strong></span>
-                        </div>
-                        <p class="session-desc">You are already signed in to your EngLish account.</p>
-                        <div class="session-btn-group">
-                            <a href="index.html" class="session-action-btn primary">
-                                <i class="fa-solid fa-house"></i>
-                                <span>Go to Dashboard</span>
-                            </a>
-                            <button type="button" class="session-action-btn secondary" id="sessionSignOutBtn">
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                <span>Sign Out</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- =====================================================
-                         PANEL 1: SIGN IN FORM
-                    ===================================================== -->
-                    <form id="loginForm" class="auth-form" novalidate>
-
-                        <!-- FIELD: EMAIL -->
-                        <div class="form-group" id="emailGroup">
-                            <label for="emailInput" class="form-label">
-                                Email Address
-                            </label>
-                            <div class="input-wrapper">
-                                <i class="fa-regular fa-envelope input-leading-icon" aria-hidden="true"></i>
-                                <input
-                                    type="email"
-                                    id="emailInput"
-                                    name="email"
-                                    class="form-input"
-                                    placeholder="Enter your registered email"
-                                    autocomplete="email"
-                                    spellcheck="false"
-                                    required
-                                >
-                            </div>
-                            <div class="field-error" id="emailError" role="alert">
-                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-                                <span>Please enter a valid email address.</span>
-                            </div>
-                        </div>
-
-                        <!-- FIELD: PASSWORD -->
-                        <div class="form-group" id="passwordGroup">
-                            <label for="passwordInput" class="form-label">
-                                Password
-                            </label>
-                            <div class="input-wrapper">
-                                <i class="fa-solid fa-lock input-leading-icon" aria-hidden="true"></i>
-                                <input
-                                    type="password"
-                                    id="passwordInput"
-                                    name="password"
-                                    class="form-input password-input"
-                                    placeholder="Enter your password"
-                                    autocomplete="current-password"
-                                    required
-                                >
-                                <button
-                                    type="button"
-                                    class="password-toggle-btn"
-                                    id="passwordToggle"
-                                    aria-label="Show password"
-                                    title="Show password"
-                                >
-                                    <i class="fa-regular fa-eye" id="toggleIcon" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="field-error" id="passwordError" role="alert">
-                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-                                <span>Please enter your password.</span>
-                            </div>
-                        </div>
-
-                        <!-- REMEMBER ME & FORGOT PASSWORD -->
-                        <div class="form-options-row">
-                            <label class="remember-label" for="rememberMe">
-                                <input type="checkbox" id="rememberMe" name="remember" checked>
-                                <span class="custom-checkbox-box" aria-hidden="true">
-                                    <i class="fa-solid fa-check"></i>
-                                </span>
-                                <span class="remember-text">Remember me</span>
-                            </label>
-
-                            <button type="button" class="forgot-password-link" id="forgotPasswordLink">
-                                Forgot Password?
-                            </button>
-                        </div>
-
-                        <!-- SUBMIT BUTTON -->
-                        <button type="submit" class="login-submit-btn" id="loginBtn">
-                            <span>Sign In</span>
-                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                        </button>
-
-                    </form>
-
-                    <!-- =====================================================
-                         PANEL 2: SIGN UP FORM
-                    ===================================================== -->
-                    <form id="signupForm" class="auth-form" style="display: none;" novalidate>
-
-                        <!-- FIELD: FULL NAME -->
-                        <div class="form-group" id="signupNameGroup">
-                            <label for="signupNameInput" class="form-label">
-                                Full Name
-                            </label>
-                            <div class="input-wrapper">
-                                <i class="fa-regular fa-user input-leading-icon" aria-hidden="true"></i>
-                                <input
-                                    type="text"
-                                    id="signupNameInput"
-                                    name="fullname"
-                                    class="form-input"
-                                    placeholder="e.g. Alex Johnson"
-                                    autocomplete="name"
-                                    spellcheck="false"
-                                >
-                            </div>
-                            <div class="field-error" id="signupNameError" role="alert">
-                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-                                <span>Please enter your name.</span>
-                            </div>
-                        </div>
-
-                        <!-- FIELD: EMAIL -->
-                        <div class="form-group" id="signupEmailGroup">
-                            <label for="signupEmailInput" class="form-label">
-                                Email Address
-                            </label>
-                            <div class="input-wrapper">
-                                <i class="fa-regular fa-envelope input-leading-icon" aria-hidden="true"></i>
-                                <input
-                                    type="email"
-                                    id="signupEmailInput"
-                                    name="email"
-                                    class="form-input"
-                                    placeholder="name@example.com"
-                                    autocomplete="email"
-                                    spellcheck="false"
-                                    required
-                                >
-                            </div>
-                            <div class="field-error" id="signupEmailError" role="alert">
-                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-                                <span>Please enter a valid email address.</span>
-                            </div>
-                        </div>
-
-                        <!-- FIELD: PASSWORD -->
-                        <div class="form-group" id="signupPasswordGroup">
-                            <label for="signupPasswordInput" class="form-label">
-                                Password
-                            </label>
-                            <div class="input-wrapper">
-                                <i class="fa-solid fa-lock input-leading-icon" aria-hidden="true"></i>
-                                <input
-                                    type="password"
-                                    id="signupPasswordInput"
-                                    name="new-password"
-                                    class="form-input password-input"
-                                    placeholder="At least 6 characters"
-                                    autocomplete="new-password"
-                                    required
-                                >
-                                <button
-                                    type="button"
-                                    class="password-toggle-btn"
-                                    id="signupPasswordToggle"
-                                    aria-label="Show password"
-                                    title="Show password"
-                                >
-                                    <i class="fa-regular fa-eye" id="signupToggleIcon" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="field-error" id="signupPasswordError" role="alert">
-                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-                                <span>Password must be at least 6 characters.</span>
-                            </div>
-                        </div>
-
-                        <!-- FIELD: CONFIRM PASSWORD -->
-                        <div class="form-group" id="signupConfirmGroup">
-                            <label for="signupConfirmInput" class="form-label">
-                                Confirm Password
-                            </label>
-                            <div class="input-wrapper">
-                                <i class="fa-solid fa-shield-halved input-leading-icon" aria-hidden="true"></i>
-                                <input
-                                    type="password"
-                                    id="signupConfirmInput"
-                                    name="confirm-password"
-                                    class="form-input password-input"
-                                    placeholder="Re-enter your password"
-                                    autocomplete="new-password"
-                                    required
-                                >
-                                <button
-                                    type="button"
-                                    class="password-toggle-btn"
-                                    id="signupConfirmToggle"
-                                    aria-label="Show password"
-                                    title="Show password"
-                                >
-                                    <i class="fa-regular fa-eye" id="signupConfirmToggleIcon" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="field-error" id="signupConfirmError" role="alert">
-                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-                                <span>Passwords do not match.</span>
-                            </div>
-                        </div>
-
-                        <!-- SUBMIT BUTTON -->
-                        <button type="submit" class="login-submit-btn" id="signupBtn">
-                            <span>Create Account</span>
-                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                        </button>
-
-                    </form>
-
-                    <!-- CARD FOOTER -->
-                    <div class="login-card-footer" id="cardFooterText">
-                        Want to start practicing now?
-                        <a href="index.html#skills">Explore LSRW Modules</a>
-                    </div>
-
-                </div>
-            </section>
-
-        </div>
-    </main>
-
-    <!-- =====================================================
-         FORGOT PASSWORD MODAL
-    ===================================================== -->
-    <div class="forgot-modal-backdrop" id="forgotModal" role="dialog" aria-modal="true" aria-labelledby="forgotModalTitle" style="display: none;">
-        <div class="forgot-modal-card">
-            <button type="button" class="forgot-modal-close" id="forgotModalClose" aria-label="Close dialog">
-                <i class="fa-solid fa-xmark"></i>
+            <button class="tab active" id="loginTab" type="button">
+                ↪ &nbsp; Sign In
             </button>
 
-            <div class="forgot-modal-icon" aria-hidden="true">
-                <i class="fa-solid fa-key"></i>
-            </div>
+            <button class="tab" id="signupTab" type="button">
+                👤+ &nbsp; Sign Up
+            </button>
 
-            <h3 id="forgotModalTitle">Reset Password</h3>
-            <p class="forgot-modal-desc">
-                Enter your registered email address below, and Supabase will send you a secure password reset link.
-            </p>
+        </div>
 
-            <form id="forgotForm" novalidate>
-                <div class="form-group" id="forgotEmailGroup">
-                    <label for="forgotEmailInput" class="form-label">Email Address</label>
-                    <div class="input-wrapper">
-                        <i class="fa-regular fa-envelope input-leading-icon" aria-hidden="true"></i>
-                        <input
-                            type="email"
-                            id="forgotEmailInput"
-                            name="email"
-                            class="form-input"
-                            placeholder="Enter your registered email"
-                            autocomplete="email"
-                            required
-                        >
-                    </div>
-                    <div class="field-error" id="forgotEmailError" role="alert">
-                        <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-                        <span>Please enter a valid email address.</span>
-                    </div>
+
+        <!-- =========================
+         LOGIN FORM
+    ========================= -->
+
+        <form class="form" id="loginForm">
+
+            <div class="form-group">
+
+                <label class="form-label" for="loginEmail">
+                    Email Address
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        ✉
+                    </span>
+
+                    <input class="form-input" type="email" id="loginEmail" placeholder="Enter your registered email"
+                        required>
+
                 </div>
 
-                <div class="forgot-feedback" id="forgotFeedback" style="display: none;" role="status"></div>
+            </div>
 
-                <button type="submit" class="login-submit-btn" id="forgotSubmitBtn">
-                    <span>Send Reset Link</span>
-                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-                </button>
-            </form>
+
+            <div class="form-group">
+
+                <label class="form-label" for="loginPassword">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔒
+                    </span>
+
+                    <input class="form-input" type="password" id="loginPassword" placeholder="Enter your password"
+                        required>
+
+                    <button class="password-toggle" type="button" onclick="togglePassword('loginPassword', this)">
+                        👁
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-options">
+
+                <label class="remember">
+
+                    <input type="checkbox" id="rememberMe">
+
+                    Remember me
+
+                </label>
+
+                <a href="#" class="forgot" id="forgotPassword">
+                    Forgot Password?
+                </a>
+
+            </div>
+
+
+            <div class="message" id="loginMessage"></div>
+
+
+            <button class="submit-btn" type="submit">
+                Sign In
+                <span>→</span>
+            </button>
+
+        </form>
+
+
+        <!-- =========================
+         SIGN UP FORM
+    ========================= -->
+
+        <form class="form hidden" id="signupForm">
+
+            <div class="form-group">
+
+                <label class="form-label" for="fullName">
+                    Full Name
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        👤
+                    </span>
+
+                    <input class="form-input" type="text" id="fullName" placeholder="Enter your full name" required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label" for="signupEmail">
+                    Email Address
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        ✉
+                    </span>
+
+                    <input class="form-input" type="email" id="signupEmail" placeholder="Enter your email" required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label" for="signupPassword">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔒
+                    </span>
+
+                    <input class="form-input" type="password" id="signupPassword" placeholder="Create a password"
+                        required>
+
+                    <button class="password-toggle" type="button" onclick="togglePassword('signupPassword', this)">
+                        👁
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label" for="confirmPassword">
+                    Confirm Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔐
+                    </span>
+
+                    <input class="form-input" type="password" id="confirmPassword" placeholder="Confirm your password"
+                        required>
+
+                    <button class="password-toggle" type="button" onclick="togglePassword('confirmPassword', this)">
+                        👁
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="message" id="signupMessage"></div>
+
+
+            <button class="submit-btn" type="submit">
+                Create Account
+                <span>→</span>
+            </button>
+
+        </form>
+
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+            Want to start practicing now?
+
+            <a href="../index.html">
+                Explore LSRW Modules
+            </a>
+
         </div>
+
     </div>
 
-    <!-- TOAST NOTIFICATION -->
-    <div class="login-toast" id="loginToast" role="status" aria-live="polite">
-        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-        <span class="toast-message">Notification</span>
-    </div>
 
-    <!-- LOGIC SCRIPT -->
-    <script src="login.js"></script>
+    <!-- =========================================
+     SUPABASE
+========================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase-config.js"></script>
+
+
+    <script>
+
+        /* =========================
+           ELEMENTS
+        ========================= */
+
+        const loginTab =
+            document.getElementById("loginTab");
+
+        const signupTab =
+            document.getElementById("signupTab");
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const signupForm =
+            document.getElementById("signupForm");
+
+        const formTitle =
+            document.getElementById("formTitle");
+
+        const formSubtitle =
+            document.getElementById("formSubtitle");
+
+
+        /* =========================
+           SWITCH TO LOGIN
+        ========================= */
+
+        loginTab.addEventListener("click", () => {
+
+            loginTab.classList.add("active");
+            signupTab.classList.remove("active");
+
+            loginForm.classList.remove("hidden");
+            signupForm.classList.add("hidden");
+
+            formTitle.textContent =
+                "Welcome Back";
+
+            formSubtitle.textContent =
+                "Sign in to continue your English learning journey.";
+        });
+
+
+        /* =========================
+           SWITCH TO SIGN UP
+        ========================= */
+
+        signupTab.addEventListener("click", () => {
+
+            signupTab.classList.add("active");
+            loginTab.classList.remove("active");
+
+            signupForm.classList.remove("hidden");
+            loginForm.classList.add("hidden");
+
+            formTitle.textContent =
+                "Create an Account";
+
+            formSubtitle.textContent =
+                "Join EngLish to track your LSRW and IELTS progress.";
+        });
+
+
+        /* =========================
+           PASSWORD VISIBILITY
+        ========================= */
+
+        function togglePassword(inputId, button) {
+
+            const input =
+                document.getElementById(inputId);
+
+            if (input.type === "password") {
+
+                input.type = "text";
+
+                button.textContent = "🙈";
+
+            } else {
+
+                input.type = "password";
+
+                button.textContent = "👁";
+            }
+        }
+
+
+        /* =========================
+           LOGIN
+        ========================= */
+
+        loginForm.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+                const email =
+                    document.getElementById("loginEmail").value;
+
+                const password =
+                    document.getElementById("loginPassword").value;
+
+                const message =
+                    document.getElementById("loginMessage");
+
+                message.className = "message";
+
+                if (!window.supabaseAuth) {
+
+                    message.textContent =
+                        "Supabase is not loaded.";
+
+                    message.classList.add("error");
+
+                    return;
+                }
+
+                const result =
+                    await window.supabaseAuth.signIn(
+                        email,
+                        password
+                    );
+
+                if (result.error) {
+
+                    message.textContent =
+                        result.error.message;
+
+                    message.classList.add("error");
+
+                    return;
+                }
+
+                message.textContent =
+                    "Login successful! Redirecting...";
+
+                message.classList.add("success");
+
+
+                setTimeout(() => {
+
+                    window.location.href =
+                        "../index.html";
+
+                }, 1000);
+
+            }
+        );
+
+
+        /* =========================
+           SIGN UP
+        ========================= */
+
+        signupForm.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+                const fullName =
+                    document.getElementById("fullName").value;
+
+                const email =
+                    document.getElementById("signupEmail").value;
+
+                const password =
+                    document.getElementById("signupPassword").value;
+
+                const confirmPassword =
+                    document.getElementById("confirmPassword").value;
+
+                const message =
+                    document.getElementById("signupMessage");
+
+                message.className = "message";
+
+
+                /* Password match */
+
+                if (password !== confirmPassword) {
+
+                    message.textContent =
+                        "Passwords do not match.";
+
+                    message.classList.add("error");
+
+                    return;
+                }
+
+
+                /* Minimum password */
+
+                if (password.length < 6) {
+
+                    message.textContent =
+                        "Password must contain at least 6 characters.";
+
+                    message.classList.add("error");
+
+                    return;
+                }
+
+
+                if (!window.supabaseAuth) {
+
+                    message.textContent =
+                        "Supabase is not loaded.";
+
+                    message.classList.add("error");
+
+                    return;
+                }
+
+
+                const result =
+                    await window.supabaseAuth.signUp(
+                        email,
+                        password,
+                        fullName
+                    );
+
+
+                if (result.error) {
+
+                    message.textContent =
+                        result.error.message;
+
+                    message.classList.add("error");
+
+                    return;
+                }
+
+
+                message.textContent =
+                    "Account created successfully! Check your email if verification is required.";
+
+                message.classList.add("success");
+
+                signupForm.reset();
+
+            }
+        );
+
+
+        /* =========================
+           FORGOT PASSWORD
+        ========================= */
+
+        document
+            .getElementById("forgotPassword")
+            .addEventListener(
+                "click",
+                async (event) => {
+
+                    event.preventDefault();
+
+                    const email =
+                        document.getElementById("loginEmail").value;
+
+                    const message =
+                        document.getElementById("loginMessage");
+
+
+                    if (!email) {
+
+                        message.textContent =
+                            "Enter your email address first.";
+
+                        message.className =
+                            "message error";
+
+                        return;
+                    }
+
+
+                    const result =
+                        await window.supabaseAuth.resetPassword(
+                            email
+                        );
+
+
+                    if (result.error) {
+
+                        message.textContent =
+                            result.error.message;
+
+                        message.className =
+                            "message error";
+
+                        return;
+                    }
+
+
+                    message.textContent =
+                        "Password reset email sent.";
+
+                    message.className =
+                        "message success";
+                }
+            );
+
+    </script>
 
 </body>
 
