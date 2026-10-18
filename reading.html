@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <script>document.documentElement.classList.add("auth-pending");</script>
+<style>html.auth-pending body { visibility: hidden !important; }</style>
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="IELTS General Training Reading Practice - Authentic sample tasks with direct on-question answering.">
     <title>IELTS Reading Practice | EngLish</title>
@@ -1162,6 +1164,9 @@
         }
     </script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth-guard.js"></script>
 </body>
 
 </html>

@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <script>document.documentElement.classList.add("auth-pending");</script>
+<style>html.auth-pending body { visibility: hidden !important; }</style>
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="IELTS Listening Practice - Official Sample Tasks 1 to 8 covering Form, Multiple Choice, Short Answer, Sentences, Matching, Plan Labelling, and Notes.">
     <title>IELTS Listening Practice | EngLish</title>
@@ -1420,6 +1422,9 @@
     <!-- JavaScript Logic -->
     <script src="listening.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth-guard.js"></script>
 </body>
 
 </html>

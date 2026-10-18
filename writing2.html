@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <script>document.documentElement.classList.add("auth-pending");</script>
+<style>html.auth-pending body { visibility: hidden !important; }</style>
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task 1B: Public Library Improvement Letter | IELTS Writing | EngLish</title>
 
@@ -231,6 +233,9 @@
     <!-- JS -->
     <script src="writing.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth-guard.js"></script>
 </body>
 
 </html>

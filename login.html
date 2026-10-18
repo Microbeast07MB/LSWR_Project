@@ -720,6 +720,23 @@
 
     <script>
 
+        function getPostLoginDestination() {
+            const requested = new URLSearchParams(window.location.search).get("next");
+            if (!requested) return new URL("index.html", window.location.href).href;
+
+            try {
+                const destination = new URL(requested, window.location.origin);
+                const loginPath = new URL("login.html", window.location.href).pathname;
+                if (destination.origin === window.location.origin && destination.pathname !== loginPath) {
+                    return destination.href;
+                }
+            } catch (error) {
+                console.warn("Ignoring invalid post-login destination.", error);
+            }
+
+            return new URL("index.html", window.location.href).href;
+        }
+
         // Supabase Auth throttles email sends across the project/provider.
         // Keep a short browser-side cooldown to prevent repeated clicks and retries.
         const EMAIL_SEND_COOLDOWN_MS = 60 * 1000;
@@ -888,8 +905,7 @@
 
                 setTimeout(() => {
 
-                    window.location.href =
-                        "../index.html";
+                    window.location.href = getPostLoginDestination();
 
                 }, 1000);
 
