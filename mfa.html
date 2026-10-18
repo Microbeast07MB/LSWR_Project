@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Secure your account | EngLish</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #f3f6fb; color: #172b4d; font-family: Inter, sans-serif; }
+        main { width: min(100%, 480px); padding: 32px; border: 1px solid #e2e8f0; border-radius: 18px; background: #fff; box-shadow: 0 16px 50px #172b4d14; }
+        h1 { margin: 0 0 10px; font-size: 25px; }
+        p { color: #52627a; line-height: 1.6; }
+        #qr { display: block; width: 190px; height: 190px; margin: 20px auto; }
+        #secret { overflow-wrap: anywhere; padding: 12px; border-radius: 8px; background: #f3f6fb; font-family: monospace; }
+        label { display: block; margin: 22px 0 8px; font-weight: 600; }
+        input { width: 100%; padding: 13px; border: 1px solid #cbd5e1; border-radius: 8px; font: inherit; font-size: 20px; letter-spacing: .25em; text-align: center; }
+        button { width: 100%; margin-top: 16px; padding: 13px; border: 0; border-radius: 8px; background: #2457d6; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+        button:disabled { opacity: .6; cursor: wait; }
+        #feedback { min-height: 24px; color: #b42318; }
+        #signOut { margin-top: 8px; background: transparent; color: #52627a; }
+        [hidden] { display: none !important; }
+    </style>
+</head>
+<body>
+    <main>
+        <h1 id="title">Checking your account…</h1>
+        <p id="instructions">Please wait while we prepare secure sign-in.</p>
+        <section id="enrollment" hidden>
+            <img id="qr" alt="QR code for your authenticator app">
+            <p>Scan this QR code with an authenticator app, such as Google Authenticator, Microsoft Authenticator, or 1Password. If you cannot scan it, enter this setup key manually:</p>
+            <p id="secret"></p>
+        </section>
+        <form id="codeForm" hidden>
+            <label for="totpCode">6-digit authenticator code</label>
+            <input id="totpCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+            <button id="verifyButton" type="submit">Verify and continue</button>
+        </form>
+        <p id="feedback" role="alert" aria-live="polite"></p>
+        <button id="signOut" type="button">Sign out</button>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="mfa.js"></script>
+</body>
+</html>
