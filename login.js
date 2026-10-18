@@ -1,5 +1,5 @@
 /* =====================================================
-   LOGIN & AUTHENTICATION LOGIC - EngLish Platform
+   LOGIN & AUTHENTICATION LOGIC - Grammarium Platform
    Powered by Supabase Auth:
    - Tab switching between Sign In & Sign Up
    - Live Supabase session detection
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             signupForm.style.display = "flex";
 
             if (cardHeaderTitle) cardHeaderTitle.textContent = "Create an Account";
-            if (cardHeaderSubtitle) cardHeaderSubtitle.textContent = "Join EngLish to track your LSRW and IELTS progress.";
+            if (cardHeaderSubtitle) cardHeaderSubtitle.textContent = "Join Grammarium to track your LSRW and IELTS progress.";
             if (cardHeaderIcon) cardHeaderIcon.className = "fa-solid fa-user-plus";
 
             if (signupNameInput) signupNameInput.focus();

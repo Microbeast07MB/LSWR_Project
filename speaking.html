@@ -6,7 +6,7 @@
 <style>html.auth-pending body { visibility: hidden !important; }</style>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speaking Practice Hub | EngLish</title>
+    <title>Speaking Practice Hub | Grammarium</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@
 
         <div class="listening-logo">
             <i class="fa-solid fa-language"></i>
-            Eng<span>Lish</span>
+            Grammarium
         </div>
 
         <div class="speaking-nav-pills">
@@ -66,7 +66,7 @@
         <div class="speaking-parts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin-bottom: 50px;">
 
             <!-- PART 1 CARD -->
-            <div class="speaking-part-card" onclick="window.location.href='speaking-part1.html'">
+            <div class="speaking-part-card">
                 <div>
                     <div style="width: 60px; height: 60px; border-radius: 16px; background: var(--light-purple); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                         <i class="fa-solid fa-comments"></i>
@@ -83,10 +83,11 @@
                     Start Part 1 Practice
                     <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                 </a>
+                <label class="speaking-completion"><input type="checkbox" data-speaking-part="1"> <span>I've completed Part 1 practice</span></label>
             </div>
 
             <!-- PART 2 CARD -->
-            <div class="speaking-part-card" onclick="window.location.href='speaking-part2.html'">
+            <div class="speaking-part-card">
                 <div>
                     <div style="width: 60px; height: 60px; border-radius: 16px; background: #ecfdf3; color: #027a48; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                         <i class="fa-solid fa-stopwatch"></i>
@@ -103,10 +104,11 @@
                     Start Part 2 Practice
                     <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                 </a>
+                <label class="speaking-completion"><input type="checkbox" data-speaking-part="2"> <span>I've completed Part 2 practice</span></label>
             </div>
 
             <!-- PART 3 CARD -->
-            <div class="speaking-part-card" onclick="window.location.href='speaking-part3.html'">
+            <div class="speaking-part-card">
                 <div>
                     <div style="width: 60px; height: 60px; border-radius: 16px; background: #fff4ed; color: #b42318; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                         <i class="fa-solid fa-users"></i>
@@ -123,9 +125,16 @@
                     Start Part 3 Practice
                     <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                 </a>
+                <label class="speaking-completion"><input type="checkbox" data-speaking-part="3"> <span>I've completed Part 3 practice</span></label>
             </div>
 
         </div>
+
+        <section class="speaking-test-panel" id="speakingTestPanel" hidden>
+            <h2>Ready for a Speaking mock test?</h2>
+            <p>You’ve marked all three parts complete. Start the timed practice when you’re ready.</p>
+            <button class="nav-link-btn primary" id="startSpeakingMock" type="button">Start mock Speaking test <i class="fa-solid fa-arrow-right"></i></button>
+        </section>
 
 
         <!-- PAGE NAVIGATION FOOTER -->
@@ -140,6 +149,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
+<script src="speaking.js"></script>
 <script src="auth-guard.js"></script>
 </body>
 

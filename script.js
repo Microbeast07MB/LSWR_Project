@@ -375,4 +375,91 @@ if (window.supabaseAuth && typeof window.supabaseAuth.onAuthStateChange === "fun
         syncNavbarAuthState();
     });
 }
+
+/* =====================================================
+   LEARNING DASHBOARD
+   ===================================================== */
+
+async function loadLearningDashboard() {
+    const percentageNodes = {
+        listening: ["listening-perc", "listening-bar"],
+        speaking: ["speaking-perc", "speaking-bar"],
+        reading: ["reading-perc", "reading-bar"],
+        writing: ["writing-perc", "writing-bar"]
+    };
+    const updatePercent = (skill, value) => {
+        const [labelId, barId] = percentageNodes[skill];
+        const label = document.getElementById(labelId);
+        const bar = document.getElementById(barId);
+        if (label) label.textContent = `${value}%`;
+        if (bar) bar.style.width = `${value}%`;
+    };
+
+    if (!window.supabaseClient || !window.supabaseAuth) return;
+    const session = await window.supabaseAuth.getSession();
+    const user = session?.user;
+    if (!user) return;
+
+    const { data: rows, error } = await window.supabaseClient
+        .from("practice_results")
+        .select("skill, score, max_score, completed_at")
+        .eq("user_id", user.id)
+        .order("completed_at", { ascending: true });
+
+    if (error) {
+        console.error("Could not load learning progress:", error.message);
+        return;
+    }
+
+    const totals = Object.fromEntries(Object.keys(percentageNodes).map(skill => [skill, { score: 0, max: 0 }]));
+    const activeDays = new Set();
+    (rows || []).forEach(row => {
+        const skill = String(row.skill || "").toLowerCase();
+        const score = Number(row.score);
+        const max = Number(row.max_score);
+        if (totals[skill] && Number.isFinite(score) && Number.isFinite(max) && max > 0) {
+            totals[skill].score += score;
+            totals[skill].max += max;
+        }
+        if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
+    });
+
+    let overallScore = 0;
+    let overallMax = 0;
+    Object.entries(totals).forEach(([skill, total]) => {
+        const pct = total.max ? Math.round((total.score / total.max) * 100) : 0;
+        updatePercent(skill, pct);
+        overallScore += total.score;
+        overallMax += total.max;
+    });
+    const overall = overallMax ? Math.round((overallScore / overallMax) * 100) : 0;
+    const overallNode = document.getElementById("overall-percentage");
+    if (overallNode) overallNode.textContent = `${overall}%`;
+    const circle = document.querySelector(".progress-circle");
+    if (circle) circle.style.background = `conic-gradient(#655bff ${overall * 3.6}deg, #e9e8ff 0deg)`;
+
+    const headline = document.getElementById("progress-headline");
+    const description = document.getElementById("progress-description");
+    if (headline) headline.textContent = overall ? (overall >= 80 ? "Excellent progress!" : overall >= 50 ? "Good progress!" : "Keep it up!") : "Start practicing!";
+    if (description) description.textContent = overall ? "Your progress is based on completed practice results." : "Complete a practice task to see your progress here.";
+
+    const goal = user.user_metadata?.ielts_goal;
+    const goalNode = document.getElementById("ielts-goal-value");
+    if (goalNode && Number.isFinite(Number(goal)) && Number(goal) >= 0 && Number(goal) <= 9) goalNode.textContent = `Band ${Number(goal).toFixed(1)}`;
+
+    let streak = 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const cursor = new Date(today);
+    const todayKey = today.toLocaleDateString("en-CA");
+    if (!activeDays.has(todayKey)) cursor.setDate(cursor.getDate() - 1);
+    while (activeDays.has(cursor.toLocaleDateString("en-CA"))) {
+        streak++;
+        cursor.setDate(cursor.getDate() - 1);
+    }
+    const streakNode = document.getElementById("streak-value");
+    if (streakNode) streakNode.textContent = `${streak} ${streak === 1 ? "Day" : "Days"}`;
+}
+
+loadLearningDashboard();
 

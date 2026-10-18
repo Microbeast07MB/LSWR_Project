@@ -1,5 +1,5 @@
 /* =====================================================
-   SUPABASE CONFIGURATION - EngLish Platform
+   SUPABASE CONFIGURATION - Grammarium Platform
    ===================================================== */
 
 // Supabase Project URL

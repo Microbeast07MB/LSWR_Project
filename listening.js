@@ -814,6 +814,8 @@ function showOverallScorecard() {
 
     const overallPct = grandMax > 0 ? Math.round((grandTotal / grandMax) * 100) : 0;
 
+    savePracticeResult("listening", grandTotal, grandMax);
+
     // IELTS Estimated Band Score calculation
     let estimatedBand = "5.0";
     if (overallPct >= 90) estimatedBand = "8.5 – 9.0";
@@ -873,4 +875,17 @@ function showOverallScorecard() {
     `;
 
     window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function savePracticeResult(skill, score, maxScore) {
+    if (!window.supabaseClient || !window.supabaseAuth || !Number.isFinite(score) || !Number.isFinite(maxScore) || maxScore <= 0) return;
+    const session = await window.supabaseAuth.getSession();
+    if (!session?.user) return;
+    const { error } = await window.supabaseClient.from("practice_results").insert({
+        user_id: session.user.id,
+        skill,
+        score,
+        max_score: maxScore
+    });
+    if (error) console.error(`Could not save ${skill} practice result:`, error.message);
 }

@@ -1563,6 +1563,40 @@ button {
     transform: translateY(-8px) !important;
 }
 
+.speaking-completion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #f5f4ff;
+    color: #344054;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.speaking-completion input {
+    width: 19px;
+    height: 19px;
+    accent-color: #655bff;
+    cursor: pointer;
+}
+
+.speaking-test-panel {
+    margin: 0 auto 40px;
+    max-width: 760px;
+    padding: 28px;
+    border: 1px solid #c7d7fe;
+    border-radius: 18px;
+    background: #f5f8ff;
+    text-align: center;
+}
+
+.speaking-test-panel h2 { margin-bottom: 8px; color: var(--dark); }
+.speaking-test-panel p { margin-bottom: 18px; color: var(--muted); }
+
 
 /* =====================================================
    IELTS SECTION
