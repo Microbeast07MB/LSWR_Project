@@ -7,7 +7,6 @@
 
     const guardScriptUrl = document.currentScript?.src || window.location.href;
     const loginUrl = new URL("login.html", guardScriptUrl);
-    const mfaUrl = new URL("mfa.html", guardScriptUrl);
     const requestedPage = window.location.pathname + window.location.search + window.location.hash;
 
     function redirectToLogin() {
@@ -25,14 +24,6 @@
         const session = await window.supabaseAuth.getSession();
         if (!session?.user) {
             redirectToLogin();
-            return;
-        }
-
-        const { data: assurance, error: assuranceError } = await window.supabaseAuth.getMfaAssuranceLevel();
-        if (assuranceError) throw assuranceError;
-        if (assurance?.currentLevel !== "aal2") {
-            mfaUrl.searchParams.set("next", requestedPage);
-            window.location.replace(mfaUrl.href);
             return;
         }
 

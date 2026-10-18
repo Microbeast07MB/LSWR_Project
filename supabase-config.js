@@ -303,43 +303,6 @@ const supabaseAuth = {
         return data.user;
     },
 
-    /** Return the current session's MFA assurance level. */
-    async getMfaAssuranceLevel() {
-        if (!this.isReady()) return { data: null, error: new Error("Supabase is not connected.") };
-        return await supabaseClient.auth.mfa.getAuthenticatorAssuranceLevel();
-    },
-
-    /** Return enrolled MFA factors for the current user. */
-    async listMfaFactors() {
-        if (!this.isReady()) return { data: null, error: new Error("Supabase is not connected.") };
-        return await supabaseClient.auth.mfa.listFactors();
-    },
-
-    /** Start TOTP enrollment and return its QR code and secret. */
-    async enrollTotp(friendlyName) {
-        if (!this.isReady()) return { data: null, error: new Error("Supabase is not connected.") };
-        return await supabaseClient.auth.mfa.enroll({ factorType: "totp", friendlyName });
-    },
-
-    /** Ask Supabase to create a verification challenge for a factor. */
-    async challengeMfa(factorId) {
-        if (!this.isReady()) return { data: null, error: new Error("Supabase is not connected.") };
-        return await supabaseClient.auth.mfa.challenge({ factorId });
-    },
-
-    /** Verify a TOTP code and promote the session to AAL2. */
-    async verifyMfa(factorId, challengeId, code) {
-        if (!this.isReady()) return { data: null, error: new Error("Supabase is not connected.") };
-        return await supabaseClient.auth.mfa.verify({ factorId, challengeId, code: code.trim() });
-    },
-
-    /** Remove an unused or compromised factor belonging to the current user. */
-    async unenrollMfa(factorId) {
-        if (!this.isReady()) return { error: new Error("Supabase is not connected.") };
-        return await supabaseClient.auth.mfa.unenroll({ factorId });
-    },
-
-
     /**
      * Listen for Authentication Changes
      */
