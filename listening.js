@@ -199,7 +199,10 @@ function showHub() {
     if (taskCard) taskCard.style.display = "none";
     if (questionNumber) questionNumber.textContent = "Practice Hub";
     if (backBtnText) backBtnText.textContent = "Back to Home";
-    if (backBtn) backBtn.href = "index.html";
+    if (backBtn) {
+        backBtn.href = new URL("index.html", window.location.href).href;
+        backBtn.onclick = null;
+    }
 
     updateNavPills("pill-hub");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -222,7 +225,7 @@ function showTask(taskNumber) {
 
     if (backBtnText) backBtnText.textContent = "Task Hub";
     if (backBtn) {
-        backBtn.href = "#";
+        backBtn.href = new URL("listening.html", window.location.href).href;
         backBtn.onclick = function (e) {
             e.preventDefault();
             navigateToHub();

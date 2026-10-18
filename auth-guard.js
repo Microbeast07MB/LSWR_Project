@@ -1,5 +1,7 @@
 /* Client-side page gate. Protected pages stay hidden until Supabase confirms a session. */
 (async function requireAuthenticatedUser() {
+    // The landing page is public and must remain reachable from every protected page.
+    if (window.location.pathname.endsWith("/index.html") || window.location.pathname === "/") return;
     document.documentElement.classList.add("auth-pending");
     const pendingStyle = document.createElement("style");
     pendingStyle.textContent = "html.auth-pending body { visibility: hidden !important; }";
