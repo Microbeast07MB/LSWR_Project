@@ -1,5 +1,5 @@
 /* =====================================================
-   LOGIN & AUTHENTICATION LOGIC - EngLish Platform
+   LOGIN & AUTHENTICATION LOGIC - Grammarium Platform
    Powered by Supabase Auth:
    - Tab switching between Sign In & Sign Up
    - Live Supabase session detection
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             signupForm.style.display = "flex";
 
             if (cardHeaderTitle) cardHeaderTitle.textContent = "Create an Account";
-            if (cardHeaderSubtitle) cardHeaderSubtitle.textContent = "Join EngLish to track your LSRW and IELTS progress.";
+            if (cardHeaderSubtitle) cardHeaderSubtitle.textContent = "Join Grammarium to track your LSRW and IELTS progress.";
             if (cardHeaderIcon) cardHeaderIcon.className = "fa-solid fa-user-plus";
 
             if (signupNameInput) signupNameInput.focus();
@@ -348,7 +348,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 loginBtn.innerHTML = `<span>Success!</span> <i class="fa-solid fa-check"></i>`;
 
                 setTimeout(() => {
-                    window.location.href = "index.html";
+                    window.location.href = getPostLoginDestination();
                 }, 800);
             } catch (err) {
                 console.error("Sign in unexpected error:", err);
@@ -466,7 +466,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     showBanner("Account created and signed in successfully! Redirecting...", "success");
                     signupBtn.innerHTML = `<span>Welcome!</span> <i class="fa-solid fa-check"></i>`;
                     setTimeout(() => {
-                        window.location.href = "index.html";
+                        window.location.href = getPostLoginDestination();
                     }, 900);
                 }
             } catch (err) {

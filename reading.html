@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="IELTS General Training Reading Practice - Authentic sample tasks with direct on-question answering.">
-    <title>IELTS Reading Practice | EngLish</title>
+    <title>IELTS Reading Practice | Grammarium</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,7 @@
 
         <div class="listening-logo">
             <i class="fa-solid fa-language"></i>
-            Eng<span>Lish</span>
+            Grammarium
         </div>
 
         <div class="reading-nav-pills" id="readingNavPills">
@@ -88,6 +88,7 @@
                         Start Practice
                         <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                     </a>
+                    <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="type1"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 2: TRUE / FALSE / NOT GIVEN -->
@@ -108,6 +109,7 @@
                         Start Practice
                         <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                     </a>
+                    <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="type2"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 3: MATCHING FEATURES -->
@@ -128,6 +130,7 @@
                         Start Practice
                         <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                     </a>
+                    <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="type3"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 4: MATCHING HEADINGS -->
@@ -148,6 +151,7 @@
                         Start Practice
                         <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                     </a>
+                    <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="type4"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 5: NOTE COMPLETION -->
@@ -168,6 +172,7 @@
                         Start Practice
                         <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                     </a>
+                    <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="type5"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 6: SENTENCE COMPLETION -->
@@ -188,6 +193,7 @@
                         Start Practice
                         <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                     </a>
+                    <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="type6"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 7: SHORT-ANSWER QUESTIONS -->
@@ -208,6 +214,7 @@
                         Start Practice
                         <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                     </a>
+                    <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="type7"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 8: SUMMARY COMPLETION -->
@@ -228,6 +235,7 @@
                         Start Practice
                         <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                     </a>
+                    <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="type8"> <span>Completed this practice</span></label>
                 </div>
 
             </div>
@@ -1123,6 +1131,8 @@
                 reviewList.appendChild(card);
             });
 
+            savePracticeResult("reading", score, total);
+
             // Display Score
             document.getElementById("scoreValueDisplay").textContent = `${score} / ${total}`;
             const feedbackText = document.getElementById("scoreFeedbackText");
@@ -1152,6 +1162,19 @@
             document.querySelector(".reading-questions-card").scrollIntoView({ behavior: "smooth", block: "start" });
         }
 
+        async function savePracticeResult(skill, score, maxScore) {
+            if (!window.supabaseClient || !window.supabaseAuth || maxScore <= 0) return;
+            const session = await window.supabaseAuth.getSession();
+            if (!session?.user) return;
+            const { error } = await window.supabaseClient.from("practice_results").insert({
+                user_id: session.user.id,
+                skill,
+                score,
+                max_score: maxScore
+            });
+            if (error) console.error(`Could not save ${skill} practice result:`, error.message);
+        }
+
         function escapeHtml(text) {
             const map = {
                 '&': '&amp;',
@@ -1166,6 +1189,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
+<script src="script.js"></script>
 <script src="auth-guard.js"></script>
 </body>
 

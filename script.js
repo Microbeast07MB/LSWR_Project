@@ -5,7 +5,7 @@
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 
-menuBtn.addEventListener("click", () => {
+if (menuBtn && mobileMenu) menuBtn.addEventListener("click", () => {
 
     mobileMenu.classList.toggle("open");
 
@@ -85,16 +85,16 @@ function closeTestModal() {
 }
 
 
-testBtn.addEventListener("click", openModal);
+if (testBtn) testBtn.addEventListener("click", openModal);
 
-ctaBtn.addEventListener("click", openModal);
+if (ctaBtn) ctaBtn.addEventListener("click", openModal);
 
-closeModal.addEventListener("click", closeTestModal);
+if (closeModal) closeModal.addEventListener("click", closeTestModal);
 
 
 /* Close when clicking outside */
 
-testModal.addEventListener("click", (event) => {
+if (testModal) testModal.addEventListener("click", (event) => {
 
     if (event.target === testModal) {
 
@@ -122,7 +122,7 @@ document.addEventListener("keydown", (event) => {
    START TEST
 ===================================================== */
 
-modalStart.addEventListener("click", () => {
+if (modalStart) modalStart.addEventListener("click", () => {
 
     window.location.href = "listening.html";
 
@@ -224,6 +224,100 @@ window.addEventListener("scroll", () => {
     });
 
 });
+
+/* =====================================================
+   SIGN-IN GATE FOR HOMEPAGE LEARNING ACTIONS
+===================================================== */
+
+function initHomepageAuthGate() {
+    const gate = document.getElementById("authGateModal");
+    if (!gate) return;
+    const closeButton = document.getElementById("authGateClose");
+    const signInLink = document.getElementById("authGateSignIn");
+    const signUpLink = document.getElementById("authGateSignUp");
+    let pendingDestination = "";
+
+    const openGate = async (destination) => {
+        const session = await window.supabaseAuth?.getSession();
+        if (session?.user) {
+            if (destination) window.location.assign(destination);
+            return true;
+        }
+        pendingDestination = destination || "";
+        const suffix = pendingDestination ? `?next=${encodeURIComponent(pendingDestination)}` : "";
+        if (signInLink) signInLink.href = `login.html${suffix}`;
+        if (signUpLink) signUpLink.href = `login.html?mode=signup${pendingDestination ? `&next=${encodeURIComponent(pendingDestination)}` : ""}`;
+        gate.classList.add("show");
+        gate.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        return false;
+    };
+
+    const closeGate = () => {
+        gate.classList.remove("show");
+        gate.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        pendingDestination = "";
+    };
+
+    if (closeButton) closeButton.addEventListener("click", closeGate);
+    gate.addEventListener("click", event => { if (event.target === gate) closeGate(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape" && gate.classList.contains("show")) closeGate(); });
+
+    const learningSelector = 'a[href$="listening.html"], a[href$="speaking.html"], a[href$="reading.html"], a[href$="writing.html"], a[href^="listening.html?"], a[href^="reading.html?"], .skill-card[onclick*="listening.html"], .skill-card[onclick*="speaking.html"], .skill-card[onclick*="reading.html"], .skill-card[onclick*="writing.html"], .skill-row[onclick*="listening.html"], .skill-row[onclick*="speaking.html"], .skill-row[onclick*="reading.html"], .skill-row[onclick*="writing.html"]';
+    document.querySelectorAll(learningSelector).forEach(element => {
+        if (element.closest(".skill-card") || element.closest(".skill-row")) return;
+        element.addEventListener("click", async event => {
+            const session = await window.supabaseAuth?.getSession();
+            if (session?.user) return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            const destination = element instanceof HTMLAnchorElement ? element.getAttribute("href") : (element.getAttribute("onclick")?.match(/'([^']+\.html[^']*)'/)?.[1] || "");
+            openGate(destination);
+        }, true);
+    });
+
+    document.querySelectorAll(".hero-buttons a").forEach(element => {
+        element.addEventListener("click", async event => {
+            const session = await window.supabaseAuth?.getSession();
+            if (session?.user) return;
+            if (element.getAttribute("href") === "#skills" || element.getAttribute("href") === "#ielts") {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                openGate("");
+                return;
+            }
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            openGate("");
+        }, true);
+    });
+
+    if (testBtn) {
+        testBtn.addEventListener("click", async event => {
+            const session = await window.supabaseAuth?.getSession();
+            if (session?.user) return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            openGate("listening.html");
+        }, true);
+    }
+
+    const navActions = document.getElementById("navActions");
+    const mobileLogin = document.getElementById("mobileLoginBtn");
+    if (navActions && !document.querySelector(".user-nav-chip")) {
+        navActions.querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
+            if (button.classList.contains("signup-btn")) window.location.href = "login.html?mode=signup";
+            else window.location.href = "login.html";
+        }));
+    }
+    if (mobileLogin && !mobileLogin.textContent.toLowerCase().includes("logout")) {
+        mobileLogin.addEventListener("click", event => { event.preventDefault(); window.location.href = "login.html"; });
+    }
+}
+
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initHomepageAuthGate);
+else initHomepageAuthGate();
 
 
 /* =====================================================
@@ -373,6 +467,160 @@ if (document.readyState === "loading") {
 if (window.supabaseAuth && typeof window.supabaseAuth.onAuthStateChange === "function") {
     window.supabaseAuth.onAuthStateChange(() => {
         syncNavbarAuthState();
+    });
+}
+
+/* =====================================================
+   LEARNING DASHBOARD
+   ===================================================== */
+
+async function loadLearningDashboard() {
+    const percentageNodes = {
+        listening: ["listening-perc", "listening-bar"],
+        speaking: ["speaking-perc", "speaking-bar"],
+        reading: ["reading-perc", "reading-bar"],
+        writing: ["writing-perc", "writing-bar"]
+    };
+    const updatePercent = (skill, value) => {
+        const [labelId, barId] = percentageNodes[skill];
+        const label = document.getElementById(labelId);
+        const bar = document.getElementById(barId);
+        if (label) label.textContent = `${value}%`;
+        if (bar) bar.style.width = `${value}%`;
+    };
+
+    if (!window.supabaseClient || !window.supabaseAuth) return;
+    const session = await window.supabaseAuth.getSession();
+    const user = session?.user;
+    if (!user) return;
+
+    const { data: rows, error } = await window.supabaseClient
+        .from("practice_results")
+        .select("skill, score, max_score, completed_at")
+        .eq("user_id", user.id)
+        .order("completed_at", { ascending: true });
+
+    if (error) {
+        console.error("Could not load learning progress:", error.message);
+        return;
+    }
+
+    const { data: completions, error: completionError } = await window.supabaseClient
+        .from("learning_completions")
+        .select("skill, item_key, completed, completed_at")
+        .eq("user_id", user.id)
+        .eq("completed", true);
+    if (completionError) console.error("Could not load checklist progress:", completionError.message);
+
+    const totals = Object.fromEntries(Object.keys(percentageNodes).map(skill => [skill, { score: 0, max: 0 }]));
+    const activeDays = new Set();
+    (rows || []).forEach(row => {
+        const skill = String(row.skill || "").toLowerCase();
+        const score = Number(row.score);
+        const max = Number(row.max_score);
+        if (totals[skill] && Number.isFinite(score) && Number.isFinite(max) && max > 0) {
+            totals[skill].score += score;
+            totals[skill].max += max;
+        }
+        if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
+    });
+
+    const checklistRows = completions || [];
+    Object.keys(totals).forEach(skill => {
+        const skillCompletions = checklistRows.filter(row => row.skill === skill);
+        const uniqueItems = new Set(skillCompletions.map(row => row.item_key));
+        const expectedItems = { listening: 8, speaking: 3, reading: 8, writing: 4 }[skill];
+        totals[skill].score += Math.min(uniqueItems.size, expectedItems);
+        totals[skill].max += expectedItems;
+    });
+    checklistRows.forEach(row => {
+        if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
+    });
+
+    let overallScore = 0;
+    let overallMax = 0;
+    Object.entries(totals).forEach(([skill, total]) => {
+        const pct = total.max ? Math.round((total.score / total.max) * 100) : 0;
+        updatePercent(skill, pct);
+        overallScore += total.score;
+        overallMax += total.max;
+    });
+    const overall = overallMax ? Math.round((overallScore / overallMax) * 100) : 0;
+    const overallNode = document.getElementById("overall-percentage");
+    if (overallNode) overallNode.textContent = `${overall}%`;
+    const circle = document.querySelector(".progress-circle");
+    if (circle) circle.style.background = `conic-gradient(#655bff ${overall * 3.6}deg, #e9e8ff 0deg)`;
+
+    const headline = document.getElementById("progress-headline");
+    const description = document.getElementById("progress-description");
+    if (headline) headline.textContent = overall ? (overall >= 80 ? "Excellent progress!" : overall >= 50 ? "Good progress!" : "Keep it up!") : "Start practicing!";
+    if (description) description.textContent = overall ? "Your progress is based on completed practice results." : "Complete a practice task to see your progress here.";
+
+    const goal = user.user_metadata?.ielts_goal;
+    const goalNode = document.getElementById("ielts-goal-value");
+    if (goalNode && Number.isFinite(Number(goal)) && Number(goal) >= 0 && Number(goal) <= 9) goalNode.textContent = `Band ${Number(goal).toFixed(1)}`;
+
+    let streak = 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const cursor = new Date(today);
+    const todayKey = today.toLocaleDateString("en-CA");
+    if (!activeDays.has(todayKey)) cursor.setDate(cursor.getDate() - 1);
+    while (activeDays.has(cursor.toLocaleDateString("en-CA"))) {
+        streak++;
+        cursor.setDate(cursor.getDate() - 1);
+    }
+    const streakNode = document.getElementById("streak-value");
+    if (streakNode) streakNode.textContent = `${streak} ${streak === 1 ? "Day" : "Days"}`;
+}
+
+loadLearningDashboard();
+
+/* Per-item completion checklists for all four learning skills. */
+document.addEventListener("DOMContentLoaded", initLearningChecklist);
+
+async function initLearningChecklist() {
+    const checks = [...document.querySelectorAll("[data-learning-skill][data-learning-item]")];
+    if (!checks.length || !window.supabaseClient || !window.supabaseAuth) return;
+    const session = await window.supabaseAuth.getSession();
+    const user = session?.user;
+    if (!user) return;
+
+    const { data, error } = await window.supabaseClient
+        .from("learning_completions")
+        .select("skill, item_key, completed")
+        .eq("user_id", user.id);
+    if (error) {
+        console.error("Could not load learning checklist:", error.message);
+        return;
+    }
+
+    const completed = new Set((data || []).filter(row => row.completed).map(row => `${row.skill}:${row.item_key}`));
+    checks.forEach(check => {
+        const skill = check.dataset.learningSkill;
+        const itemKey = check.dataset.learningItem;
+        check.checked = completed.has(`${skill}:${itemKey}`);
+        check.addEventListener("click", event => event.stopPropagation());
+        check.addEventListener("change", async () => {
+            check.disabled = true;
+            const { error: saveError } = await window.supabaseClient
+                .from("learning_completions")
+                .upsert({
+                    user_id: user.id,
+                    skill,
+                    item_key: itemKey,
+                    completed: check.checked,
+                    completed_at: check.checked ? new Date().toISOString() : null
+                }, { onConflict: "user_id,skill,item_key" });
+            check.disabled = false;
+            if (saveError) {
+                check.checked = !check.checked;
+                console.error("Could not save learning checklist:", saveError.message);
+                return;
+            }
+            if (skill === "speaking") updateSpeakingMockAvailability();
+            loadLearningDashboard();
+        });
     });
 }
 

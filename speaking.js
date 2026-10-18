@@ -7,7 +7,67 @@ document.addEventListener("DOMContentLoaded", function () {
     initCustomAudioPlayers();
     initTranscriptToggles();
     initSampleResponseToggles();
+    initSpeakingCompletion();
 });
+
+async function initSpeakingCompletion() {
+    const checks = [...document.querySelectorAll("[data-learning-skill='speaking']")];
+    if (checks.length) updateSpeakingMockAvailability();
+
+    const startMock = document.getElementById("startSpeakingMock");
+    if (startMock) startMock.addEventListener("click", startSpeakingMockTest);
+}
+
+function updateSpeakingMockAvailability() {
+    const panel = document.getElementById("speakingTestPanel");
+    if (!panel) return;
+    const checks = [...document.querySelectorAll("[data-learning-skill='speaking']")];
+    panel.hidden = !checks.length || !checks.every(check => check.checked);
+}
+
+function startSpeakingMockTest() {
+    const prompts = [
+        { part: 1, label: "Part 1 — Introduction", seconds: 30, prompt: "Introduce yourself and describe where you live." },
+        { part: 2, label: "Part 2 — Long turn", seconds: 60, prompt: "Describe a skill you learned that was useful to you. Say what it was, how you learned it, and why it was useful." },
+        { part: 3, label: "Part 3 — Discussion", seconds: 30, prompt: "Why do people need to keep learning new skills throughout their lives?" }
+    ];
+    let promptIndex = 0;
+    let remaining = prompts[0].seconds;
+    const win = window.open("", "speakingMockTest", "width=720,height=640");
+    if (!win) return;
+    const render = () => {
+        const item = prompts[promptIndex];
+        win.document.body.innerHTML = `<main style="font:16px Arial,sans-serif;max-width:620px;margin:60px auto;padding:24px;color:#172033"><p style="color:#655bff;font-weight:bold">${item.label}</p><h1>Mock Speaking Test</h1><p>${item.prompt}</p><h2 id="timer">${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2,"0")}</h2><textarea placeholder="Optional notes (your speaking is not recorded)" style="width:100%;height:100px;padding:12px"></textarea><p id="status">Speak your answer aloud.</p><button id="next">${promptIndex === prompts.length - 1 ? "Finish test" : "Next part"}</button>`;
+        win.document.getElementById("next").onclick = () => {
+            if (promptIndex < prompts.length - 1) { promptIndex++; remaining = prompts[promptIndex].seconds; render(); }
+            else {
+                clearInterval(timer);
+                saveSpeakingMockResult();
+                win.document.body.innerHTML = "<main style='font:16px Arial,sans-serif;max-width:620px;margin:60px auto;padding:24px'><h1>Mock test complete</h1><p>Your Speaking practice has been added to your dashboard. You can review your answers and repeat any part you want to improve.</p><button onclick='window.close()'>Close</button></main>";
+            }
+        };
+    };
+    render();
+    const timer = win.setInterval(() => {
+        if (win.closed) { clearInterval(timer); return; }
+        remaining = Math.max(0, remaining - 1);
+        const node = win.document.getElementById("timer");
+        if (node) node.textContent = `${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2,"0")}`;
+        if (remaining === 0) win.document.getElementById("status").textContent = "Time is up. Continue when ready.";
+    }, 1000);
+}
+
+async function saveSpeakingMockResult() {
+    const session = await window.supabaseAuth?.getSession();
+    if (!session?.user || !window.supabaseClient) return;
+    const { error } = await window.supabaseClient.from("practice_results").insert({
+        user_id: session.user.id,
+        skill: "speaking",
+        score: 3,
+        max_score: 3
+    });
+    if (error) console.error("Could not save Speaking mock test:", error.message);
+}
 
 /* =====================================================
    CUSTOM AUDIO PLAYER
