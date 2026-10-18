@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EngLish Student Dashboard - Track your Listening, Speaking, Reading, and Writing progress and IELTS Target Band score with Supabase.">
+    <title>Student Dashboard | EngLish – Master English. Ace IELTS.</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+
+    <!-- Supabase JS SDK (CDN v2) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="student-progress-service.js"></script>
+
+    <!-- Client-Side Auth Guard -->
+    <script src="auth-guard.js"></script>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         TOP NAVBAR
+    ===================================================== -->
+    <header class="dashboard-navbar">
+        <div class="dash-nav-container">
+            <div class="dash-nav-left">
+                <a href="index.html" class="dash-logo" aria-label="EngLish Home">
+                    <span class="logo-icon"><i class="fa-solid fa-language"></i></span>
+                    <span>Eng<span class="highlight">Lish</span></span>
+                </a>
+                <span class="portal-badge">
+                    <i class="fa-solid fa-graduation-cap"></i> Student Portal
+                </span>
+            </div>
+
+            <nav class="dash-nav-links">
+                <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="listening.html"><i class="fa-solid fa-headphones"></i> Listening</a>
+                <a href="reading-selection.html"><i class="fa-solid fa-book-open"></i> Reading</a>
+                <a href="writing.html"><i class="fa-solid fa-pen-nib"></i> Writing</a>
+                <a href="speaking.html"><i class="fa-solid fa-microphone"></i> Speaking</a>
+            </nav>
+
+            <div class="dash-nav-right">
+                <div class="sync-status-indicator" id="syncStatusIndicator" title="Supabase Database Status">
+                    <span class="sync-dot"></span>
+                    <span class="sync-text">Checking...</span>
+                </div>
+
+                <div class="user-profile-pill">
+                    <div class="user-avatar-initial" id="userAvatarInitial">S</div>
+                    <div class="user-info-text">
+                        <span class="user-name" id="userDisplayName">Student</span>
+                        <span class="user-email" id="userEmailAddress">student@example.com</span>
+                    </div>
+                </div>
+
+                <button type="button" class="dash-logout-btn" id="dashLogoutBtn" title="Sign Out">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- =====================================================
+         MAIN DASHBOARD CONTENT
+    ===================================================== -->
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+
+            <!-- DATABASE SETUP ALERT (Shows if table not created yet) -->
+            <div class="supabase-schema-alert" id="schemaSetupAlert" style="display: none;">
+                <div class="alert-icon"><i class="fa-solid fa-database"></i></div>
+                <div class="alert-body">
+                    <strong>Supabase Database Table Setup</strong>
+                    <p>Your progress is temporarily cached locally. To enable cloud sync across all devices, run the provided <code>supabase_schema.sql</code> script in your Supabase SQL Editor.</p>
+                </div>
+                <div class="alert-actions">
+                    <button type="button" class="alert-btn" id="openSqlModalBtn">
+                        <i class="fa-solid fa-code"></i> View SQL Setup
+                    </button>
+                    <button type="button" class="alert-dismiss-btn" id="dismissSchemaAlert" aria-label="Dismiss">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- HERO GREETING BANNER -->
+            <section class="dashboard-hero-card">
+                <div class="hero-left">
+                    <div class="hero-greeting-tag">
+                        <span class="dot-live"></span> IELTS Preparation Hub
+                    </div>
+                    <h1 class="hero-title">
+                        Welcome back, <span id="heroStudentName">Student</span>! 👋
+                    </h1>
+                    <p class="hero-subtitle">
+                        Track your LSRW skills progress, monitor your IELTS Target Band, and build communication confidence for your engineering career.
+                    </p>
+
+                    <div class="hero-quick-tags">
+                        <div class="quick-tag target-band-tag" id="quickBandBadge">
+                            <i class="fa-solid fa-bullseye"></i>
+                            <span>Target Band: <strong id="heroTargetBandText">7.5</strong></span>
+                        </div>
+                        <div class="quick-tag overall-tag">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>Overall Mastery: <strong id="heroOverallPercentage">0%</strong></span>
+                        </div>
+                        <button type="button" class="edit-goal-btn" id="editGoalBtn">
+                            <i class="fa-solid fa-pen"></i> Edit Target Band
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hero-right">
+                    <div class="radial-score-box">
+                        <div class="radial-circle">
+                            <svg class="progress-ring" width="130" height="130">
+                                <circle class="progress-ring-circle-bg" stroke="#e2e8f0" stroke-width="10" fill="transparent" r="54" cx="65" cy="65" />
+                                <circle class="progress-ring-circle" id="overallRingCircle" stroke="#635bff" stroke-width="10" stroke-linecap="round" fill="transparent" r="54" cx="65" cy="65" />
+                            </svg>
+                            <div class="radial-content">
+                                <span class="radial-number" id="overallRadialNumber">0%</span>
+                                <span class="radial-label">Completed</span>
+                            </div>
+                        </div>
+                        <span class="radial-title">LSRW Overall</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KPI METRICS GRID -->
+            <section class="kpi-grid">
+                <!-- Card 1: Target IELTS Band -->
+                <div class="kpi-card" id="kpiTargetBandCard">
+                    <div class="kpi-icon-wrap band-icon">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-label">Target IELTS Band</span>
+                        <div class="kpi-value-row">
+                            <h3 class="kpi-value" id="kpiTargetBandVal">7.5</h3>
+                            <span class="kpi-subtext">/ 9.0</span>
+                        </div>
+                        <span class="kpi-hint" id="kpiTargetBandHint">Engineering standard score</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Overall Progress -->
+                <div class="kpi-card">
+                    <div class="kpi-icon-wrap progress-icon">
+                        <i class="fa-solid fa-bars-progress"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-label">Skills Average</span>
+                        <div class="kpi-value-row">
+                            <h3 class="kpi-value" id="kpiOverallVal">0%</h3>
+                        </div>
+                        <span class="kpi-hint" id="kpiOverallHint">Across all 4 LSRW modules</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Completed Practice Tasks -->
+                <div class="kpi-card">
+                    <div class="kpi-icon-wrap tasks-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-label">Tasks Completed</span>
+                        <div class="kpi-value-row">
+                            <h3 class="kpi-value" id="kpiTasksVal">0 / 23</h3>
+                        </div>
+                        <span class="kpi-hint">Practice exercises finished</span>
+                    </div>
+                </div>
+
+                <!-- Card 4: Focus Area Recommendation -->
+                <div class="kpi-card">
+                    <div class="kpi-icon-wrap focus-icon">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-label">Recommended Focus</span>
+                        <div class="kpi-value-row">
+                            <h3 class="kpi-value focus-value" id="kpiFocusVal">Listening</h3>
+                        </div>
+                        <span class="kpi-hint" id="kpiFocusHint">Skill needing most practice</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LSRW SKILLS PROGRESS SECTION -->
+            <section class="section-container">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">The Four LSRW Pillars</h2>
+                        <p class="section-desc">Real-time completion percentage stored in Supabase for each skill.</p>
+                    </div>
+                    <div class="section-actions">
+                        <button type="button" class="outline-action-btn" id="openAdjustModalBtn">
+                            <i class="fa-solid fa-sliders"></i> Adjust Percentages
+                        </button>
+                    </div>
+                </div>
+
+                <div class="skills-cards-grid">
+                    <!-- 1. Listening -->
+                    <div class="skill-detail-card listening" id="skillCardListening">
+                        <div class="skill-card-top">
+                            <div class="skill-badge-icon">
+                                <i class="fa-solid fa-headphones"></i>
+                            </div>
+                            <div class="skill-meta">
+                                <h3>Listening</h3>
+                                <span>8 Audio Tasks (L1 – L8)</span>
+                            </div>
+                            <div class="skill-score-pill" id="listeningScorePill">0%</div>
+                        </div>
+
+                        <div class="skill-progress-wrap">
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill listening-fill" id="listeningProgressBar" style="width: 0%;"></div>
+                            </div>
+                            <div class="progress-info-row">
+                                <span class="task-count-text" id="listeningCountText">0 of 8 tasks complete</span>
+                                <span class="percent-label" id="listeningPercentLabel">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card-footer">
+                            <span class="estimated-band-badge" id="listeningBandBadge">Est. Band: 5.0</span>
+                            <a href="listening.html" class="skill-action-link">
+                                <span>Practice Audio</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 2. Reading -->
+                    <div class="skill-detail-card reading" id="skillCardReading">
+                        <div class="skill-card-top">
+                            <div class="skill-badge-icon">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <div class="skill-meta">
+                                <h3>Reading</h3>
+                                <span>8 Question Formats</span>
+                            </div>
+                            <div class="skill-score-pill" id="readingScorePill">0%</div>
+                        </div>
+
+                        <div class="skill-progress-wrap">
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill reading-fill" id="readingProgressBar" style="width: 0%;"></div>
+                            </div>
+                            <div class="progress-info-row">
+                                <span class="task-count-text" id="readingCountText">0 of 8 formats complete</span>
+                                <span class="percent-label" id="readingPercentLabel">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card-footer">
+                            <span class="estimated-band-badge" id="readingBandBadge">Est. Band: 5.0</span>
+                            <a href="reading-selection.html" class="skill-action-link">
+                                <span>Practice Reading</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 3. Writing -->
+                    <div class="skill-detail-card writing" id="skillCardWriting">
+                        <div class="skill-card-top">
+                            <div class="skill-badge-icon">
+                                <i class="fa-solid fa-pen-nib"></i>
+                            </div>
+                            <div class="skill-meta">
+                                <h3>Writing</h3>
+                                <span>Tasks 1 & 2 + Engineering Essays</span>
+                            </div>
+                            <div class="skill-score-pill" id="writingScorePill">0%</div>
+                        </div>
+
+                        <div class="skill-progress-wrap">
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill writing-fill" id="writingProgressBar" style="width: 0%;"></div>
+                            </div>
+                            <div class="progress-info-row">
+                                <span class="task-count-text" id="writingCountText">0 of 4 tasks complete</span>
+                                <span class="percent-label" id="writingPercentLabel">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card-footer">
+                            <span class="estimated-band-badge" id="writingBandBadge">Est. Band: 5.0</span>
+                            <a href="writing.html" class="skill-action-link">
+                                <span>Practice Writing</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4. Speaking -->
+                    <div class="skill-detail-card speaking" id="skillCardSpeaking">
+                        <div class="skill-card-top">
+                            <div class="skill-badge-icon">
+                                <i class="fa-solid fa-microphone"></i>
+                            </div>
+                            <div class="skill-meta">
+                                <h3>Speaking</h3>
+                                <span>Parts 1, 2 & 3 Interactive Practice</span>
+                            </div>
+                            <div class="skill-score-pill" id="speakingScorePill">0%</div>
+                        </div>
+
+                        <div class="skill-progress-wrap">
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill speaking-fill" id="speakingProgressBar" style="width: 0%;"></div>
+                            </div>
+                            <div class="progress-info-row">
+                                <span class="task-count-text" id="speakingCountText">0 of 3 parts complete</span>
+                                <span class="percent-label" id="speakingPercentLabel">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card-footer">
+                            <span class="estimated-band-badge" id="speakingBandBadge">Est. Band: 5.0</span>
+                            <a href="speaking.html" class="skill-action-link">
+                                <span>Practice Speaking</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- INTERACTIVE PRACTICE TASK CHECKLIST -->
+            <section class="section-container checklist-section">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Module Task Checklist</h2>
+                        <p class="section-desc">Check off tasks as you practice. Each check dynamically recalculates your skill progress and saves to Supabase.</p>
+                    </div>
+                </div>
+
+                <div class="checklist-tabs-nav" role="tablist">
+                    <button type="button" class="check-tab-btn active" data-tab="listening" role="tab" aria-selected="true">
+                        <i class="fa-solid fa-headphones"></i> Listening (L1–L8)
+                    </button>
+                    <button type="button" class="check-tab-btn" data-tab="reading" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-book-open"></i> Reading Formats
+                    </button>
+                    <button type="button" class="check-tab-btn" data-tab="writing" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-pen-nib"></i> Writing Tasks
+                    </button>
+                    <button type="button" class="check-tab-btn" data-tab="speaking" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-microphone"></i> Speaking Parts
+                    </button>
+                </div>
+
+                <div class="checklist-content-panel">
+                    <div class="tasks-checklist-grid" id="tasksChecklistGrid">
+                        <!-- Populated dynamically by dashboard.js -->
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- =====================================================
+         MODAL 1: EDIT GOALS & TARGET BAND
+    ===================================================== -->
+    <div class="modal-backdrop" id="goalModal" style="display: none;">
+        <div class="modal-card">
+            <button type="button" class="modal-close-btn" id="closeGoalModalBtn" aria-label="Close dialog">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="modal-icon-wrap">
+                <i class="fa-solid fa-bullseye"></i>
+            </div>
+            <h3 class="modal-title">Set Your IELTS Goal</h3>
+            <p class="modal-subtitle">Update your target IELTS band score and details. This will be stored in your Supabase profile.</p>
+
+            <form id="goalForm" novalidate>
+                <div class="form-group">
+                    <label for="goalFullNameInput" class="form-label">Full Name</label>
+                    <input type="text" id="goalFullNameInput" class="form-input" placeholder="Your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="goalTargetBandSelect" class="form-label">Target Band Score</label>
+                    <select id="goalTargetBandSelect" class="form-input form-select">
+                        <option value="5.5">Band 5.5 (Modest User)</option>
+                        <option value="6.0">Band 6.0 (Competent User)</option>
+                        <option value="6.5">Band 6.5 (Engineering Standard)</option>
+                        <option value="7.0">Band 7.0 (Good User)</option>
+                        <option value="7.5" selected>Band 7.5 (Top Tech Universities)</option>
+                        <option value="8.0">Band 8.0 (Very Good User)</option>
+                        <option value="8.5">Band 8.5 (Near Native)</option>
+                        <option value="9.0">Band 9.0 (Expert)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="goalTargetDateInput" class="form-label">Target Exam Date (Optional)</label>
+                    <input type="date" id="goalTargetDateInput" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="goalNotesInput" class="form-label">Study Notes & Priorities</label>
+                    <textarea id="goalNotesInput" class="form-input form-textarea" rows="3" placeholder="e.g. Focus on Academic Writing Task 2 and Speaking Part 3 fluency..."></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelGoalBtn">Cancel</button>
+                    <button type="submit" class="btn-save" id="saveGoalBtn">
+                        <span>Save to Supabase</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         MODAL 2: DIRECT PERCENTAGE ADJUSTER
+    ===================================================== -->
+    <div class="modal-backdrop" id="adjustModal" style="display: none;">
+        <div class="modal-card">
+            <button type="button" class="modal-close-btn" id="closeAdjustModalBtn" aria-label="Close dialog">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="modal-icon-wrap">
+                <i class="fa-solid fa-sliders"></i>
+            </div>
+            <h3 class="modal-title">Adjust Skill Progress</h3>
+            <p class="modal-subtitle">Fine-tune your completion percentage for each skill manually (0% - 100%).</p>
+
+            <form id="adjustForm" novalidate>
+                <!-- Listening Slider -->
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <span class="slider-label"><i class="fa-solid fa-headphones"></i> Listening</span>
+                        <span class="slider-val" id="adjustListeningVal">0%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="0" class="progress-slider listening-slider" id="adjustListeningInput">
+                </div>
+
+                <!-- Reading Slider -->
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <span class="slider-label"><i class="fa-solid fa-book-open"></i> Reading</span>
+                        <span class="slider-val" id="adjustReadingVal">0%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="0" class="progress-slider reading-slider" id="adjustReadingInput">
+                </div>
+
+                <!-- Writing Slider -->
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <span class="slider-label"><i class="fa-solid fa-pen-nib"></i> Writing</span>
+                        <span class="slider-val" id="adjustWritingVal">0%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="0" class="progress-slider writing-slider" id="adjustWritingInput">
+                </div>
+
+                <!-- Speaking Slider -->
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <span class="slider-label"><i class="fa-solid fa-microphone"></i> Speaking</span>
+                        <span class="slider-val" id="adjustSpeakingVal">0%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="0" class="progress-slider speaking-slider" id="adjustSpeakingInput">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelAdjustBtn">Cancel</button>
+                    <button type="submit" class="btn-save" id="saveAdjustBtn">
+                        <span>Save Changes</span>
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         MODAL 3: SUPABASE SQL INSTRUCTIONS
+    ===================================================== -->
+    <div class="modal-backdrop" id="sqlModal" style="display: none;">
+        <div class="modal-card sql-modal-card">
+            <button type="button" class="modal-close-btn" id="closeSqlModalBtn" aria-label="Close dialog">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="modal-icon-wrap">
+                <i class="fa-solid fa-terminal"></i>
+            </div>
+            <h3 class="modal-title">Supabase Database Setup</h3>
+            <p class="modal-subtitle">To enable live database sync for student progress, run this SQL in your Supabase project:</p>
+
+            <ol class="sql-instructions-list">
+                <li>Go to your <a href="https://supabase.com/dashboard/project/yiwjiwesniwbddhvgmth" target="_blank" rel="noopener">Supabase Dashboard ↗</a></li>
+                <li>Click <strong>SQL Editor</strong> in the left sidebar</li>
+                <li>Click <strong>New query</strong>, paste the script below, and click <strong>Run</strong></li>
+            </ol>
+
+            <div class="sql-snippet-box">
+                <button type="button" class="copy-sql-btn" id="copySqlBtn">
+                    <i class="fa-regular fa-copy"></i> <span>Copy SQL</span>
+                </button>
+                <pre><code id="sqlSnippetCode">-- Run supabase_schema.sql to create the student_progress table:
+CREATE TABLE IF NOT EXISTS public.student_progress (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL UNIQUE REFERENCES auth.users(id) ON DELETE CASCADE,
+    full_name TEXT DEFAULT '',
+    target_band NUMERIC(2, 1) DEFAULT 7.5 CHECK (target_band >= 1.0 AND target_band <= 9.0),
+    target_date DATE,
+    listening_progress INTEGER DEFAULT 0 CHECK (listening_progress >= 0 AND listening_progress <= 100),
+    reading_progress INTEGER DEFAULT 0 CHECK (reading_progress >= 0 AND reading_progress <= 100),
+    writing_progress INTEGER DEFAULT 0 CHECK (writing_progress >= 0 AND writing_progress <= 100),
+    speaking_progress INTEGER DEFAULT 0 CHECK (speaking_progress >= 0 AND speaking_progress <= 100),
+    completed_tasks JSONB DEFAULT '{"listening": [], "reading": [], "writing": [], "speaking": []}'::jsonb,
+    notes TEXT DEFAULT '',
+    created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE public.student_progress ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Students can view their own progress" ON public.student_progress FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Students can insert their own progress" ON public.student_progress FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Students can update their own progress" ON public.student_progress FOR UPDATE USING (auth.uid() = user_id);</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="dash-toast" id="dashToast" role="status" aria-live="polite">
+        <i class="fa-solid fa-circle-check"></i>
+        <span class="toast-text">Progress saved to Supabase!</span>
+    </div>
+
+    <!-- Dashboard Logic -->
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>

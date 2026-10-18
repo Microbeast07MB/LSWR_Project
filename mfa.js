@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 console.warn("Ignoring invalid post-MFA destination.", error);
             }
         }
-        return new URL("index.html", window.location.href).href;
+        return new URL("dashboard.html", window.location.href).href;
     }
 
     function showError(error) {

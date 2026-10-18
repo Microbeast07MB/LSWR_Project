@@ -320,11 +320,14 @@ async function syncNavbarAuthState() {
             const rawName = (user.user_metadata && user.user_metadata.full_name) || user.email.split("@")[0];
             const initial = rawName.charAt(0).toUpperCase();
 
-            // Render desktop user chip
+            // Render desktop user chip with Dashboard link
             navActions.innerHTML = `
                 <div class="user-nav-chip" title="Signed in as ${user.email}">
-                    <div class="user-avatar-circle">${initial}</div>
-                    <span class="user-nav-name">${rawName}</span>
+                    <a href="dashboard.html" class="user-dashboard-link" style="display:flex; align-items:center; gap:8px; text-decoration:none; color:inherit;">
+                        <div class="user-avatar-circle">${initial}</div>
+                        <span class="user-nav-name">${rawName}</span>
+                        <span class="dash-pill-tag" style="background:#f3f2ff; color:#635bff; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:100px;">Dashboard</span>
+                    </a>
                     <button class="nav-logout-btn" id="navLogoutBtn" aria-label="Sign out" title="Sign out">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     </button>
@@ -342,10 +345,9 @@ async function syncNavbarAuthState() {
 
             // Render mobile user state
             if (mobileLoginBtn) {
-                mobileLoginBtn.innerHTML = `<i class="fa-solid fa-arrow-right-from-bracket"></i> Logout (${rawName})`;
-                mobileLoginBtn.onclick = async () => {
-                    await window.supabaseAuth.signOut();
-                    window.location.reload();
+                mobileLoginBtn.innerHTML = `<i class="fa-solid fa-graduation-cap"></i> Student Dashboard`;
+                mobileLoginBtn.onclick = () => {
+                    window.location.href = "dashboard.html";
                 };
             }
         } else {

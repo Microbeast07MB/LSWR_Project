@@ -747,6 +747,23 @@ function showTaskFeedbackBanner(taskNumber, score, total, hasEmpty) {
         alertMsg += " Excellent! Perfect accuracy! 🌟";
     }
 
+    // Auto-sync completed task to student progress in Supabase
+    if (window.studentProgressService && window.supabaseAuth) {
+        window.supabaseAuth.getUser().then(user => {
+            if (user) {
+                const taskId = "L" + taskNumber;
+                window.studentProgressService.loadProgress(user).then(progress => {
+                    if (progress) {
+                        const tasks = progress.completed_tasks?.listening || [];
+                        if (!tasks.includes(taskId)) {
+                            window.studentProgressService.toggleTask(user, "listening", taskId);
+                        }
+                    }
+                });
+            }
+        }).catch(err => console.warn("Could not sync task progress:", err));
+    }
+
     alert(alertMsg);
 }
 
@@ -865,8 +882,11 @@ function showOverallScorecard() {
                 <button type="button" onclick="location.reload()" class="task-nav-btn secondary">
                     <i class="fa-solid fa-rotate-right"></i> Retake Full Practice
                 </button>
-                <a href="index.html" class="task-nav-btn primary">
-                    <i class="fa-solid fa-house"></i> Home Dashboard
+                <a href="dashboard.html" class="task-nav-btn primary" style="background: var(--primary); color: white;">
+                    <i class="fa-solid fa-graduation-cap"></i> Student Dashboard
+                </a>
+                <a href="index.html" class="task-nav-btn secondary">
+                    <i class="fa-solid fa-house"></i> Home
                 </a>
             </div>
         </div>
