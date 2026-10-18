@@ -348,7 +348,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 loginBtn.innerHTML = `<span>Success!</span> <i class="fa-solid fa-check"></i>`;
 
                 setTimeout(() => {
-                    window.location.href = "index.html";
+                    window.location.href = getPostLoginDestination();
                 }, 800);
             } catch (err) {
                 console.error("Sign in unexpected error:", err);
@@ -466,7 +466,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     showBanner("Account created and signed in successfully! Redirecting...", "success");
                     signupBtn.innerHTML = `<span>Welcome!</span> <i class="fa-solid fa-check"></i>`;
                     setTimeout(() => {
-                        window.location.href = "index.html";
+                        window.location.href = getPostLoginDestination();
                     }, 900);
                 }
             } catch (err) {

@@ -5,7 +5,7 @@
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 
-menuBtn.addEventListener("click", () => {
+if (menuBtn && mobileMenu) menuBtn.addEventListener("click", () => {
 
     mobileMenu.classList.toggle("open");
 
@@ -85,16 +85,16 @@ function closeTestModal() {
 }
 
 
-testBtn.addEventListener("click", openModal);
+if (testBtn) testBtn.addEventListener("click", openModal);
 
-ctaBtn.addEventListener("click", openModal);
+if (ctaBtn) ctaBtn.addEventListener("click", openModal);
 
-closeModal.addEventListener("click", closeTestModal);
+if (closeModal) closeModal.addEventListener("click", closeTestModal);
 
 
 /* Close when clicking outside */
 
-testModal.addEventListener("click", (event) => {
+if (testModal) testModal.addEventListener("click", (event) => {
 
     if (event.target === testModal) {
 
@@ -122,7 +122,7 @@ document.addEventListener("keydown", (event) => {
    START TEST
 ===================================================== */
 
-modalStart.addEventListener("click", () => {
+if (modalStart) modalStart.addEventListener("click", () => {
 
     window.location.href = "listening.html";
 
@@ -224,6 +224,100 @@ window.addEventListener("scroll", () => {
     });
 
 });
+
+/* =====================================================
+   SIGN-IN GATE FOR HOMEPAGE LEARNING ACTIONS
+===================================================== */
+
+function initHomepageAuthGate() {
+    const gate = document.getElementById("authGateModal");
+    if (!gate) return;
+    const closeButton = document.getElementById("authGateClose");
+    const signInLink = document.getElementById("authGateSignIn");
+    const signUpLink = document.getElementById("authGateSignUp");
+    let pendingDestination = "";
+
+    const openGate = async (destination) => {
+        const session = await window.supabaseAuth?.getSession();
+        if (session?.user) {
+            if (destination) window.location.assign(destination);
+            return true;
+        }
+        pendingDestination = destination || "";
+        const suffix = pendingDestination ? `?next=${encodeURIComponent(pendingDestination)}` : "";
+        if (signInLink) signInLink.href = `login.html${suffix}`;
+        if (signUpLink) signUpLink.href = `login.html?mode=signup${pendingDestination ? `&next=${encodeURIComponent(pendingDestination)}` : ""}`;
+        gate.classList.add("show");
+        gate.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        return false;
+    };
+
+    const closeGate = () => {
+        gate.classList.remove("show");
+        gate.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        pendingDestination = "";
+    };
+
+    if (closeButton) closeButton.addEventListener("click", closeGate);
+    gate.addEventListener("click", event => { if (event.target === gate) closeGate(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape" && gate.classList.contains("show")) closeGate(); });
+
+    const learningSelector = 'a[href$="listening.html"], a[href$="speaking.html"], a[href$="reading.html"], a[href$="writing.html"], a[href^="listening.html?"], a[href^="reading.html?"], .skill-card[onclick*="listening.html"], .skill-card[onclick*="speaking.html"], .skill-card[onclick*="reading.html"], .skill-card[onclick*="writing.html"], .skill-row[onclick*="listening.html"], .skill-row[onclick*="speaking.html"], .skill-row[onclick*="reading.html"], .skill-row[onclick*="writing.html"]';
+    document.querySelectorAll(learningSelector).forEach(element => {
+        if (element.closest(".skill-card") || element.closest(".skill-row")) return;
+        element.addEventListener("click", async event => {
+            const session = await window.supabaseAuth?.getSession();
+            if (session?.user) return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            const destination = element instanceof HTMLAnchorElement ? element.getAttribute("href") : (element.getAttribute("onclick")?.match(/'([^']+\.html[^']*)'/)?.[1] || "");
+            openGate(destination);
+        }, true);
+    });
+
+    document.querySelectorAll(".hero-buttons a").forEach(element => {
+        element.addEventListener("click", async event => {
+            const session = await window.supabaseAuth?.getSession();
+            if (session?.user) return;
+            if (element.getAttribute("href") === "#skills" || element.getAttribute("href") === "#ielts") {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                openGate("");
+                return;
+            }
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            openGate("");
+        }, true);
+    });
+
+    if (testBtn) {
+        testBtn.addEventListener("click", async event => {
+            const session = await window.supabaseAuth?.getSession();
+            if (session?.user) return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            openGate("listening.html");
+        }, true);
+    }
+
+    const navActions = document.getElementById("navActions");
+    const mobileLogin = document.getElementById("mobileLoginBtn");
+    if (navActions && !document.querySelector(".user-nav-chip")) {
+        navActions.querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
+            if (button.classList.contains("signup-btn")) window.location.href = "login.html?mode=signup";
+            else window.location.href = "login.html";
+        }));
+    }
+    if (mobileLogin && !mobileLogin.textContent.toLowerCase().includes("logout")) {
+        mobileLogin.addEventListener("click", event => { event.preventDefault(); window.location.href = "login.html"; });
+    }
+}
+
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initHomepageAuthGate);
+else initHomepageAuthGate();
 
 
 /* =====================================================

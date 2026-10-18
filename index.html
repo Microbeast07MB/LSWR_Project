@@ -1529,6 +1529,21 @@
 
 
 
+<!-- SIGN-IN GATE FOR LEARNING ACTIONS -->
+<div class="modal" id="authGateModal" role="dialog" aria-modal="true" aria-labelledby="authGateTitle" aria-hidden="true">
+    <div class="modal-box auth-gate-box">
+        <button class="close-modal" id="authGateClose" type="button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-icon"><i class="fa-solid fa-user-lock"></i></div>
+        <span class="section-tag">JOIN GRAMMARIUM</span>
+        <h2 id="authGateTitle">Sign in to continue</h2>
+        <p>Create an account or sign in to access lessons, practice, and progress tracking.</p>
+        <div class="auth-gate-actions">
+            <a class="modal-start" id="authGateSignUp" href="login.html?mode=signup">Create an account <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="auth-gate-login" id="authGateSignIn" href="login.html">I already have an account</a>
+        </div>
+    </div>
+</div>
+
 <!-- Supabase JS SDK (Official CDN v2) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- Supabase Configuration -->
