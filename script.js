@@ -411,6 +411,13 @@ async function loadLearningDashboard() {
         return;
     }
 
+    const { data: speakingParts, error: speakingError } = await window.supabaseClient
+        .from("speaking_completions")
+        .select("part, completed, completed_at")
+        .eq("user_id", user.id)
+        .eq("completed", true);
+    if (speakingError) console.error("Could not load Speaking checklist progress:", speakingError.message);
+
     const totals = Object.fromEntries(Object.keys(percentageNodes).map(skill => [skill, { score: 0, max: 0 }]));
     const activeDays = new Set();
     (rows || []).forEach(row => {
@@ -423,6 +430,16 @@ async function loadLearningDashboard() {
         }
         if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
     });
+
+    // Checklist completion counts toward Speaking progress even before a mock test is taken.
+    const completedSpeakingParts = speakingParts || [];
+    if (completedSpeakingParts.length) {
+        totals.speaking.score += completedSpeakingParts.length;
+        totals.speaking.max += 3;
+        completedSpeakingParts.forEach(row => {
+            if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
+        });
+    }
 
     let overallScore = 0;
     let overallMax = 0;
