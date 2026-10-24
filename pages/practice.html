@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>document.documentElement.classList.add("auth-pending");</script>
+    <style>html.auth-pending body { visibility: hidden !important; }</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IELTS Practice Hub - Practice official Cambridge IELTS sample tasks across Listening, Reading, Writing, and Speaking with audio, timers, and instant scoring.">
+    <title>IELTS Practice Hub (LSRW) | Grammarium</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-language"></i></span>
+                <span>Grammarium</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="assessment.html">🎯 IELTS Assessment</a>
+                <a href="practice.html" class="active">📚 IELTS Practice</a>
+                <a href="engineering.html">🎓 Engineering English</a>
+                <a href="../index.html#dashboard">📊 My Progress</a>
+            </nav>
+
+            <div class="nav-actions" id="navActions">
+                <a href="../index.html" class="primary-btn" style="padding: 10px 20px; font-size: 14px;">
+                    <i class="fa-solid fa-house"></i> Home Dashboard
+                </a>
+            </div>
+
+            <button class="menu-btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html">Home</a>
+        <a href="assessment.html">🎯 IELTS Assessment</a>
+        <a href="practice.html" class="active">📚 IELTS Practice</a>
+        <a href="engineering.html">🎓 Engineering English</a>
+        <a href="../index.html#dashboard">📊 My Progress</a>
+        <a href="../index.html" class="mobile-login">Back to Home</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main style="padding-top: 110px; min-height: 100vh;">
+
+        <!-- HERO HEADER -->
+        <section class="section" style="padding-top: 20px; padding-bottom: 30px;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; text-align: center;">
+                <div class="hero-badge" style="margin-bottom: 16px;">
+                    <span class="badge-dot" style="background: #635bff;"></span>
+                    OFFICIAL CAMBRIDGE IELTS PRACTICE
+                </div>
+
+                <h1 style="font-size: 40px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin-bottom: 14px; line-height: 1.2;">
+                    Master Every Component of <br><span style="color: var(--primary);">IELTS LSRW.</span>
+                </h1>
+
+                <p style="font-size: 16px; color: var(--muted); max-width: 720px; margin: 0 auto 35px auto; line-height: 1.6;">
+                    Comprehensive, high-yield practice modules for Listening, Reading, Writing, and Speaking. Work through realistic sample tasks, listen to native speaker audio, and check off completed lessons as you advance toward Band 7.5+.
+                </p>
+
+                <!-- QUICK SKILL PILLS -->
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#listeningSection" class="secondary-btn" style="font-size: 14px; padding: 10px 20px;">
+                        <i class="fa-solid fa-headphones" style="color: #635bff;"></i> Listening (8 Tasks)
+                    </a>
+                    <a href="#readingSection" class="secondary-btn" style="font-size: 14px; padding: 10px 20px;">
+                        <i class="fa-solid fa-book-open" style="color: #027a48;"></i> Reading (3 Passages)
+                    </a>
+                    <a href="#writingSection" class="secondary-btn" style="font-size: 14px; padding: 10px 20px;">
+                        <i class="fa-solid fa-pen-nib" style="color: #b54708;"></i> Writing (Task 1 & 2)
+                    </a>
+                    <a href="#speakingSection" class="secondary-btn" style="font-size: 14px; padding: 10px 20px;">
+                        <i class="fa-solid fa-microphone" style="color: #e04f16;"></i> Speaking (Parts 1–3)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- LSRW PRACTICE GRID -->
+        <section class="section" style="padding-top: 20px; padding-bottom: 80px;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 40px;">
+
+                <!-- 1. LISTENING SECTION -->
+                <div id="listeningSection" style="background: #ffffff; border: 1.5px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: var(--shadow);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="large-icon listening-icon" style="width: 52px; height: 52px; font-size: 24px;">
+                                <i class="fa-solid fa-headphones"></i>
+                            </div>
+                            <div>
+                                <span class="small-label" style="color: var(--primary);">SKILL 01 • AUDIO PRACTICE</span>
+                                <h2 style="font-size: 24px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark);">
+                                    IELTS Listening Practice
+                                </h2>
+                            </div>
+                        </div>
+                        <a href="listening.html" class="primary-btn" style="padding: 10px 22px; font-size: 14px;">
+                            Open Listening Hub <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <p style="color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 24px;">
+                        Practice with 8 official sample audio tracks covering all essential question styles: Form completion, Multiple Choice, Short Answer, Sentence completion, Matching, Map/Plan labeling, and Flow-chart notes.
+                    </p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 16px;">
+                            <div style="font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 6px;">Tasks 1 & 2: Forms & Notes</div>
+                            <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Shipping quotation and customer information dialogues.</p>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="listening" data-learning-item="task1"> <span>Task 1 Completed</span></label>
+                        </div>
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 16px;">
+                            <div style="font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 6px;">Tasks 3 & 4: MCQs & Sentences</div>
+                            <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Audio discussion on student study projects and research.</p>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="listening" data-learning-item="task3"> <span>Task 3 Completed</span></label>
+                        </div>
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 16px;">
+                            <div style="font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 6px;">Tasks 5 & 6: Matching & Maps</div>
+                            <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Visual floor plan and town development audio mapping.</p>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="listening" data-learning-item="task5"> <span>Task 5 Completed</span></label>
+                        </div>
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 16px;">
+                            <div style="font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 6px;">Tasks 7 & 8: Flow-charts & Summaries</div>
+                            <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Academic lecture comprehension and structured note-taking.</p>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="listening" data-learning-item="task7"> <span>Task 7 Completed</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. READING SECTION -->
+                <div id="readingSection" style="background: #ffffff; border: 1.5px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: var(--shadow);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="large-icon reading-icon" style="width: 52px; height: 52px; font-size: 24px;">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <div>
+                                <span class="small-label" style="color: #027a48;">SKILL 02 • COMPREHENSION PRACTICE</span>
+                                <h2 style="font-size: 24px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark);">
+                                    IELTS Academic Reading Practice
+                                </h2>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <a href="reading-selection.html" class="secondary-btn" style="padding: 10px 18px; font-size: 14px;">
+                                Select Passage
+                            </a>
+                            <a href="reading.html" class="primary-btn" style="padding: 10px 22px; font-size: 14px; background: #027a48;">
+                                Full Reading Test <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 24px;">
+                        Strengthen your skimming, scanning, and detail comprehension. Authentic texts feature scientific discoveries, history of navigation, and educational technology across 3 graded passages.
+                    </p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+                            <div style="font-weight: 700; font-size: 16px; color: var(--dark); margin-bottom: 6px;">Passage 1: Technical & Scientific Texts</div>
+                            <p style="font-size: 13.5px; color: var(--muted); margin-bottom: 14px;">True/False/Not Given questions testing precise factual analysis.</p>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="passage1"> <span>Passage 1 Completed</span></label>
+                        </div>
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+                            <div style="font-weight: 700; font-size: 16px; color: var(--dark); margin-bottom: 6px;">Passage 2: Analytical & Descriptive Articles</div>
+                            <p style="font-size: 13.5px; color: var(--muted); margin-bottom: 14px;">Matching Headings and summary completion exercises.</p>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="passage2"> <span>Passage 2 Completed</span></label>
+                        </div>
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+                            <div style="font-weight: 700; font-size: 16px; color: var(--dark); margin-bottom: 6px;">Passage 3: Complex Discursive Papers</div>
+                            <p style="font-size: 13.5px; color: var(--muted); margin-bottom: 14px;">Multiple choice and author perspective evaluation.</p>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading" data-learning-item="passage3"> <span>Passage 3 Completed</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. WRITING SECTION -->
+                <div id="writingSection" style="background: #ffffff; border: 1.5px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: var(--shadow);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="large-icon writing-icon" style="width: 52px; height: 52px; font-size: 24px;">
+                                <i class="fa-solid fa-pen-nib"></i>
+                            </div>
+                            <div>
+                                <span class="small-label" style="color: #b54708;">SKILL 03 • WRITTEN EXPRESSION</span>
+                                <h2 style="font-size: 24px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark);">
+                                    IELTS Writing Practice
+                                </h2>
+                            </div>
+                        </div>
+                        <a href="writing.html" class="primary-btn" style="padding: 10px 22px; font-size: 14px; background: #b54708;">
+                            Open Writing Hub <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <p style="color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 24px;">
+                        Study Band 7.0–9.0 examiner-graded model answers. Learn exact paragraph templates, vocabulary for describing trends, and essay coherence frameworks.
+                    </p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+                        <a href="writing1.html" style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: all 0.2s ease;">
+                            <span style="font-size: 12px; font-weight: 700; color: #b54708; text-transform: uppercase;">Task 1 Academic</span>
+                            <div style="font-weight: 800; font-size: 16px; color: var(--dark); margin: 6px 0;">Charts & Data Description</div>
+                            <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Analyze visual trends, comparisons, and overview paragraphs.</p>
+                            <label class="speaking-completion" onclick="event.stopPropagation();"><input type="checkbox" data-learning-skill="writing" data-learning-item="task1a"> <span>Completed Task 1A</span></label>
+                        </a>
+                        <a href="writing2.html" style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: all 0.2s ease;">
+                            <span style="font-size: 12px; font-weight: 700; color: #b54708; text-transform: uppercase;">Task 2 Academic</span>
+                            <div style="font-weight: 800; font-size: 16px; color: var(--dark); margin: 6px 0;">Discursive Essay Mastery</div>
+                            <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Agree/Disagree, Discussion, and Problem-Solution structures.</p>
+                            <label class="speaking-completion" onclick="event.stopPropagation();"><input type="checkbox" data-learning-skill="writing" data-learning-item="task2a"> <span>Completed Task 2A</span></label>
+                        </a>
+                        <a href="writing3.html" style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: all 0.2s ease;">
+                            <span style="font-size: 12px; font-weight: 700; color: #b54708; text-transform: uppercase;">Task 1 General</span>
+                            <div style="font-weight: 800; font-size: 16px; color: var(--dark); margin: 6px 0;">Formal & Semi-Formal Letters</div>
+                            <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Letter conventions, tone adjustment, and clear requests.</p>
+                            <label class="speaking-completion" onclick="event.stopPropagation();"><input type="checkbox" data-learning-skill="writing" data-learning-item="task1b"> <span>Completed Task 1B</span></label>
+                        </a>
+                        <a href="writing4.html" style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: all 0.2s ease;">
+                            <span style="font-size: 12px; font-weight: 700; color: #b54708; text-transform: uppercase;">Task 2 General</span>
+                            <div style="font-weight: 800; font-size: 16px; color: var(--dark); margin: 6px 0;">Social & Educational Topics</div>
+                            <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Real-world essay questions with sample hand-written scripts.</p>
+                            <label class="speaking-completion" onclick="event.stopPropagation();"><input type="checkbox" data-learning-skill="writing" data-learning-item="task2b"> <span>Completed Task 2B</span></label>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 4. SPEAKING SECTION -->
+                <div id="speakingSection" style="background: #ffffff; border: 1.5px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: var(--shadow);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="large-icon speaking-icon" style="width: 52px; height: 52px; font-size: 24px;">
+                                <i class="fa-solid fa-microphone"></i>
+                            </div>
+                            <div>
+                                <span class="small-label" style="color: #e04f16;">SKILL 04 • SPOKEN FLUENCY</span>
+                                <h2 style="font-size: 24px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark);">
+                                    IELTS Speaking Practice
+                                </h2>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <a href="speaking.html" class="primary-btn" style="padding: 10px 22px; font-size: 14px; background: #e04f16;">
+                                Open Speaking Hub <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 24px;">
+                        Train with native examiner prompts across all three parts. Listen to sample band 8 candidate recordings and simulate realistic exam timing.
+                    </p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                        <a href="speaking-part1.html" style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+                            <div style="font-weight: 700; font-size: 16px; color: var(--dark); margin-bottom: 6px;">Part 1: Introduction & Interview</div>
+                            <p style="font-size: 13.5px; color: var(--muted); margin-bottom: 14px;">Answering personal questions naturally (hometown, studies, hobbies).</p>
+                            <label class="speaking-completion" onclick="event.stopPropagation();"><input type="checkbox" data-learning-skill="speaking" data-learning-item="part1"> <span>Part 1 Completed</span></label>
+                        </a>
+                        <a href="speaking-part2.html" style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+                            <div style="font-weight: 700; font-size: 16px; color: var(--dark); margin-bottom: 6px;">Part 2: Long Turn (Cue Card)</div>
+                            <p style="font-size: 13.5px; color: var(--muted); margin-bottom: 14px;">1-minute preparation and 2-minute continuous speech structure.</p>
+                            <label class="speaking-completion" onclick="event.stopPropagation();"><input type="checkbox" data-learning-skill="speaking" data-learning-item="part2"> <span>Part 2 Completed</span></label>
+                        </a>
+                        <a href="speaking-part3.html" style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+                            <div style="font-weight: 700; font-size: 16px; color: var(--dark); margin-bottom: 6px;">Part 3: In-Depth Discussion</div>
+                            <p style="font-size: 13.5px; color: var(--muted); margin-bottom: 14px;">Expressing abstract arguments, justifying opinions, and speculating.</p>
+                            <label class="speaking-completion" onclick="event.stopPropagation();"><input type="checkbox" data-learning-skill="speaking" data-learning-item="part3"> <span>Part 3 Completed</span></label>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon"><i class="fa-solid fa-language"></i></span>
+                    <span>Grammarium</span>
+                </a>
+                <p>English learning and IELTS preparation platform designed for engineering students.</p>
+            </div>
+            <div class="footer-links">
+                <div>
+                    <h4>Platform Pillars</h4>
+                    <a href="assessment.html">🎯 IELTS Assessment</a>
+                    <a href="practice.html">📚 IELTS Practice</a>
+                    <a href="engineering.html">🎓 Engineering English</a>
+                </div>
+                <div>
+                    <h4>Quick Access</h4>
+                    <a href="listening.html">Listening Tests</a>
+                    <a href="reading.html">Reading Tests</a>
+                    <a href="writing.html">Writing Tasks</a>
+                    <a href="speaking.html">Speaking Practice</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Grammarium. Built for engineering students.</span>
+        </div>
+    </footer>
+
+    <!-- Supabase JS SDK (Official CDN v2) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/auth-guard.js"></script>
+</body>
+</html>

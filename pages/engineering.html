@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>document.documentElement.classList.add("auth-pending");</script>
+    <style>html.auth-pending body { visibility: hidden !important; }</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="English for Engineering Students - Practical communication skills for project vivas, technical presentations, job interviews, group discussions, and workplace email communication.">
+    <title>English for Engineering Students | Grammarium</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-language"></i></span>
+                <span>Grammarium</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="assessment.html">🎯 IELTS Assessment</a>
+                <a href="practice.html">📚 IELTS Practice</a>
+                <a href="engineering.html" class="active">🎓 Engineering English</a>
+                <a href="../index.html#dashboard">📊 My Progress</a>
+            </nav>
+
+            <div class="nav-actions" id="navActions">
+                <a href="../index.html" class="primary-btn" style="padding: 10px 20px; font-size: 14px;">
+                    <i class="fa-solid fa-house"></i> Home Dashboard
+                </a>
+            </div>
+
+            <button class="menu-btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html">Home</a>
+        <a href="assessment.html">🎯 IELTS Assessment</a>
+        <a href="practice.html">📚 IELTS Practice</a>
+        <a href="engineering.html" class="active">🎓 Engineering English</a>
+        <a href="../index.html#dashboard">📊 My Progress</a>
+        <a href="../index.html" class="mobile-login">Back to Home</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main style="padding-top: 110px; min-height: 100vh;">
+
+        <!-- HERO HEADER -->
+        <section class="section" style="padding-top: 20px; padding-bottom: 30px;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; text-align: center;">
+                <div class="hero-badge" style="margin-bottom: 16px; background: #ecfdf3; color: #027a48; border-color: #a6f4c5;">
+                    <span class="badge-dot" style="background: #12b76a;"></span>
+                    ENGINEERING-FOCUSED COMMUNICATION
+                </div>
+
+                <h1 style="font-size: 40px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin-bottom: 14px; line-height: 1.2;">
+                    Communication is an <br><span style="color: #027a48;">Engineering Superpower.</span>
+                </h1>
+
+                <p style="font-size: 16px; color: var(--muted); max-width: 740px; margin: 0 auto 35px auto; line-height: 1.6;">
+                    Technical brilliance without clear communication gets overlooked. Grammarium provides targeted training for college project vivas, campus placement interviews, seminar slide presentations, group discussions, and professional technical writing.
+                </p>
+
+                <!-- QUICK NAVIGATION ANCHORS -->
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <a href="engineering-modules.html" class="primary-btn" style="font-size: 14px; padding: 10px 22px; background: #027a48;">
+                        <i class="fa-solid fa-book-bookmark"></i> Start Interactive Lessons
+                    </a>
+                    <a href="#engineeringCurriculum" class="secondary-btn" style="font-size: 14px; padding: 10px 22px;">
+                        <i class="fa-solid fa-list-check"></i> Explore 7 Core Modules
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY ENGINEERING ENGLISH BANNER -->
+        <section class="section" style="padding-top: 10px; padding-bottom: 30px;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+                <div style="background: linear-gradient(135deg, #027a48 0%, #054f30 100%); border-radius: 24px; padding: 36px 40px; color: #ffffff; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; box-shadow: 0 20px 40px rgba(2, 122, 72, 0.16);">
+                    <div style="max-width: 680px;">
+                        <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;">The Engineer's Advantage</span>
+                        <h2 style="font-size: 26px; font-family: 'Manrope', sans-serif; font-weight: 800; margin: 10px 0 8px 0;">
+                            Bridging the Gap Between Code & Articulation
+                        </h2>
+                        <p style="font-size: 14.5px; opacity: 0.9; line-height: 1.6;">
+                            Recruiters and university panels don't just judge your code or schematics — they judge your ability to articulate system trade-offs, explain complex architectures simply, and handle tough questions under pressure.
+                        </p>
+                    </div>
+                    <div>
+                        <a href="engineering-modules.html" class="white-btn" style="padding: 14px 28px; font-size: 15px; font-weight: 800; color: #027a48; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; background: #ffffff;">
+                            Start First Lesson <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7 CORE ENGINEERING MODULES -->
+        <section id="engineeringCurriculum" class="section" style="padding-top: 30px; padding-bottom: 80px;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+                <div class="section-heading" style="text-align: center; margin-bottom: 44px;">
+                    <span class="section-tag" style="background: #ecfdf3; color: #027a48;">PRACTICAL CURRICULUM</span>
+                    <h2 style="font-size: 32px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark);">
+                        The 7 Pillars of Engineering English
+                    </h2>
+                    <p style="color: var(--muted); max-width: 640px; margin: 0 auto; font-size: 15.5px;">
+                        Interactive modules loaded with real-world scenarios, sentence templates, audio guidance, and self-assessment checkboxes.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px;">
+
+                    <!-- MODULE 1: PROJECT COMMUNICATION -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 32px 26px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                <span style="background: #eeedff; color: var(--primary); font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">MODULE 01</span>
+                                <span style="font-size: 12.5px; color: var(--muted);"><i class="fa-solid fa-list-check"></i> 5 Lessons</span>
+                            </div>
+                            <div class="large-icon" style="background: #eeedff; color: var(--primary); width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Project Communication & Viva</h3>
+                            <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Deliver the 60-second elevator pitch, explain system architecture diagrams, write clean documentation, and defend your technical choices in examiner vivas.
+                            </p>
+                            <ul style="list-style: none; padding: 0; margin-bottom: 24px; font-size: 13.5px; color: var(--text); display: flex; flex-direction: column; gap: 8px;">
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> 60-Second Project Pitch Template</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Describing System Architecture & Tech Stacks</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Handling External Examiner Viva Questions</li>
+                            </ul>
+                        </div>
+                        <a href="engineering-modules.html?module=projects" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px;">
+                            Study Module <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- MODULE 2: PRESENTATION SKILLS -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 32px 26px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                <span style="background: #ecfdf3; color: #027a48; font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">MODULE 02</span>
+                                <span style="font-size: 12.5px; color: var(--muted);"><i class="fa-solid fa-list-check"></i> 6 Lessons</span>
+                            </div>
+                            <div class="large-icon" style="background: #ecfdf3; color: #027a48; width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Technical Presentation Skills</h3>
+                            <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Master conference and seminar presentations. Hook audience attention, transition seamlessly across slides, explain benchmarks, and answer panel Q&A with poise.
+                            </p>
+                            <ul style="list-style: none; padding: 0; margin-bottom: 24px; font-size: 13.5px; color: var(--text); display: flex; flex-direction: column; gap: 8px;">
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Opening Hooks for Technical Seminars</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Explaining Complex Charts & Flowcharts</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Professional Techniques for Hostile Questions</li>
+                            </ul>
+                        </div>
+                        <a href="engineering-modules.html?module=presentations" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px; background: #027a48;">
+                            Study Module <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- MODULE 3: INTERVIEW SKILLS -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 32px 26px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                <span style="background: #fffaeb; color: #b54708; font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">MODULE 03</span>
+                                <span style="font-size: 12.5px; color: var(--muted);"><i class="fa-solid fa-list-check"></i> 6 Lessons</span>
+                            </div>
+                            <div class="large-icon" style="background: #fffaeb; color: #b54708; width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Technical & HR Interviews</h3>
+                            <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Crack technical screening and hiring rounds. Structure behavioral answers with the STAR method, articulate strengths/weaknesses honestly, and discuss technical failures constructively.
+                            </p>
+                            <ul style="list-style: none; padding: 0; margin-bottom: 24px; font-size: 13.5px; color: var(--text); display: flex; flex-direction: column; gap: 8px;">
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> The 90-Second Tech Self-Introduction</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> STAR Method Applied to College Projects</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Smart Questions to Ask the Technical Interviewer</li>
+                            </ul>
+                        </div>
+                        <a href="engineering-modules.html?module=interviews" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px; background: #b54708;">
+                            Study Module <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- MODULE 4: PROFESSIONAL COMMUNICATION -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 32px 26px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                <span style="background: #fef3f2; color: #b42318; font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">MODULE 04</span>
+                                <span style="font-size: 12.5px; color: var(--muted);"><i class="fa-solid fa-list-check"></i> 6 Lessons</span>
+                            </div>
+                            <div class="large-icon" style="background: #fef3f2; color: #b42318; width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">
+                                <i class="fa-solid fa-envelope-open-text"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Workplace Emails & Etiquette</h3>
+                            <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Master the corporate language of global engineering teams. Write concise status updates, handle pull request reviews diplomatically, and communicate in daily standups.
+                            </p>
+                            <ul style="list-style: none; padding: 0; margin-bottom: 24px; font-size: 13.5px; color: var(--text); display: flex; flex-direction: column; gap: 8px;">
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> 10 Standard Engineering Email Templates</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Formal vs. Informal Tone in Slack & Teams</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Giving and Receiving Code Review Feedback</li>
+                            </ul>
+                        </div>
+                        <a href="engineering-modules.html?module=professional" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px; background: #b42318;">
+                            Study Module <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- MODULE 5: GROUP DISCUSSION -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 32px 26px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                <span style="background: #f0fdf9; color: #0f766e; font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">MODULE 05</span>
+                                <span style="font-size: 12.5px; color: var(--muted);"><i class="fa-solid fa-list-check"></i> 5 Lessons</span>
+                            </div>
+                            <div class="large-icon" style="background: #f0fdf9; color: #0f766e; width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">
+                                <i class="fa-solid fa-users-line"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Group Discussion (GD) Mastery</h3>
+                            <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Ace campus recruitment GD rounds. Learn how to initiate with authoritative facts, intervene respectfully without shouting, and deliver balanced conclusions.
+                            </p>
+                            <ul style="list-style: none; padding: 0; margin-bottom: 24px; font-size: 13.5px; color: var(--text); display: flex; flex-direction: column; gap: 8px;">
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> 4 Strategies to Initiate a GD Topic</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Phrases to Agree & Disagree Professionally</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> How to Bring a Derailing Discussion Back on Track</li>
+                            </ul>
+                        </div>
+                        <a href="engineering-modules.html?module=gd" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px; background: #0f766e;">
+                            Study Module <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- MODULE 6: TECHNICAL ENGLISH & VOCABULARY -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 32px 26px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                <span style="background: #fdf2f8; color: #9d174d; font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">MODULE 06</span>
+                                <span style="font-size: 12.5px; color: var(--muted);"><i class="fa-solid fa-list-check"></i> 5 Lessons</span>
+                            </div>
+                            <div class="large-icon" style="background: #fdf2f8; color: #9d174d; width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">
+                                <i class="fa-solid fa-microchip"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Technical English & Precision</h3>
+                            <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Eliminate ambiguous phrasing in technical reports. Learn standard engineering collocations, formulate crisp scientific definitions, and avoid typical Indian English traps.
+                            </p>
+                            <ul style="list-style: none; padding: 0; margin-bottom: 24px; font-size: 13.5px; color: var(--text); display: flex; flex-direction: column; gap: 8px;">
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Precise Technical Jargon (Latency vs. Throughput)</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Formulating Mathematical & Engineering Definitions</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Eliminating Common Redundancies in Tech Writing</li>
+                            </ul>
+                        </div>
+                        <a href="engineering-modules.html?module=technical" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px; background: #9d174d;">
+                            Study Module <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- MODULE 7: CAREER & RESUME ENGLISH -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 32px 26px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                <span style="background: #eef2ff; color: #3730a3; font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">MODULE 07</span>
+                                <span style="font-size: 12.5px; color: var(--muted);"><i class="fa-solid fa-list-check"></i> 4 Lessons</span>
+                            </div>
+                            <div class="large-icon" style="background: #eef2ff; color: #3730a3; width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Resume & LinkedIn Networking</h3>
+                            <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Write high-impact bullet points using strong engineering action verbs. Craft persuasive cold messages on LinkedIn to alumni and hiring managers that get responses.
+                            </p>
+                            <ul style="list-style: none; padding: 0; margin-bottom: 24px; font-size: 13.5px; color: var(--text); display: flex; flex-direction: column; gap: 8px;">
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> Resume Formula: Action Verb + Tech Stack + Metric</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> 3 Cold Outreach Templates for LinkedIn</li>
+                                <li><i class="fa-solid fa-check" style="color: #027a48; margin-right: 8px;"></i> High-Converting Cover Letter Structure</li>
+                            </ul>
+                        </div>
+                        <a href="engineering-modules.html?module=career" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px; background: #3730a3;">
+                            Study Module <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon"><i class="fa-solid fa-language"></i></span>
+                    <span>Grammarium</span>
+                </a>
+                <p>English learning and IELTS preparation platform designed for engineering students.</p>
+            </div>
+            <div class="footer-links">
+                <div>
+                    <h4>Platform Pillars</h4>
+                    <a href="assessment.html">🎯 IELTS Assessment</a>
+                    <a href="practice.html">📚 IELTS Practice</a>
+                    <a href="engineering.html">🎓 Engineering English</a>
+                </div>
+                <div>
+                    <h4>Engineering Modules</h4>
+                    <a href="engineering-modules.html?module=projects">Project Communication</a>
+                    <a href="engineering-modules.html?module=presentations">Technical Presentations</a>
+                    <a href="engineering-modules.html?module=interviews">Job & HR Interviews</a>
+                    <a href="engineering-modules.html?module=professional">Workplace Etiquette</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Grammarium. Built for engineering students.</span>
+        </div>
+    </footer>
+
+    <!-- Supabase JS SDK (Official CDN v2) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/auth-guard.js"></script>
+</body>
+</html>

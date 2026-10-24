@@ -1,4 +1,4 @@
-﻿/* =====================================================
+/* =====================================================
    MOBILE MENU
 ===================================================== */
 
@@ -124,7 +124,7 @@ document.addEventListener("keydown", (event) => {
 
 if (modalStart) modalStart.addEventListener("click", () => {
 
-    window.location.href = "pages/listening.html";
+    window.location.href = "pages/assessment.html";
 
 });
 
@@ -482,6 +482,7 @@ async function loadLearningDashboard() {
         writing: ["writing-perc", "writing-bar"]
     };
     const updatePercent = (skill, value) => {
+        if (!percentageNodes[skill]) return;
         const [labelId, barId] = percentageNodes[skill];
         const label = document.getElementById(labelId);
         const bar = document.getElementById(barId);
@@ -494,6 +495,7 @@ async function loadLearningDashboard() {
     const user = session?.user;
     if (!user) return;
 
+    // Fetch practice test scores
     const { data: rows, error } = await window.supabaseClient
         .from("practice_results")
         .select("skill, score, max_score, completed_at")
@@ -505,6 +507,7 @@ async function loadLearningDashboard() {
         return;
     }
 
+    // Fetch checklist item completions
     const { data: completions, error: completionError } = await window.supabaseClient
         .from("learning_completions")
         .select("skill, item_key, completed, completed_at")
@@ -526,10 +529,13 @@ async function loadLearningDashboard() {
     });
 
     const checklistRows = completions || [];
+    const completedSet = new Set(checklistRows.map(row => `${row.skill}:${row.item_key}`));
+
+    // IELTS Track Calculations
     Object.keys(totals).forEach(skill => {
         const skillCompletions = checklistRows.filter(row => row.skill === skill);
         const uniqueItems = new Set(skillCompletions.map(row => row.item_key));
-        const expectedItems = { listening: 8, speaking: 3, reading: 8, writing: 4 }[skill];
+        const expectedItems = { listening: 8, speaking: 3, reading: 8, writing: 4 }[skill] || 5;
         totals[skill].score += Math.min(uniqueItems.size, expectedItems);
         totals[skill].max += expectedItems;
     });
@@ -537,15 +543,56 @@ async function loadLearningDashboard() {
         if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
     });
 
-    let overallScore = 0;
-    let overallMax = 0;
+    let ieltsScore = 0;
+    let ieltsMax = 0;
     Object.entries(totals).forEach(([skill, total]) => {
         const pct = total.max ? Math.round((total.score / total.max) * 100) : 0;
         updatePercent(skill, pct);
-        overallScore += total.score;
-        overallMax += total.max;
+        ieltsScore += total.score;
+        ieltsMax += total.max;
     });
-    const overall = overallMax ? Math.round((overallScore / overallMax) * 100) : 0;
+    const ieltsOverallPct = ieltsMax ? Math.round((ieltsScore / ieltsMax) * 100) : 0;
+
+    const ieltsTrackNode = document.getElementById("ielts-track-perc");
+    const ieltsTrackBar = document.getElementById("ielts-track-bar");
+    if (ieltsTrackNode) ieltsTrackNode.textContent = `${ieltsOverallPct}%`;
+    if (ieltsTrackBar) ieltsTrackBar.style.width = `${ieltsOverallPct}%`;
+
+    // Engineering English Track Calculations
+    const engCategories = {
+        projects: { items: ["eng-proj-pitch", "eng-proj-viva"], name: "Projects & Viva" },
+        presentations: { items: ["eng-pres-open", "eng-pres-charts"], name: "Presentations" },
+        interviews: { items: ["eng-int-intro", "eng-int-star"], name: "Interviews" },
+        professional: { items: ["eng-prof-email", "eng-gd-phrases", "eng-tech-vocab", "eng-career-resume"], name: "Workplace & Career" }
+    };
+
+    let engScore = 0;
+    let engMax = 0;
+    Object.entries(engCategories).forEach(([catKey, catData]) => {
+        const done = catData.items.filter(item => completedSet.has(`engineering:${item}`)).length;
+        const total = catData.items.length;
+        const pct = Math.round((done / total) * 100);
+
+        engScore += done;
+        engMax += total;
+
+        const percEl = document.getElementById(`eng-${catKey}-perc`);
+        const barEl = document.getElementById(`eng-${catKey}-bar`);
+        if (percEl) percEl.textContent = `${pct}%`;
+        if (barEl) barEl.style.width = `${pct}%`;
+    });
+    const engOverallPct = engMax ? Math.round((engScore / engMax) * 100) : 0;
+
+    const engTrackNode = document.getElementById("engineering-track-perc");
+    const engTrackBar = document.getElementById("engineering-track-bar");
+    if (engTrackNode) engTrackNode.textContent = `${engOverallPct}%`;
+    if (engTrackBar) engTrackBar.style.width = `${engOverallPct}%`;
+
+    // Overall Combined English Proficiency
+    const combinedTotalScore = ieltsScore + engScore;
+    const combinedTotalMax = ieltsMax + engMax;
+    const overall = combinedTotalMax ? Math.round((combinedTotalScore / combinedTotalMax) * 100) : 0;
+
     const overallNode = document.getElementById("overall-percentage");
     if (overallNode) overallNode.textContent = `${overall}%`;
     const circle = document.querySelector(".progress-circle");
@@ -553,9 +600,10 @@ async function loadLearningDashboard() {
 
     const headline = document.getElementById("progress-headline");
     const description = document.getElementById("progress-description");
-    if (headline) headline.textContent = overall ? (overall >= 80 ? "Excellent progress!" : overall >= 50 ? "Good progress!" : "Keep it up!") : "Start practicing!";
-    if (description) description.textContent = overall ? "Your progress is based on completed practice results." : "Complete a practice task to see your progress here.";
+    if (headline) headline.textContent = overall ? (overall >= 80 ? "Excellent Mastery!" : overall >= 50 ? "Solid Progress!" : "Keep it up!") : "Start your learning!";
+    if (description) description.textContent = overall ? "Calculated from completed IELTS tests and engineering modules." : "Complete a practice task or engineering module to see progress.";
 
+    // IELTS Goal & Streak
     const goal = user.user_metadata?.ielts_goal;
     const goalNode = document.getElementById("ielts-goal-value");
     if (goalNode && Number.isFinite(Number(goal)) && Number(goal) >= 0 && Number(goal) <= 9) goalNode.textContent = `Band ${Number(goal).toFixed(1)}`;
@@ -572,9 +620,123 @@ async function loadLearningDashboard() {
     }
     const streakNode = document.getElementById("streak-value");
     if (streakNode) streakNode.textContent = `${streak} ${streak === 1 ? "Day" : "Days"}`;
+
+    // Continue Learning Component (Finds next incomplete lesson)
+    renderContinueLearning(completedSet);
+
+    // Rule-Based Recommendations Component
+    renderRecommendations(ieltsOverallPct, engOverallPct, totals);
+}
+
+function renderContinueLearning(completedSet) {
+    const continueCard = document.getElementById("continueLearningBox");
+    if (!continueCard) return;
+
+    const curriculumSequence = [
+        { skill: "engineering", item: "eng-proj-pitch", title: "Project Pitch — The 60-Second Elevator Formula", module: "Projects", url: "pages/engineering-modules.html?module=projects" },
+        { skill: "engineering", item: "eng-proj-viva", title: "Project Viva — Defending Technical Choices", module: "Projects", url: "pages/engineering-modules.html?module=projects" },
+        { skill: "engineering", item: "eng-pres-open", title: "Presentation Skills — Technical Opening Hooks", module: "Presentations", url: "pages/engineering-modules.html?module=presentations" },
+        { skill: "engineering", item: "eng-int-intro", title: "Job Interviews — The 90-Second Tech Introduction", module: "Interviews", url: "pages/engineering-modules.html?module=interviews" },
+        { skill: "engineering", item: "eng-int-star", title: "Job Interviews — STAR Method for Technical Challenges", module: "Interviews", url: "pages/engineering-modules.html?module=interviews" },
+        { skill: "listening", item: "task1", title: "IELTS Listening Task 1 — Form Completion Practice", module: "IELTS Listening", url: "pages/listening.html" },
+        { skill: "speaking", item: "part1", title: "IELTS Speaking Part 1 — Introduction & Fluency", module: "IELTS Speaking", url: "pages/speaking-part1.html" },
+        { skill: "writing", item: "task2a", title: "IELTS Writing Task 2 — Academic Discursive Essay", module: "IELTS Writing", url: "pages/writing2.html" }
+    ];
+
+    const nextLesson = curriculumSequence.find(c => !completedSet.has(`${c.skill}:${c.item}`)) || curriculumSequence[0];
+
+    continueCard.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+            <div>
+                <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; background: #eeedff; color: var(--primary); padding: 4px 10px; border-radius: 20px;">
+                    RESUME WHERE YOU LEFT OFF
+                </span>
+                <h3 style="font-size: 19px; font-weight: 800; color: var(--dark); margin: 10px 0 6px 0;">
+                    ${nextLesson.title}
+                </h3>
+                <p style="font-size: 13.5px; color: var(--muted); margin: 0;">
+                    Module: <strong>${nextLesson.module}</strong>
+                </p>
+            </div>
+            <a href="${nextLesson.url}" class="primary-btn" style="padding: 10px 22px; font-size: 14px; white-space: nowrap;">
+                Continue Lesson <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    `;
+}
+
+function renderRecommendations(ieltsPct, engPct, skillTotals) {
+    const recBox = document.getElementById("dashboardRecommendations");
+    if (!recBox) return;
+
+    const recs = [];
+
+    if (engPct < 60) {
+        recs.push({
+            icon: "fa-solid fa-laptop-code",
+            bg: "#ecfdf3",
+            color: "#027a48",
+            title: "Master Your Engineering Project Viva",
+            desc: "Learn to defend design architectures and handle challenge questions from professors and external examiners.",
+            url: "pages/engineering-modules.html?module=projects",
+            action: "Open Project Module"
+        });
+    }
+
+    if (skillTotals?.writing && (skillTotals.writing.max === 0 || skillTotals.writing.score / skillTotals.writing.max < 0.6)) {
+        recs.push({
+            icon: "fa-solid fa-pen-nib",
+            bg: "#fffaeb",
+            color: "#b54708",
+            title: "Study IELTS Writing Task 2 Framework",
+            desc: "Analyze Band 9 sample discursive essays to improve coherence and cohesion scores.",
+            url: "pages/writing2.html",
+            action: "View Model Essays"
+        });
+    }
+
+    if (skillTotals?.speaking && (skillTotals.speaking.max === 0 || skillTotals.speaking.score / skillTotals.speaking.max < 0.6)) {
+        recs.push({
+            icon: "fa-solid fa-microphone",
+            bg: "#fef3f2",
+            color: "#b42318",
+            title: "Practice Speaking Part 2 Cue Cards",
+            desc: "Train to speak uninterrupted for 2 full minutes with native audio recordings.",
+            url: "pages/speaking-part2.html",
+            action: "Start Cue Card"
+        });
+    }
+
+    if (recs.length === 0) {
+        recs.push({
+            icon: "fa-solid fa-trophy",
+            bg: "#eeedff",
+            color: "#635bff",
+            title: "Take a Full IELTS Diagnostic Assessment",
+            desc: "Validate your English proficiency with a complete 4-component mock assessment.",
+            url: "pages/assessment.html",
+            action: "Start Assessment"
+        });
+    }
+
+    recBox.innerHTML = recs.slice(0, 3).map(r => `
+        <div style="background: #ffffff; border: 1.5px solid var(--border); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s ease;">
+            <div>
+                <div style="width: 40px; height: 40px; border-radius: 10px; background: ${r.bg}; color: ${r.color}; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px;">
+                    <i class="${r.icon}"></i>
+                </div>
+                <h4 style="font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 6px;">${r.title}</h4>
+                <p style="font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 16px;">${r.desc}</p>
+            </div>
+            <a href="${r.url}" style="font-size: 13.5px; font-weight: 700; color: ${r.color}; display: inline-flex; align-items: center; gap: 6px;">
+                ${r.action} <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    `).join("");
 }
 
 loadLearningDashboard();
+
 
 /* Per-item completion checklists for all four learning skills. */
 document.addEventListener("DOMContentLoaded", initLearningChecklist);

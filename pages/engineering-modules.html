@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>document.documentElement.classList.add("auth-pending");</script>
+    <style>html.auth-pending body { visibility: hidden !important; }</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive English for Engineering Students - Deep dive lessons on project viva defense, technical presentations, tech interviews, workplace emails, and group discussions.">
+    <title>Engineering English Lessons & Modules | Grammarium</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .module-tab-btn {
+            background: #ffffff;
+            border: 1.5px solid var(--border);
+            padding: 12px 20px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+        .module-tab-btn:hover {
+            border-color: #027a48;
+            color: #027a48;
+            background: #f6fef9;
+        }
+        .module-tab-btn.active {
+            background: #027a48;
+            border-color: #027a48;
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(2, 122, 72, 0.2);
+        }
+        .lesson-card {
+            background: #ffffff;
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(16, 24, 40, 0.03);
+            transition: border-color 0.2s ease;
+        }
+        .lesson-card:hover {
+            border-color: #d0d5dd;
+        }
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 18px 0;
+        }
+        @media (max-width: 768px) {
+            .comparison-box {
+                grid-template-columns: 1fr;
+            }
+        }
+        .bad-phrase {
+            background: #fef3f2;
+            border-left: 4px solid #f04438;
+            padding: 14px 16px;
+            border-radius: 0 10px 10px 0;
+            font-size: 13.5px;
+            color: #b42318;
+        }
+        .good-phrase {
+            background: #ecfdf3;
+            border-left: 4px solid #12b76a;
+            padding: 14px 16px;
+            border-radius: 0 10px 10px 0;
+            font-size: 13.5px;
+            color: #027a48;
+        }
+        .template-block {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 20px 24px;
+            border-radius: 14px;
+            font-family: 'DM Sans', monospace, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 18px 0;
+            border: 1px solid #334155;
+        }
+        .star-item {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-language"></i></span>
+                <span>Grammarium</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="assessment.html">🎯 IELTS Assessment</a>
+                <a href="practice.html">📚 IELTS Practice</a>
+                <a href="engineering.html" class="active">🎓 Engineering English</a>
+                <a href="../index.html#dashboard">📊 My Progress</a>
+            </nav>
+
+            <div class="nav-actions" id="navActions">
+                <a href="engineering.html" class="secondary-btn" style="padding: 10px 18px; font-size: 13.5px;">
+                    <i class="fa-solid fa-arrow-left"></i> Engineering Hub
+                </a>
+            </div>
+
+            <button class="menu-btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html">Home</a>
+        <a href="assessment.html">🎯 IELTS Assessment</a>
+        <a href="practice.html">📚 IELTS Practice</a>
+        <a href="engineering.html" class="active">🎓 Engineering English</a>
+        <a href="../index.html#dashboard">📊 My Progress</a>
+        <a href="engineering.html" class="mobile-login">Back to Hub</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main style="padding-top: 105px; min-height: 100vh;">
+
+        <!-- BREADCRUMBS & TOP NAV -->
+        <section style="background: #ffffff; border-bottom: 1.5px solid var(--border); padding: 18px 0;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div style="font-size: 13.5px; color: var(--muted); display: flex; align-items: center; gap: 8px;">
+                    <a href="../index.html" style="color: var(--muted);">Home</a>
+                    <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
+                    <a href="engineering.html" style="color: var(--muted);">Engineering English</a>
+                    <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
+                    <span id="currentModuleBreadcrumb" style="color: #027a48; font-weight: 700;">Project Communication</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 13px; font-weight: 600; color: var(--text);">Track Progress:</span>
+                    <span style="background: #ecfdf3; color: #027a48; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700;">
+                        Auto-saved to Supabase
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- HORIZONTAL MODULE TAB SELECTOR -->
+        <section style="background: #f8fafc; border-bottom: 1px solid var(--border); padding: 16px 0; overflow-x: auto;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; gap: 10px; flex-wrap: nowrap;">
+                <button class="module-tab-btn active" onclick="switchModule('projects')">
+                    <i class="fa-solid fa-laptop-code"></i> 1. Project & Viva
+                </button>
+                <button class="module-tab-btn" onclick="switchModule('presentations')">
+                    <i class="fa-solid fa-chalkboard-user"></i> 2. Presentations
+                </button>
+                <button class="module-tab-btn" onclick="switchModule('interviews')">
+                    <i class="fa-solid fa-user-tie"></i> 3. Interviews
+                </button>
+                <button class="module-tab-btn" onclick="switchModule('professional')">
+                    <i class="fa-solid fa-envelope-open-text"></i> 4. Workplace & Emails
+                </button>
+                <button class="module-tab-btn" onclick="switchModule('gd')">
+                    <i class="fa-solid fa-users-line"></i> 5. Group Discussion
+                </button>
+                <button class="module-tab-btn" onclick="switchModule('technical')">
+                    <i class="fa-solid fa-microchip"></i> 6. Technical English
+                </button>
+                <button class="module-tab-btn" onclick="switchModule('career')">
+                    <i class="fa-solid fa-file-lines"></i> 7. Career & Resume
+                </button>
+            </div>
+        </section>
+
+        <!-- LESSON CONTENT AREA -->
+        <section class="section" style="padding-top: 35px; padding-bottom: 80px;">
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 24px;">
+
+                <!-- ==========================================
+                     MODULE 1: PROJECT COMMUNICATION & VIVA
+                     ========================================== -->
+                <div id="module-projects" class="module-content-block">
+                    <div style="margin-bottom: 30px;">
+                        <span class="hero-badge" style="background: #eeedff; color: var(--primary); border: none;">MODULE 01 • PROJECT COMMUNICATION</span>
+                        <h1 style="font-size: 32px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin: 10px 0 6px 0;">
+                            Project Explanation & Viva Defense
+                        </h1>
+                        <p style="font-size: 15px; color: var(--muted);">
+                            Learn the exact formulas to articulate problem statements, system architectures, technical trade-offs, and defend your work during external examiner vivas.
+                        </p>
+                    </div>
+
+                    <!-- Lesson 1.1 -->
+                    <div class="lesson-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <span style="font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase;">LESSON 1.1</span>
+                                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                    The 60-Second Technical Elevator Pitch
+                                </h2>
+                            </div>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="engineering" data-learning-item="eng-proj-pitch"> <span>Mark Complete</span></label>
+                        </div>
+                        <p style="font-size: 14.5px; color: var(--text); line-height: 1.6;">
+                            When an examiner, recruiter, or professor asks: <em>"Can you briefly explain what your project does?"</em>, never start with implementation trivia like <em>"I imported React and created 5 files"</em>. Use the <strong>Problem → Solution → Architecture → Impact</strong> formula:
+                        </p>
+
+                        <div class="template-block">
+                            <strong>The 4-Part Pitch Framework:</strong><br><br>
+                            1. <strong>Problem:</strong> "In traditional systems, [User/Process] faces [Critical Bottleneck] resulting in [Quantifiable Cost/Loss]."<br>
+                            2. <strong>Proposed Solution:</strong> "To solve this, our project develops [Name], an automated system designed to [Core Value Proposition]."<br>
+                            3. <strong>Architecture:</strong> "It is architected using [Tech Stack A] for real-time processing and [Tech Stack B] for reliable persistence."<br>
+                            4. <strong>Impact/Metric:</strong> "As a result, it reduces [Metric] by [Percentage/Time], achieving [Outcome]."
+                        </div>
+
+                        <div class="comparison-box">
+                            <div class="bad-phrase">
+                                <strong>❌ Weak / Colloquial:</strong><br>
+                                "Basically our project is an IoT water tank. We connected Arduino with buzzer and when water fills it makes beep sound."
+                            </div>
+                            <div class="good-phrase">
+                                <strong>✅ Professional Engineering:</strong><br>
+                                "Our system is an automated fluid monitoring solution that mitigates municipal water wastage by using ultrasonic sensors coupled with microcontrollers for automated cutoff and real-time telemetry."
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lesson 1.2 -->
+                    <div class="lesson-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <span style="font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase;">LESSON 1.2</span>
+                                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                    Defending Design Choices in a University Viva
+                                </h2>
+                            </div>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="engineering" data-learning-item="eng-proj-viva"> <span>Mark Complete</span></label>
+                        </div>
+                        <p style="font-size: 14.5px; color: var(--text); line-height: 1.6;">
+                            External examiners commonly test your engineering maturity with challenge questions like: <em>"Why did you choose MongoDB instead of PostgreSQL?"</em> or <em>"Why not use a standard algorithm?"</em>
+                        </p>
+
+                        <div style="background: #f8fafc; border: 1.5px solid var(--border); border-radius: 14px; padding: 18px; margin: 16px 0;">
+                            <div style="font-weight: 800; font-size: 14px; color: var(--dark); margin-bottom: 8px;">
+                                🛡️ The 3-Step Viva Defense Technique:
+                            </div>
+                            <ol style="margin-left: 20px; font-size: 13.5px; color: var(--text); line-height: 1.7;">
+                                <li><strong>Acknowledge the Alternative:</strong> <em>"That is a valid alternative, and we evaluated PostgreSQL during our initial feasibility study."</em></li>
+                                <li><strong>Highlight the Constraint/Trade-off:</strong> <em>"However, our system ingest rate demanded schema flexibility for semi-structured sensor telemetry where writes heavily outnumber complex joins."</em></li>
+                                <li><strong>Conclude with Benchmark Validation:</strong> <em>"Under our load simulations, this architectural decision reduced write latency by 35%."</em></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     MODULE 2: TECHNICAL PRESENTATION SKILLS
+                     ========================================== -->
+                <div id="module-presentations" class="module-content-block" style="display: none;">
+                    <div style="margin-bottom: 30px;">
+                        <span class="hero-badge" style="background: #ecfdf3; color: #027a48; border: none;">MODULE 02 • PRESENTATIONS</span>
+                        <h1 style="font-size: 32px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin: 10px 0 6px 0;">
+                            Technical Presentation & Seminar Delivery
+                        </h1>
+                        <p style="font-size: 15px; color: var(--muted);">
+                            Deliver academic and industry slide decks that command attention, present benchmarks persuasively, and handle difficult question rounds.
+                        </p>
+                    </div>
+
+                    <!-- Lesson 2.1 -->
+                    <div class="lesson-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <span style="font-size: 12px; font-weight: 700; color: #027a48; text-transform: uppercase;">LESSON 2.1</span>
+                                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                    Opening a Technical Presentation with Impact
+                                </h2>
+                            </div>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="engineering" data-learning-item="eng-pres-open"> <span>Mark Complete</span></label>
+                        </div>
+                        <p style="font-size: 14.5px; color: var(--text); line-height: 1.6;">
+                            Avoid opening with generic filler like: <em>"Hello, my name is Rahul and today I will show my slides."</em> Grab your audience immediately with the engineering problem statement:
+                        </p>
+                        <div class="template-block">
+                            "Good morning respected panel and fellow peers. Consider this: over 40% of microservice outages stem not from code flaws, but from unmonitored database connection saturation. Over the next fifteen minutes, our team will demonstrate how our adaptive load-balancing proxy eliminates this single point of failure."
+                        </div>
+                    </div>
+
+                    <!-- Lesson 2.2 -->
+                    <div class="lesson-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <span style="font-size: 12px; font-weight: 700; color: #027a48; text-transform: uppercase;">LESSON 2.2</span>
+                                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                    Explaining System Flowcharts & Benchmarks
+                                </h2>
+                            </div>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="engineering" data-learning-item="eng-pres-charts"> <span>Mark Complete</span></label>
+                        </div>
+                        <div class="comparison-box">
+                            <div class="bad-phrase">
+                                <strong>❌ Cluttered / Passive:</strong><br>
+                                "Here on this slide we have this graph. You can see the blue line is higher than the orange line so it is better."
+                            </div>
+                            <div class="good-phrase">
+                                <strong>✅ Precise Technical Language:</strong><br>
+                                "Directing your attention to the horizontal X-axis, we plot concurrent client sessions against p99 response latency. As highlighted by the green trajectory, our algorithm maintains linear scaling up to 10,000 requests per second."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     MODULE 3: INTERVIEW SKILLS
+                     ========================================== -->
+                <div id="module-interviews" class="module-content-block" style="display: none;">
+                    <div style="margin-bottom: 30px;">
+                        <span class="hero-badge" style="background: #fffaeb; color: #b54708; border: none;">MODULE 03 • INTERVIEWS</span>
+                        <h1 style="font-size: 32px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin: 10px 0 6px 0;">
+                            Engineering Job & Placement Interviews
+                        </h1>
+                        <p style="font-size: 15px; color: var(--muted);">
+                            Master technical self-introductions, articulate project challenges with the STAR method, and converse with senior interviewers like a future colleague.
+                        </p>
+                    </div>
+
+                    <!-- Lesson 3.1 -->
+                    <div class="lesson-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <span style="font-size: 12px; font-weight: 700; color: #b54708; text-transform: uppercase;">LESSON 3.1</span>
+                                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                    The 90-Second Engineering "Tell Me About Yourself"
+                                </h2>
+                            </div>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="engineering" data-learning-item="eng-int-intro"> <span>Mark Complete</span></label>
+                        </div>
+                        <p style="font-size: 14.5px; color: var(--text); line-height: 1.6;">
+                            Never recite your birth date, high school marks, or hobbies. Structure your self-introduction in 3 distinct beats: <strong>Present (Focus & Core Competency) → Past (Key Technical Project) → Future (Why this specific company & role)</strong>.
+                        </p>
+                        <div class="template-block">
+                            "I am a final-year Computer Engineering student specializing in distributed systems and backend infrastructure. Over the past two years, I've primarily worked with PostgreSQL, Go, and cloud architectures. Most recently, I led a team of four to build an automated English assessment engine that processes audio telemetry for over 500 students with sub-second feedback. I'm excited about this Software Engineering role at [Company] because your team is solving large-scale data ingestion challenges, which directly aligns with my engineering interests."
+                        </div>
+                    </div>
+
+                    <!-- Lesson 3.2 -->
+                    <div class="lesson-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <span style="font-size: 12px; font-weight: 700; color: #b54708; text-transform: uppercase;">LESSON 3.2</span>
+                                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                    The STAR Method for Behavioral Questions
+                                </h2>
+                            </div>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="engineering" data-learning-item="eng-int-star"> <span>Mark Complete</span></label>
+                        </div>
+                        <p style="font-size: 14px; color: var(--text); margin-bottom: 16px;">
+                            When asked: <em>"Tell me about a time a project failed or went wrong"</em>:
+                        </p>
+                        <div class="star-item">
+                            <strong style="color: var(--primary);">S — Situation:</strong> "Two days before our capstone submission, our application experienced severe memory leaks under concurrent load tests."
+                        </div>
+                        <div class="star-item">
+                            <strong style="color: #027a48;">T — Task:</strong> "As the backend lead, my responsibility was to isolate the resource leak without rewriting core modules."
+                        </div>
+                        <div class="star-item">
+                            <strong style="color: #b54708;">A — Action:</strong> "I profiled heap allocations using Chrome DevTools, identified uncleaned WebSocket event listeners, and implemented a proper lifecycle teardown hook."
+                        </div>
+                        <div class="star-item">
+                            <strong style="color: #b42318;">R — Result:</strong> "Memory utilization stabilized under 150MB, zero crashes occurred during the live evaluation, and we achieved an A-grade."
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     MODULE 4: PROFESSIONAL WORKPLACE & EMAILS
+                     ========================================== -->
+                <div id="module-professional" class="module-content-block" style="display: none;">
+                    <div style="margin-bottom: 30px;">
+                        <span class="hero-badge" style="background: #fef3f2; color: #b42318; border: none;">MODULE 04 • WORKPLACE</span>
+                        <h1 style="font-size: 32px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin: 10px 0 6px 0;">
+                            Workplace Emails, Pull Requests & Meetings
+                        </h1>
+                        <p style="font-size: 15px; color: var(--muted);">
+                            Communicate professionally with team leads, mentors, and global colleagues across email, Slack, and code review platforms.
+                        </p>
+                    </div>
+
+                    <!-- Lesson 4.1 -->
+                    <div class="lesson-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <span style="font-size: 12px; font-weight: 700; color: #b42318; text-transform: uppercase;">LESSON 4.1</span>
+                                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                    Professional Engineering Email: Project Status Update
+                                </h2>
+                            </div>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="engineering" data-learning-item="eng-prof-email"> <span>Mark Complete</span></label>
+                        </div>
+                        <div class="template-block">
+                            <strong>Subject:</strong> [Project Name] Sprint Update — Database Optimization Phase Completed<br><br>
+                            Hi Team / Dr. Sharma,<br><br>
+                            Here is a brief progress update regarding our database restructuring milestone:<br><br>
+                            • <strong>Completed:</strong> Refactored schema to standard 3NF, replaced complex custom types with INT and TIMESTAMP, and added RLS user data isolation policies.<br>
+                            • <strong>Current Focus:</strong> Testing frontend PostgREST endpoints and verifying responsive mobile navigation.<br>
+                            • <strong>Blockers:</strong> None currently. The branch is cleanly tracked on GitHub development.<br><br>
+                            Please let me know if you would like me to review the test build before our weekly meeting.<br><br>
+                            Best regards,<br>
+                            Siddhesh Jadhav
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     MODULE 5: GROUP DISCUSSION (GD)
+                     ========================================== -->
+                <div id="module-gd" class="module-content-block" style="display: none;">
+                    <div style="margin-bottom: 30px;">
+                        <span class="hero-badge" style="background: #f0fdf9; color: #0f766e; border: none;">MODULE 05 • GROUP DISCUSSION</span>
+                        <h1 style="font-size: 32px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin: 10px 0 6px 0;">
+                            Group Discussion (GD) for Campus Placements
+                        </h1>
+                        <p style="font-size: 15px; color: var(--muted);">
+                            Learn how to initiate with authoritative clarity, intervene politely, state counter-arguments with diplomacy, and summarize effectively.
+                        </p>
+                    </div>
+
+                    <div class="lesson-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <span style="font-size: 12px; font-weight: 700; color: #0f766e; text-transform: uppercase;">LESSON 5.1</span>
+                                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                    Key Phrases for High-Impact GD Intervention
+                                </h2>
+                            </div>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="engineering" data-learning-item="eng-gd-phrases"> <span>Mark Complete</span></label>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 14px;">
+                            <div style="background: #f8fafc; border-left: 4px solid #0f766e; padding: 12px 16px; font-size: 14px;">
+                                <strong>To Initiate:</strong> "Good morning everyone. The topic given to us is [Topic]. To structure our discussion productively, let us first analyze the engineering and economic dimensions before considering regulatory implications."
+                            </div>
+                            <div style="background: #f8fafc; border-left: 4px solid #0f766e; padding: 12px 16px; font-size: 14px;">
+                                <strong>To Intervene Politely:</strong> "I agree with Rahul's point regarding cloud scalability; however, if we examine the operational security side, on-premise caching offers significant data sovereignty advantages."
+                            </div>
+                            <div style="background: #f8fafc; border-left: 4px solid #0f766e; padding: 12px 16px; font-size: 14px;">
+                                <strong>To Steer Back a Derailing Topic:</strong> "While that is an interesting tangent, let us steer back to the primary challenge outlined in our brief, which is cost optimization for tier-2 infrastructure."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     MODULE 6: TECHNICAL ENGLISH & PRECISION
+                     ========================================== -->
+                <div id="module-technical" class="module-content-block" style="display: none;">
+                    <div style="margin-bottom: 30px;">
+                        <span class="hero-badge" style="background: #fdf2f8; color: #9d174d; border: none;">MODULE 06 • TECHNICAL PRECISION</span>
+                        <h1 style="font-size: 32px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin: 10px 0 6px 0;">
+                            Technical Vocabulary & Precision
+                        </h1>
+                        <p style="font-size: 15px; color: var(--muted);">
+                            Speak and write like an experienced engineer by using accurate architectural vocabulary and eliminating vague generalizations.
+                        </p>
+                    </div>
+
+                    <div class="lesson-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <span style="font-size: 12px; font-weight: 700; color: #9d174d; text-transform: uppercase;">LESSON 6.1</span>
+                                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                    Common Engineering Collocations & Jargon
+                                </h2>
+                            </div>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="engineering" data-learning-item="eng-tech-vocab"> <span>Mark Complete</span></label>
+                        </div>
+                        <div class="comparison-box">
+                            <div class="bad-phrase">
+                                ❌ "We made the code less connected so it won't crash."<br>
+                                ❌ "The server was taking too much time to answer."<br>
+                                ❌ "We did a lot of testing to make it strong."
+                            </div>
+                            <div class="good-phrase">
+                                ✅ "We <strong>decoupled</strong> the services to prevent cascading failures."<br>
+                                ✅ "The API suffered from high <strong>network latency</strong> under peak load."<br>
+                                ✅ "We executed rigorous <strong>stress testing</strong> to ensure fault tolerance."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     MODULE 7: CAREER & RESUME ENGLISH
+                     ========================================== -->
+                <div id="module-career" class="module-content-block" style="display: none;">
+                    <div style="margin-bottom: 30px;">
+                        <span class="hero-badge" style="background: #eef2ff; color: #3730a3; border: none;">MODULE 07 • CAREER & RESUME</span>
+                        <h1 style="font-size: 32px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin: 10px 0 6px 0;">
+                            Resume Bullet Points & LinkedIn Communication
+                        </h1>
+                        <p style="font-size: 15px; color: var(--muted);">
+                            Write high-converting bullet points that beat applicant tracking systems and craft messages that alumni actually read and answer.
+                        </p>
+                    </div>
+
+                    <div class="lesson-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <span style="font-size: 12px; font-weight: 700; color: #3730a3; text-transform: uppercase;">LESSON 7.1</span>
+                                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                    The Google Formula for Tech Resumes: Action + Context + Metric
+                                </h2>
+                            </div>
+                            <label class="speaking-completion"><input type="checkbox" data-learning-skill="engineering" data-learning-item="eng-career-resume"> <span>Mark Complete</span></label>
+                        </div>
+                        <div class="comparison-box">
+                            <div class="bad-phrase">
+                                <strong>❌ Weak:</strong><br>
+                                "Responsible for creating backend APIs and fixing bugs in database."
+                            </div>
+                            <div class="good-phrase">
+                                <strong>✅ Strong:</strong><br>
+                                "Architected RESTful endpoints in Node.js and indexed PostgreSQL tables, reducing average query response time by 42% across 15,000 requests."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon"><i class="fa-solid fa-language"></i></span>
+                    <span>Grammarium</span>
+                </a>
+                <p>English learning and IELTS preparation platform designed for engineering students.</p>
+            </div>
+            <div class="footer-links">
+                <div>
+                    <h4>Platform Pillars</h4>
+                    <a href="assessment.html">🎯 IELTS Assessment</a>
+                    <a href="practice.html">📚 IELTS Practice</a>
+                    <a href="engineering.html">🎓 Engineering English</a>
+                </div>
+                <div>
+                    <h4>Quick Access</h4>
+                    <a href="listening.html">Listening Tests</a>
+                    <a href="reading.html">Reading Tests</a>
+                    <a href="writing.html">Writing Tasks</a>
+                    <a href="speaking.html">Speaking Practice</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Grammarium. Built for engineering students.</span>
+        </div>
+    </footer>
+
+    <!-- Supabase JS SDK (Official CDN v2) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/auth-guard.js"></script>
+
+    <script>
+        const moduleTitles = {
+            projects: "Project & Viva Defense",
+            presentations: "Technical Presentation Skills",
+            interviews: "Job & HR Interviews",
+            professional: "Workplace Emails & Etiquette",
+            gd: "Group Discussion Mastery",
+            technical: "Technical English & Vocabulary",
+            career: "Resume & LinkedIn Networking"
+        };
+
+        function switchModule(moduleKey) {
+            document.querySelectorAll(".module-content-block").forEach(block => block.style.display = "none");
+            document.querySelectorAll(".module-tab-btn").forEach(btn => btn.classList.remove("active"));
+
+            const targetBlock = document.getElementById(`module-${moduleKey}`);
+            if (targetBlock) {
+                targetBlock.style.display = "block";
+            }
+
+            const activeBtn = Array.from(document.querySelectorAll(".module-tab-btn")).find(btn => btn.getAttribute("onclick")?.includes(moduleKey));
+            if (activeBtn) {
+                activeBtn.classList.add("active");
+                activeBtn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+            }
+
+            const breadcrumb = document.getElementById("currentModuleBreadcrumb");
+            if (breadcrumb && moduleTitles[moduleKey]) {
+                breadcrumb.textContent = moduleTitles[moduleKey];
+            }
+
+            const url = new URL(window.location);
+            url.searchParams.set("module", moduleKey);
+            window.history.replaceState({}, "", url);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const mod = params.get("module") || "projects";
+            switchModule(mod);
+
+            const menuBtn = document.getElementById("menuBtn");
+            const mobileMenu = document.getElementById("mobileMenu");
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("open"));
+            }
+        });
+    </script>
+</body>
+</html>

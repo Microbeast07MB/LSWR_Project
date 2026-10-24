@@ -6719,4 +6719,187 @@ select.wrong-answer {
         width: 100%;
     }
 }
+
+/* =====================================================
+   THREE PILLARS SECTION & DUAL-TRACK DASHBOARD
+===================================================== */
+
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 40px;
+}
+
+@media (max-width: 1024px) {
+    .pillars-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pillar-card {
+    background: #ffffff;
+    border: 1.5px solid var(--border);
+    border-radius: 24px;
+    padding: 36px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(16, 24, 40, 0.04);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.pillar-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(16, 24, 40, 0.08);
+    border-color: #d0d5dd;
+}
+
+.pillar-card.assessment {
+    border-top: 4px solid #635bff;
+}
+
+.pillar-card.practice {
+    border-top: 4px solid #027a48;
+}
+
+.pillar-card.engineering {
+    border-top: 4px solid #b54708;
+}
+
+.pillar-badge {
+    font-size: 11.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 18px;
+}
+
+.pillar-badge.assessment {
+    background: #eeedff;
+    color: #635bff;
+}
+
+.pillar-badge.practice {
+    background: #ecfdf3;
+    color: #027a48;
+}
+
+.pillar-badge.engineering {
+    background: #fffaeb;
+    color: #b54708;
+}
+
+.pillar-title {
+    font-size: 24px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.pillar-desc {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.pillar-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--text);
+}
+
+.pillar-features-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pillar-features-list li i {
+    font-size: 13px;
+}
+
+.pillar-card.assessment .pillar-features-list li i {
+    color: #635bff;
+}
+
+.pillar-card.practice .pillar-features-list li i {
+    color: #027a48;
+}
+
+.pillar-card.engineering .pillar-features-list li i {
+    color: #b54708;
+}
+
+/* Dual-Track Dashboard */
+.dual-track-wrapper {
+    background: #ffffff;
+    border: 1.5px solid var(--border);
+    border-radius: 24px;
+    padding: 36px;
+    box-shadow: var(--shadow);
+    margin-top: 30px;
+}
+
+.dual-track-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 24px;
+}
+
+@media (max-width: 900px) {
+    .dual-track-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.track-box {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+}
+
+.track-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.track-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.continue-card-wrap {
+    background: #ffffff;
+    border: 1.5px solid var(--border);
+    border-left: 5px solid var(--primary);
+    border-radius: 18px;
+    padding: 24px 28px;
+    box-shadow: 0 4px 15px rgba(16, 24, 40, 0.04);
+    margin-bottom: 30px;
+}
+
 

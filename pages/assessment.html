@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>document.documentElement.classList.add("auth-pending");</script>
+    <style>html.auth-pending body { visibility: hidden !important; }</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IELTS Diagnostic Assessment - Test your level across Listening, Reading, Writing, and Speaking with band estimation, weak area diagnosis, and targeted practice recommendations.">
+    <title>IELTS Assessment & Band Diagnostic | Grammarium</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-language"></i></span>
+                <span>Grammarium</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="assessment.html" class="active">🎯 IELTS Assessment</a>
+                <a href="practice.html">📚 IELTS Practice</a>
+                <a href="engineering.html">🎓 Engineering English</a>
+                <a href="../index.html#dashboard">📊 My Progress</a>
+            </nav>
+
+            <div class="nav-actions" id="navActions">
+                <a href="../index.html" class="primary-btn" style="padding: 10px 20px; font-size: 14px;">
+                    <i class="fa-solid fa-house"></i> Home Dashboard
+                </a>
+            </div>
+
+            <button class="menu-btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html">Home</a>
+        <a href="assessment.html" class="active">🎯 IELTS Assessment</a>
+        <a href="practice.html">📚 IELTS Practice</a>
+        <a href="engineering.html">🎓 Engineering English</a>
+        <a href="../index.html#dashboard">📊 My Progress</a>
+        <a href="../index.html" class="mobile-login">Back to Home</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main style="padding-top: 110px; min-height: 100vh;">
+
+        <!-- HERO HEADER -->
+        <section class="section" style="padding-top: 20px; padding-bottom: 30px;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; text-align: center;">
+                <div class="hero-badge" style="margin-bottom: 16px;">
+                    <span class="badge-dot" style="background: #e04f16;"></span>
+                    DIAGNOSTIC TESTING & BAND PREDICTION
+                </div>
+
+                <h1 style="font-size: 40px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin-bottom: 14px; line-height: 1.2;">
+                    Know Exactly Where You Stand <br><span style="color: var(--primary);">Before Your Exam.</span>
+                </h1>
+
+                <p style="font-size: 16px; color: var(--muted); max-width: 720px; margin: 0 auto 35px auto; line-height: 1.6;">
+                    The IELTS Assessment is designed to pinpoint your true performance level. Take standardized diagnostic tests across all 4 components, discover your estimated band score, uncover weak areas, and get an immediate personalized roadmap.
+                </p>
+
+                <!-- QUICK NAVIGATION ANCHORS -->
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#scorecardSection" class="secondary-btn" style="font-size: 14px; padding: 10px 22px;">
+                        <i class="fa-solid fa-chart-pie"></i> View My Scorecard
+                    </a>
+                    <a href="#assessmentComponents" class="primary-btn" style="font-size: 14px; padding: 10px 22px;">
+                        <i class="fa-solid fa-play"></i> Start An Assessment
+                    </a>
+                    <a href="#recommendationsSection" class="secondary-btn" style="font-size: 14px; padding: 10px 22px;">
+                        <i class="fa-solid fa-compass"></i> Recommendations
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAGNOSTIC SCORECARD OVERVIEW -->
+        <section id="scorecardSection" class="section" style="padding-top: 20px; padding-bottom: 50px;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+
+                <div style="background: #ffffff; border: 1.5px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: var(--shadow);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-bottom: 1.5px solid var(--border); padding-bottom: 24px; margin-bottom: 28px;">
+                        <div>
+                            <span class="small-label" style="color: var(--primary); font-weight: 700; letter-spacing: 0.8px;">VERIFIED ASSESSMENT REPORT</span>
+                            <h2 style="font-size: 26px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin-top: 4px;">
+                                Your Estimated IELTS Band Scorecard
+                            </h2>
+                        </div>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <span id="assessmentStatusBadge" style="background: #ecfdf3; color: #027a48; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;">
+                                <i class="fa-solid fa-circle-check"></i> Synchronized with Supabase
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- 4 SKILL SCORES + OVERALL BAND -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; margin-bottom: 30px;">
+
+                        <!-- Overall Band Card -->
+                        <div style="background: linear-gradient(135deg, #635bff 0%, #4e44e8 100%); border-radius: 18px; padding: 24px; color: #ffffff; text-align: center; box-shadow: 0 10px 25px rgba(99, 91, 255, 0.25);">
+                            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; opacity: 0.85; margin-bottom: 8px;">
+                                Estimated Overall Band
+                            </div>
+                            <div id="overallEstimatedBand" style="font-size: 48px; font-family: 'Manrope', sans-serif; font-weight: 800; line-height: 1;">
+                                --
+                            </div>
+                            <div id="overallBandStatus" style="font-size: 13px; margin-top: 10px; opacity: 0.9;">
+                                Complete tests to calculate
+                            </div>
+                        </div>
+
+                        <!-- Listening Card -->
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 18px; padding: 20px; text-align: center;">
+                            <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px; color: #635bff; font-weight: 700; font-size: 14px;">
+                                <i class="fa-solid fa-headphones"></i> Listening
+                            </div>
+                            <div id="listeningBandScore" style="font-size: 32px; font-weight: 800; color: var(--dark); font-family: 'Manrope', sans-serif;">--</div>
+                            <div id="listeningRawScore" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Raw: 0 / 40</div>
+                            <div id="listeningBadge" style="margin-top: 8px; font-size: 11.5px; font-weight: 600; color: #667085;">Pending Test</div>
+                        </div>
+
+                        <!-- Reading Card -->
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 18px; padding: 20px; text-align: center;">
+                            <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px; color: #027a48; font-weight: 700; font-size: 14px;">
+                                <i class="fa-solid fa-book-open"></i> Reading
+                            </div>
+                            <div id="readingBandScore" style="font-size: 32px; font-weight: 800; color: var(--dark); font-family: 'Manrope', sans-serif;">--</div>
+                            <div id="readingRawScore" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Raw: 0 / 40</div>
+                            <div id="readingBadge" style="margin-top: 8px; font-size: 11.5px; font-weight: 600; color: #667085;">Pending Test</div>
+                        </div>
+
+                        <!-- Writing Card -->
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 18px; padding: 20px; text-align: center;">
+                            <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px; color: #b54708; font-weight: 700; font-size: 14px;">
+                                <i class="fa-solid fa-pen-nib"></i> Writing
+                            </div>
+                            <div id="writingBandScore" style="font-size: 32px; font-weight: 800; color: var(--dark); font-family: 'Manrope', sans-serif;">--</div>
+                            <div id="writingRawScore" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Evaluated Modules</div>
+                            <div id="writingBadge" style="margin-top: 8px; font-size: 11.5px; font-weight: 600; color: #667085;">Pending Test</div>
+                        </div>
+
+                        <!-- Speaking Card -->
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 18px; padding: 20px; text-align: center;">
+                            <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px; color: #e04f16; font-weight: 700; font-size: 14px;">
+                                <i class="fa-solid fa-microphone"></i> Speaking
+                            </div>
+                            <div id="speakingBandScore" style="font-size: 32px; font-weight: 800; color: var(--dark); font-family: 'Manrope', sans-serif;">--</div>
+                            <div id="speakingRawScore" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Mock Evaluation</div>
+                            <div id="speakingBadge" style="margin-top: 8px; font-size: 11.5px; font-weight: 600; color: #667085;">Pending Test</div>
+                        </div>
+
+                    </div>
+
+                    <!-- DIAGNOSIS: STRENGTHS & WEAK AREAS -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; background: #fdfdfd; border: 1px solid var(--border); border-radius: 18px; padding: 24px;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 15px; color: #027a48; margin-bottom: 12px;">
+                                <i class="fa-solid fa-circle-check"></i> Identified Strengths
+                            </div>
+                            <ul id="strengthsList" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--text);">
+                                <li><i class="fa-solid fa-spinner fa-spin" style="margin-right: 8px; color: var(--primary);"></i> Analyzing test results...</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 15px; color: #b54708; margin-bottom: 12px;">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Priority Areas Needing Practice
+                            </div>
+                            <ul id="weaknessesList" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--text);">
+                                <li><i class="fa-solid fa-spinner fa-spin" style="margin-right: 8px; color: var(--primary);"></i> Analyzing test results...</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 4 DIAGNOSTIC ASSESSMENT COMPONENTS -->
+        <section id="assessmentComponents" class="section" style="padding-top: 20px; padding-bottom: 60px;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+                <div class="section-heading" style="text-align: center; margin-bottom: 40px;">
+                    <span class="section-tag" style="background: #fef3f2; color: #b42318;">TESTING MODULES</span>
+                    <h2 style="font-size: 32px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark);">
+                        Individual Skill Diagnostic Tests
+                    </h2>
+                    <p style="color: var(--muted); max-width: 650px; margin: 0 auto; font-size: 15.5px;">
+                        Each test is mapped directly to standard Cambridge IELTS evaluation criteria. Results automatically synchronize with your student profile.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 24px;">
+
+                    <!-- 1. LISTENING ASSESSMENT -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 30px 24px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                                <span style="background: #eeedff; color: var(--primary); font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">DIAGNOSTIC 01</span>
+                                <span style="font-size: 13px; color: var(--muted);"><i class="fa-regular fa-clock"></i> 30 Mins</span>
+                            </div>
+                            <div class="large-icon listening-icon" style="margin-bottom: 16px;">
+                                <i class="fa-solid fa-headphones"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Listening Assessment</h3>
+                            <p style="font-size: 14.5px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Complete official Cambridge sample tasks 1 through 8. Tests form completion, multiple choice, diagram labeling, and short answers with live audio.
+                            </p>
+                        </div>
+                        <div>
+                            <div style="background: #f8fafc; padding: 10px 14px; border-radius: 10px; font-size: 13px; color: var(--text); margin-bottom: 16px;">
+                                <i class="fa-solid fa-list-check" style="color: var(--primary); margin-right: 6px;"></i> 8 Tasks (Form, MCQs, Maps)
+                            </div>
+                            <a href="listening.html" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px;">
+                                Start Listening Test <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 2. READING ASSESSMENT -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 30px 24px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                                <span style="background: #ecfdf3; color: #027a48; font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">DIAGNOSTIC 02</span>
+                                <span style="font-size: 13px; color: var(--muted);"><i class="fa-regular fa-clock"></i> 60 Mins</span>
+                            </div>
+                            <div class="large-icon reading-icon" style="margin-bottom: 16px;">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Reading Assessment</h3>
+                            <p style="font-size: 14.5px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Full Academic Reading paper with authentic articles, scientific passages, timer, and automatic scoring across 40 questions.
+                            </p>
+                        </div>
+                        <div>
+                            <div style="background: #f8fafc; padding: 10px 14px; border-radius: 10px; font-size: 13px; color: var(--text); margin-bottom: 16px;">
+                                <i class="fa-solid fa-list-check" style="color: #027a48; margin-right: 6px;"></i> 40 Academic Questions (Passages 1–3)
+                            </div>
+                            <a href="reading.html" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px; background: #027a48;">
+                                Start Reading Test <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 3. WRITING ASSESSMENT -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 30px 24px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                                <span style="background: #fffaeb; color: #b54708; font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">DIAGNOSTIC 03</span>
+                                <span style="font-size: 13px; color: var(--muted);"><i class="fa-regular fa-clock"></i> 60 Mins</span>
+                            </div>
+                            <div class="large-icon writing-icon" style="margin-bottom: 16px;">
+                                <i class="fa-solid fa-pen-nib"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Writing Assessment</h3>
+                            <p style="font-size: 14.5px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Evaluate Task 1 (Charts, Graphs & Letters) and Task 2 (Discursive Essays). Compare against examiner-assessed Band 7.0–9.0 scripts.
+                            </p>
+                        </div>
+                        <div>
+                            <div style="background: #f8fafc; padding: 10px 14px; border-radius: 10px; font-size: 13px; color: var(--text); margin-bottom: 16px;">
+                                <i class="fa-solid fa-list-check" style="color: #b54708; margin-right: 6px;"></i> Task 1 & Task 2 Rubrics
+                            </div>
+                            <a href="writing.html" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px; background: #b54708;">
+                                Start Writing Diagnostic <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4. SPEAKING ASSESSMENT -->
+                    <div class="skill-card" style="border: 1.5px solid var(--border); padding: 30px 24px; border-radius: 20px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                                <span style="background: #fef3f2; color: #b42318; font-weight: 800; font-size: 12px; padding: 4px 12px; border-radius: 20px;">DIAGNOSTIC 04</span>
+                                <span style="font-size: 13px; color: var(--muted);"><i class="fa-regular fa-clock"></i> 14 Mins</span>
+                            </div>
+                            <div class="large-icon speaking-icon" style="margin-bottom: 16px;">
+                                <i class="fa-solid fa-microphone"></i>
+                            </div>
+                            <h3 style="font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">Speaking Mock Test</h3>
+                            <p style="font-size: 14.5px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
+                                Practice Part 1 (Introduction), Part 2 (Long Turn Cue Card), and Part 3 (Two-way Discussion) with audio timers and fluency evaluation.
+                            </p>
+                        </div>
+                        <div>
+                            <div style="background: #f8fafc; padding: 10px 14px; border-radius: 10px; font-size: 13px; color: var(--text); margin-bottom: 16px;">
+                                <i class="fa-solid fa-list-check" style="color: #b42318; margin-right: 6px;"></i> 3 Parts with Native Audio
+                            </div>
+                            <a href="speaking.html" class="primary-btn" style="width: 100%; text-align: center; justify-content: center; padding: 12px; background: #e04f16;">
+                                Start Speaking Mock <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTIONABLE RECOMMENDATIONS BASED ON SCORES -->
+        <section id="recommendationsSection" class="section" style="padding-top: 20px; padding-bottom: 80px; background: #ffffff; border-top: 1.5px solid var(--border);">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+                <div class="section-heading" style="text-align: center; margin-bottom: 40px;">
+                    <span class="section-tag">TAILORED ROADMAP</span>
+                    <h2 style="font-size: 30px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark);">
+                        Recommended Next Steps
+                    </h2>
+                    <p style="color: var(--muted); max-width: 620px; margin: 0 auto; font-size: 15px;">
+                        Based on your current diagnostic evaluation, here are your high-impact improvement tasks:
+                    </p>
+                </div>
+
+                <div id="dynamicRecommendations" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                    <!-- Recommendation Card 1 -->
+                    <div style="border: 1px solid var(--border); border-radius: 16px; padding: 22px; background: #fdfdfd; display: flex; gap: 16px; align-items: flex-start;">
+                        <div style="width: 44px; height: 44px; border-radius: 12px; background: #eeedff; color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 4px;">Target IELTS Writing Task 2</h4>
+                            <p style="font-size: 13.5px; color: var(--muted); line-height: 1.5; margin-bottom: 12px;">
+                                Most candidates lose band marks on Coherence and Task Achievement. Study the high-scoring sample essay templates.
+                            </p>
+                            <a href="writing2.html" style="font-size: 13.5px; font-weight: 700; color: var(--primary);">
+                                Study Task 2 Guide <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Recommendation Card 2 -->
+                    <div style="border: 1px solid var(--border); border-radius: 16px; padding: 22px; background: #fdfdfd; display: flex; gap: 16px; align-items: flex-start;">
+                        <div style="width: 44px; height: 44px; border-radius: 12px; background: #ecfdf3; color: #027a48; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 4px;">Prepare Engineering Project Viva</h4>
+                            <p style="font-size: 13.5px; color: var(--muted); line-height: 1.5; margin-bottom: 12px;">
+                                Practice explaining your technical architecture, design patterns, and handling tough questions from panel examiners.
+                            </p>
+                            <a href="engineering-modules.html?module=projects" style="font-size: 13.5px; font-weight: 700; color: #027a48;">
+                                Open Project Viva Practice <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Recommendation Card 3 -->
+                    <div style="border: 1px solid var(--border); border-radius: 16px; padding: 22px; background: #fdfdfd; display: flex; gap: 16px; align-items: flex-start;">
+                        <div style="width: 44px; height: 44px; border-radius: 12px; background: #fef3f2; color: #b42318; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">
+                            <i class="fa-solid fa-microphone-lines"></i>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 4px;">Speaking Cue Card (Part 2)</h4>
+                            <p style="font-size: 13.5px; color: var(--muted); line-height: 1.5; margin-bottom: 12px;">
+                                Master speaking continuously for 2 minutes without hesitation using our structured preparation frameworks.
+                            </p>
+                            <a href="speaking-part2.html" style="font-size: 13.5px; font-weight: 700; color: #b42318;">
+                                Practice Speaking Part 2 <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon"><i class="fa-solid fa-language"></i></span>
+                    <span>Grammarium</span>
+                </a>
+                <p>English learning and IELTS preparation platform designed for engineering students.</p>
+            </div>
+            <div class="footer-links">
+                <div>
+                    <h4>Platform Pillars</h4>
+                    <a href="assessment.html">🎯 IELTS Assessment</a>
+                    <a href="practice.html">📚 IELTS Practice</a>
+                    <a href="engineering.html">🎓 Engineering English</a>
+                </div>
+                <div>
+                    <h4>Quick Access</h4>
+                    <a href="listening.html">Listening Tests</a>
+                    <a href="reading.html">Reading Tests</a>
+                    <a href="writing.html">Writing Tasks</a>
+                    <a href="speaking.html">Speaking Practice</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Grammarium. Built for engineering students.</span>
+        </div>
+    </footer>
+
+    <!-- Supabase JS SDK (Official CDN v2) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/auth-guard.js"></script>
+
+    <script>
+        // Official IELTS Academic Raw Score to Band Conversion
+        function rawToIeltsBand(rawScore, maxScore) {
+            if (!rawScore || rawScore <= 0 || !maxScore) return 0;
+            const pct = (rawScore / maxScore) * 40; // Normalize to 40 questions scale
+            if (pct >= 39) return 9.0;
+            if (pct >= 37) return 8.5;
+            if (pct >= 35) return 8.0;
+            if (pct >= 32) return 7.5;
+            if (pct >= 30) return 7.0;
+            if (pct >= 26) return 6.5;
+            if (pct >= 23) return 6.0;
+            if (pct >= 18) return 5.5;
+            if (pct >= 16) return 5.0;
+            if (pct >= 13) return 4.5;
+            if (pct >= 10) return 4.0;
+            return 3.5;
+        }
+
+        // Round IELTS Band to nearest 0.5 according to official rules
+        function roundIeltsBand(avg) {
+            if (avg <= 0) return 0;
+            const decimal = avg - Math.floor(avg);
+            if (decimal < 0.25) return Math.floor(avg);
+            if (decimal < 0.75) return Math.floor(avg) + 0.5;
+            return Math.ceil(avg);
+        }
+
+        async function loadAssessmentScorecard() {
+            if (!window.supabaseClient || !window.supabaseAuth) return;
+            const session = await window.supabaseAuth.getSession();
+            const user = session?.user;
+            if (!user) return;
+
+            // Fetch practice results
+            const { data: rows, error } = await window.supabaseClient
+                .from("practice_results")
+                .select("skill, score, max_score, completed_at")
+                .eq("user_id", user.id)
+                .order("completed_at", { ascending: false });
+
+            if (error) {
+                console.error("Error loading assessment data:", error.message);
+                return;
+            }
+
+            const latestScores = {};
+            (rows || []).forEach(r => {
+                const skill = String(r.skill || "").toLowerCase();
+                if (!latestScores[skill]) {
+                    latestScores[skill] = { score: Number(r.score), max: Number(r.max_score) };
+                }
+            });
+
+            // Compute bands per skill
+            const bands = {};
+            ["listening", "reading", "writing", "speaking"].forEach(skill => {
+                if (latestScores[skill] && latestScores[skill].max > 0) {
+                    bands[skill] = rawToIeltsBand(latestScores[skill].score, latestScores[skill].max);
+                } else {
+                    bands[skill] = null;
+                }
+            });
+
+            // Update UI elements
+            // Listening
+            if (bands.listening) {
+                document.getElementById("listeningBandScore").textContent = `Band ${bands.listening.toFixed(1)}`;
+                document.getElementById("listeningRawScore").textContent = `Raw: ${latestScores.listening.score} / ${latestScores.listening.max}`;
+                document.getElementById("listeningBadge").textContent = "✓ Assessed";
+                document.getElementById("listeningBadge").style.color = "#027a48";
+            }
+            // Reading
+            if (bands.reading) {
+                document.getElementById("readingBandScore").textContent = `Band ${bands.reading.toFixed(1)}`;
+                document.getElementById("readingRawScore").textContent = `Raw: ${latestScores.reading.score} / ${latestScores.reading.max}`;
+                document.getElementById("readingBadge").textContent = "✓ Assessed";
+                document.getElementById("readingBadge").style.color = "#027a48";
+            }
+            // Writing
+            if (bands.writing) {
+                document.getElementById("writingBandScore").textContent = `Band ${bands.writing.toFixed(1)}`;
+                document.getElementById("writingBadge").textContent = "✓ Assessed";
+                document.getElementById("writingBadge").style.color = "#027a48";
+            }
+            // Speaking
+            if (bands.speaking) {
+                document.getElementById("speakingBandScore").textContent = `Band ${bands.speaking.toFixed(1)}`;
+                document.getElementById("speakingBadge").textContent = "✓ Mock Completed";
+                document.getElementById("speakingBadge").style.color = "#027a48";
+            }
+
+            // Overall composite
+            const validBands = Object.values(bands).filter(b => b !== null);
+            if (validBands.length > 0) {
+                const avg = validBands.reduce((a, b) => a + b, 0) / validBands.length;
+                const roundedBand = roundIeltsBand(avg);
+                document.getElementById("overallEstimatedBand").textContent = `Band ${roundedBand.toFixed(1)}`;
+                document.getElementById("overallBandStatus").textContent = `Calculated from ${validBands.length} of 4 components`;
+            }
+
+            // Strengths and Weaknesses
+            const strengthsList = document.getElementById("strengthsList");
+            const weaknessesList = document.getElementById("weaknessesList");
+            strengthsList.innerHTML = "";
+            weaknessesList.innerHTML = "";
+
+            let hasStrengths = false;
+            let hasWeaknesses = false;
+
+            Object.entries(bands).forEach(([skill, band]) => {
+                const capitalized = skill.charAt(0).toUpperCase() + skill.slice(1);
+                if (band !== null) {
+                    if (band >= 7.0) {
+                        hasStrengths = true;
+                        strengthsList.innerHTML += `<li><i class="fa-solid fa-circle-check" style="color: #027a48; margin-right: 6px;"></i> <strong>${capitalized}:</strong> Band ${band.toFixed(1)} — Strong operational command.</li>`;
+                    } else {
+                        hasWeaknesses = true;
+                        weaknessesList.innerHTML += `<li><i class="fa-solid fa-triangle-exclamation" style="color: #b54708; margin-right: 6px;"></i> <strong>${capitalized}:</strong> Band ${band.toFixed(1)} — Recommended focus area for score uplift.</li>`;
+                    }
+                }
+            });
+
+            if (!hasStrengths) {
+                strengthsList.innerHTML = `<li><i class="fa-solid fa-info-circle" style="color: var(--primary); margin-right: 6px;"></i> Complete a test with Band 7.0+ to unlock your certified strengths.</li>`;
+            }
+            if (!hasWeaknesses) {
+                weaknessesList.innerHTML = `<li><i class="fa-solid fa-circle-check" style="color: #027a48; margin-right: 6px;"></i> No low-scoring areas detected! Continue regular practice to maintain fluency.</li>`;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadAssessmentScorecard();
+            const menuBtn = document.getElementById("menuBtn");
+            const mobileMenu = document.getElementById("mobileMenu");
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("open"));
+            }
+        });
+    </script>
+</body>
+</html>
