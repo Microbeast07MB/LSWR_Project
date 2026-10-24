@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -26,7 +26,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -78,7 +78,7 @@
 
         <div class="nav-actions" id="navActions">
 
-            <button class="login-btn" onclick="window.location.href='login.html'">
+            <button class="login-btn" onclick="window.location.href='pages/login.html'">
                 Login
             </button>
 
@@ -119,7 +119,7 @@
 
     <a href="#about">About</a>
 
-    <button class="mobile-login" id="mobileLoginBtn" onclick="window.location.href='login.html'">
+    <button class="mobile-login" id="mobileLoginBtn" onclick="window.location.href='pages/login.html'">
         Login
     </button>
 
@@ -312,7 +312,7 @@
 
                 <!-- Listening -->
 
-                <div class="skill-row" onclick="window.location.href='listening.html'" style="cursor: pointer;">
+                <div class="skill-row" onclick="window.location.href='pages/listening.html'" style="cursor: pointer;">
 
                     <div class="skill-name">
 
@@ -334,7 +334,7 @@
 
                 <!-- Speaking -->
 
-                <div class="skill-row" onclick="window.location.href='speaking.html'" style="cursor: pointer;">
+                <div class="skill-row" onclick="window.location.href='pages/speaking.html'" style="cursor: pointer;">
 
                     <div class="skill-name">
 
@@ -356,7 +356,7 @@
 
                 <!-- Reading -->
 
-                <div class="skill-row" onclick="window.location.href='reading.html'" style="cursor: pointer;">
+                <div class="skill-row" onclick="window.location.href='pages/reading.html'" style="cursor: pointer;">
 
                     <div class="skill-name">
 
@@ -378,7 +378,7 @@
 
                 <!-- Writing -->
 
-                <div class="skill-row" onclick="window.location.href='writing.html'" style="cursor: pointer;">
+                <div class="skill-row" onclick="window.location.href='pages/writing.html'" style="cursor: pointer;">
 
                     <div class="skill-name">
 
@@ -590,7 +590,7 @@
 
         <!-- Listening -->
 
-        <div class="skill-card" onclick="window.location.href='listening.html'" style="cursor: pointer;">
+        <div class="skill-card" onclick="window.location.href='pages/listening.html'" style="cursor: pointer;">
 
             <span class="card-number">
                 01
@@ -603,7 +603,7 @@
             </div>
 
             <h3>
-                <a href="listening.html" style="color: inherit; text-decoration: none;">Listening</a>
+                <a href="pages/listening.html" style="color: inherit; text-decoration: none;">Listening</a>
             </h3>
 
             <p>
@@ -611,7 +611,7 @@
                 lectures and spoken English.
             </p>
 
-            <a href="listening.html">
+            <a href="pages/listening.html">
 
                 Start Practice
 
@@ -625,7 +625,7 @@
 
         <!-- Speaking -->
 
-        <div class="skill-card" onclick="window.location.href='speaking.html'" style="cursor: pointer;">
+        <div class="skill-card" onclick="window.location.href='pages/speaking.html'" style="cursor: pointer;">
 
             <span class="card-number">
                 02
@@ -638,7 +638,7 @@
             </div>
 
             <h3>
-                <a href="speaking.html" style="color: inherit; text-decoration: none;">Speaking</a>
+                <a href="pages/speaking.html" style="color: inherit; text-decoration: none;">Speaking</a>
             </h3>
 
             <p>
@@ -646,7 +646,7 @@
                 pronunciation through speaking practice.
             </p>
 
-            <a href="speaking.html">
+            <a href="pages/speaking.html">
 
                 Start Practice
 
@@ -660,7 +660,7 @@
 
         <!-- Reading -->
 
-        <div class="skill-card" onclick="window.location.href='reading.html'" style="cursor: pointer;">
+        <div class="skill-card" onclick="window.location.href='pages/reading.html'" style="cursor: pointer;">
 
             <span class="card-number">
                 03
@@ -673,7 +673,7 @@
             </div>
 
             <h3>
-                <a href="reading.html" style="color: inherit; text-decoration: none;">Reading</a>
+                <a href="pages/reading.html" style="color: inherit; text-decoration: none;">Reading</a>
             </h3>
 
             <p>
@@ -681,7 +681,7 @@
                 through engaging reading exercises.
             </p>
 
-            <a href="reading.html">
+            <a href="pages/reading.html">
 
                 Start Practice
 
@@ -695,7 +695,7 @@
 
         <!-- Writing -->
 
-        <div class="skill-card" onclick="window.location.href='writing.html'" style="cursor: pointer;">
+        <div class="skill-card" onclick="window.location.href='pages/writing.html'" style="cursor: pointer;">
 
             <span class="card-number">
                 04
@@ -708,7 +708,7 @@
             </div>
 
             <h3>
-                <a href="writing.html" style="color: inherit; text-decoration: none;">Writing</a>
+                <a href="pages/writing.html" style="color: inherit; text-decoration: none;">Writing</a>
             </h3>
 
             <p>
@@ -716,7 +716,7 @@
                 vocabulary and structured writing.
             </p>
 
-            <a href="writing.html">
+            <a href="pages/writing.html">
 
                 Start Practice
 
@@ -1539,7 +1539,7 @@
         <p>Create an account or sign in to access lessons, practice, and progress tracking.</p>
         <div class="auth-gate-actions">
             <a class="modal-start" id="authGateSignUp" href="login.html?mode=signup">Create an account <i class="fa-solid fa-arrow-right"></i></a>
-            <a class="auth-gate-login" id="authGateSignIn" href="login.html">I already have an account</a>
+            <a class="auth-gate-login" id="authGateSignIn" href="pages/login.html">I already have an account</a>
         </div>
     </div>
 </div>
@@ -1547,10 +1547,10 @@
 <!-- Supabase JS SDK (Official CDN v2) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- Supabase Configuration -->
-<script src="supabase-config.js"></script>
+<script src="js/supabase-config.js"></script>
 
 <!-- Main Script -->
-<script src="script.js"></script>
+<script src="js/script.js"></script>
 
 
 </body>

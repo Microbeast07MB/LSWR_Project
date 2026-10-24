@@ -715,14 +715,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="supabase-config.js"></script>
+    <script src="../js/supabase-config.js"></script>
 
 
     <script>
 
         function getPostLoginDestination() {
             const requested = new URLSearchParams(window.location.search).get("next");
-            if (!requested) return new URL("index.html", window.location.href).href;
+            if (!requested) return new URL("../index.html", window.location.href).href;
 
             try {
                 const destination = new URL(requested, window.location.origin);
@@ -734,7 +734,7 @@
                 console.warn("Ignoring invalid post-login destination.", error);
             }
 
-            return new URL("index.html", window.location.href).href;
+            return new URL("../index.html", window.location.href).href;
         }
 
         // Supabase Auth throttles email sends across the project/provider.

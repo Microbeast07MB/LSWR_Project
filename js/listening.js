@@ -1,4 +1,4 @@
-/**
+﻿/**
  * IELTS LISTENING PRACTICE ENGINE (Tasks 1 to 8)
  * Complete interactive testing suite with authentic Cambridge audio, Web Speech Synthesis player,
  * responsive map interactions, and official scoring analytics.
@@ -200,7 +200,7 @@ function showHub() {
     if (questionNumber) questionNumber.textContent = "Practice Hub";
     if (backBtnText) backBtnText.textContent = "Back to Home";
     if (backBtn) {
-        backBtn.href = new URL("index.html", window.location.href).href;
+        backBtn.href = new URL("../index.html", window.location.href).href;
         backBtn.onclick = null;
     }
 
@@ -878,7 +878,7 @@ function showOverallScorecard() {
                 <button type="button" onclick="location.reload()" class="task-nav-btn secondary">
                     <i class="fa-solid fa-rotate-right"></i> Retake Full Practice
                 </button>
-                <a href="index.html" class="task-nav-btn primary">
+                <a href="../index.html" class="task-nav-btn primary">
                     <i class="fa-solid fa-house"></i> Home Dashboard
                 </a>
             </div>

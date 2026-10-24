@@ -7,8 +7,7 @@
     pendingStyle.textContent = "html.auth-pending body { visibility: hidden !important; }";
     document.head.appendChild(pendingStyle);
 
-    const guardScriptUrl = document.currentScript?.src || window.location.href;
-    const loginUrl = new URL("login.html", guardScriptUrl);
+    const loginUrl = new URL("login.html", window.location.href);
     const requestedPage = window.location.pathname + window.location.search + window.location.hash;
 
     function redirectToLogin() {

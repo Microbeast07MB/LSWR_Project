@@ -1,4 +1,4 @@
-/* =====================================================
+﻿/* =====================================================
    MOBILE MENU
 ===================================================== */
 
@@ -124,7 +124,7 @@ document.addEventListener("keydown", (event) => {
 
 if (modalStart) modalStart.addEventListener("click", () => {
 
-    window.location.href = "listening.html";
+    window.location.href = "pages/listening.html";
 
 });
 
@@ -245,8 +245,8 @@ function initHomepageAuthGate() {
         }
         pendingDestination = destination || "";
         const suffix = pendingDestination ? `?next=${encodeURIComponent(pendingDestination)}` : "";
-        if (signInLink) signInLink.href = `login.html${suffix}`;
-        if (signUpLink) signUpLink.href = `login.html?mode=signup${pendingDestination ? `&next=${encodeURIComponent(pendingDestination)}` : ""}`;
+        if (signInLink) signInLink.href = `pages/login.html${suffix}`;
+        if (signUpLink) signUpLink.href = `pages/login.html?mode=signup${pendingDestination ? `&next=${encodeURIComponent(pendingDestination)}` : ""}`;
         gate.classList.add("show");
         gate.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
@@ -264,7 +264,7 @@ function initHomepageAuthGate() {
     gate.addEventListener("click", event => { if (event.target === gate) closeGate(); });
     document.addEventListener("keydown", event => { if (event.key === "Escape" && gate.classList.contains("show")) closeGate(); });
 
-    const learningSelector = 'a[href$="listening.html"], a[href$="speaking.html"], a[href$="reading.html"], a[href$="writing.html"], a[href^="listening.html?"], a[href^="reading.html?"], .skill-card[onclick*="listening.html"], .skill-card[onclick*="speaking.html"], .skill-card[onclick*="reading.html"], .skill-card[onclick*="writing.html"], .skill-row[onclick*="listening.html"], .skill-row[onclick*="speaking.html"], .skill-row[onclick*="reading.html"], .skill-row[onclick*="writing.html"]';
+    const learningSelector = 'a[href$="pages/listening.html"], a[href$="pages/speaking.html"], a[href$="pages/reading.html"], a[href$="pages/writing.html"], a[href^="pages/listening.html?"], a[href^="pages/reading.html?"], .skill-card[onclick*="pages/listening.html"], .skill-card[onclick*="pages/speaking.html"], .skill-card[onclick*="pages/reading.html"], .skill-card[onclick*="pages/writing.html"], .skill-row[onclick*="pages/listening.html"], .skill-row[onclick*="pages/speaking.html"], .skill-row[onclick*="pages/reading.html"], .skill-row[onclick*="pages/writing.html"]';
     document.querySelectorAll(learningSelector).forEach(element => {
         if (element.closest(".skill-card") || element.closest(".skill-row")) return;
         element.addEventListener("click", async event => {
@@ -299,7 +299,7 @@ function initHomepageAuthGate() {
             if (session?.user) return;
             event.preventDefault();
             event.stopImmediatePropagation();
-            openGate("listening.html");
+            openGate("pages/listening.html");
         }, true);
     }
 
@@ -307,12 +307,12 @@ function initHomepageAuthGate() {
     const mobileLogin = document.getElementById("mobileLoginBtn");
     if (navActions && !document.querySelector(".user-nav-chip")) {
         navActions.querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
-            if (button.classList.contains("signup-btn")) window.location.href = "login.html?mode=signup";
-            else window.location.href = "login.html";
+            if (button.classList.contains("signup-btn")) window.location.href = "pages/login.html?mode=signup";
+            else window.location.href = "pages/login.html";
         }));
     }
     if (mobileLogin && !mobileLogin.textContent.toLowerCase().includes("logout")) {
-        mobileLogin.addEventListener("click", event => { event.preventDefault(); window.location.href = "login.html"; });
+        mobileLogin.addEventListener("click", event => { event.preventDefault(); window.location.href = "pages/login.html"; });
     }
 }
 
@@ -398,10 +398,10 @@ async function syncNavbarAuthState() {
     if (!window.supabaseAuth || !window.isSupabaseConfigured || !window.isSupabaseConfigured()) {
         // Supabase not configured yet - fallback navigation
         document.querySelectorAll(".login-btn, .mobile-login").forEach(btn => {
-            btn.onclick = () => { window.location.href = "login.html"; };
+            btn.onclick = () => { window.location.href = "pages/login.html"; };
         });
         document.querySelectorAll(".signup-btn").forEach(btn => {
-            btn.onclick = () => { window.location.href = "login.html?mode=signup"; };
+            btn.onclick = () => { window.location.href = "pages/login.html?mode=signup"; };
         });
         return;
     }
@@ -445,10 +445,10 @@ async function syncNavbarAuthState() {
         } else {
             // Not logged in - ensure buttons route correctly
             document.querySelectorAll(".login-btn, .mobile-login").forEach(btn => {
-                btn.onclick = () => { window.location.href = "login.html"; };
+                btn.onclick = () => { window.location.href = "pages/login.html"; };
             });
             document.querySelectorAll(".signup-btn").forEach(btn => {
-                btn.onclick = () => { window.location.href = "login.html?mode=signup"; };
+                btn.onclick = () => { window.location.href = "pages/login.html?mode=signup"; };
             });
         }
     } catch (err) {
