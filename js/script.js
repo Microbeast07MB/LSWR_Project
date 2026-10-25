@@ -578,26 +578,42 @@ async function initLearningChecklist() {
         const skill = check.dataset.learningSkill;
         const itemKey = check.dataset.learningItem;
         check.checked = completed.has(`${skill}:${itemKey}`);
-        check.addEventListener("change", async () => {
-            check.disabled = true;
-            const { error: saveError } = await window.supabaseClient
-                .from("learning_completions")
-                .upsert({
-                    user_id: user.id,
-                    skill,
-                    item_key: itemKey,
-                    completed: check.checked,
-                    completed_at: check.checked ? new Date().toISOString() : null
-                }, { onConflict: "user_id,skill,item_key" });
-            check.disabled = false;
-            if (saveError) {
-                check.checked = !check.checked;
-                console.error("Could not save learning checklist:", saveError.message);
-                return;
-            }
-            if (skill === "speaking") updateSpeakingMockAvailability();
-            loadLearningDashboard();
-        });
+        check.addEventListener("click", event => event.stopPropagation());
+        check.closest("label")?.addEventListener("click", event => event.stopPropagation());
+    });
+
+    const skill = checks[0].dataset.learningSkill;
+    const saveButton = document.querySelector("[data-save-learning-progress]");
+    if (!saveButton || checks.some(check => check.dataset.learningSkill !== skill)) return;
+    const status = document.querySelector("[data-learning-save-status]");
+    const showStatus = message => { if (status) status.textContent = message; };
+    const markDirty = () => showStatus("You have unsaved changes.");
+    checks.forEach(check => check.addEventListener("change", markDirty));
+    saveButton.addEventListener("click", event => event.stopPropagation());
+
+    saveButton.addEventListener("click", async () => {
+        saveButton.disabled = true;
+        showStatus("Saving your progress...");
+        const timestamp = new Date().toISOString();
+        const updates = checks.map(check => ({
+            user_id: user.id,
+            skill,
+            item_key: check.dataset.learningItem,
+            completed: check.checked,
+            completed_at: check.checked ? timestamp : null
+        }));
+        const { error: saveError } = await window.supabaseClient
+            .from("learning_completions")
+            .upsert(updates, { onConflict: "user_id,skill,item_key" });
+        saveButton.disabled = false;
+        if (saveError) {
+            console.error("Could not save learning checklist:", saveError.message);
+            showStatus("Couldn't save your progress. Please try again.");
+            return;
+        }
+        if (skill === "speaking") updateSpeakingMockAvailability();
+        await loadLearningDashboard();
+        showStatus("Progress saved and dashboard updated.");
     });
 }
 
