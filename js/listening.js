@@ -478,9 +478,7 @@ function toggleTapescript(taskId) {
 // TASK EVALUATION & SCORING LOGIC
 // =======================================================
 
-import { recordProgress } from "./progress.js";
-
-async function evaluateTask(taskNumber) {
+function evaluateTask(taskNumber) {
     switch (taskNumber) {
         case 1: evaluateTask1(); break;
         case 2: evaluateTask2(); break;
@@ -490,12 +488,6 @@ async function evaluateTask(taskNumber) {
         case 6: evaluateTask6(); break;
         case 7: evaluateTask7(); break;
         case 8: evaluateTask8(); break;
-    }
-    // Record progress for the Listening module after evaluation
-    try {
-        await recordProgress("listening", taskNumber);
-    } catch (e) {
-        console.error("[Progress] Failed to record progress for listening task", taskNumber, e);
     }
 }
 

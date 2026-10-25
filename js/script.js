@@ -10,6 +10,7 @@ if (menuBtn && mobileMenu) menuBtn.addEventListener("click", () => {
     mobileMenu.classList.toggle("open");
 
     const icon = menuBtn.querySelector("i");
+    if (!icon) return;
 
     if (mobileMenu.classList.contains("open")) {
 
@@ -35,9 +36,12 @@ mobileLinks.forEach(link => {
 
     link.addEventListener("click", () => {
 
+        if (!mobileMenu || !menuBtn) return;
+
         mobileMenu.classList.remove("open");
 
         const icon = menuBtn.querySelector("i");
+        if (!icon) return;
 
         icon.classList.remove("fa-xmark");
         icon.classList.add("fa-bars");
@@ -69,6 +73,8 @@ const modalStart =
 
 function openModal() {
 
+    if (!testModal) return;
+
     testModal.classList.add("show");
 
     document.body.style.overflow = "hidden";
@@ -77,6 +83,8 @@ function openModal() {
 
 
 function closeTestModal() {
+
+    if (!testModal) return;
 
     testModal.classList.remove("show");
 
@@ -560,6 +568,7 @@ async function initLearningChecklist() {
                 }, { onConflict: "user_id,skill,item_key" });
             if (saveError) throw saveError;
             if (skill === "speaking") updateSpeakingMockAvailability();
+            await loadLearningDashboard();
             showStatus("Checkbox saved. Dashboard progress will sync from this activity.");
         } catch (saveError) {
             check.checked = !completed;
