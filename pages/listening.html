@@ -80,7 +80,7 @@
             <div class="listening-hub-grid">
 
                 <!-- CARD 1: FORM COMPLETION -->
-                <div class="listening-hub-card" onclick="navigateToTask(1)">
+                <div class="listening-hub-card" data-listening-destination="listening.html?task=1" role="link" tabindex="0">
                     <div>
                         <div class="hub-card-icon" style="background: #eeedff; color: var(--primary);">
                             <i class="fa-solid fa-file-lines"></i>
@@ -99,7 +99,7 @@
                 </div>
 
                 <!-- CARD 2: MULTIPLE CHOICE -->
-                <div class="listening-hub-card" onclick="navigateToTask(2)">
+                <div class="listening-hub-card" data-listening-destination="listening.html?task=2" role="link" tabindex="0">
                     <div>
                         <div class="hub-card-icon" style="background: #ecfdf3; color: #027a48;">
                             <i class="fa-solid fa-circle-dot"></i>
@@ -118,7 +118,7 @@
                 </div>
 
                 <!-- CARD 3: SHORT-ANSWER QUESTIONS -->
-                <div class="listening-hub-card" onclick="navigateToTask(3)">
+                <div class="listening-hub-card" data-listening-destination="listening.html?task=3" role="link" tabindex="0">
                     <div>
                         <div class="hub-card-icon" style="background: #eff8ff; color: #175cd3;">
                             <i class="fa-solid fa-pen"></i>
@@ -137,7 +137,7 @@
                 </div>
 
                 <!-- CARD 4: SENTENCE COMPLETION -->
-                <div class="listening-hub-card" onclick="navigateToTask(4)">
+                <div class="listening-hub-card" data-listening-destination="listening.html?task=4" role="link" tabindex="0">
                     <div>
                         <div class="hub-card-icon" style="background: #fef3f2; color: #b42318;">
                             <i class="fa-solid fa-align-left"></i>
@@ -156,7 +156,7 @@
                 </div>
 
                 <!-- CARD 5: MATCHING 1 -->
-                <div class="listening-hub-card" onclick="navigateToTask(5)">
+                <div class="listening-hub-card" data-listening-destination="listening.html?task=5" role="link" tabindex="0">
                     <div>
                         <div class="hub-card-icon" style="background: #fdf4ff; color: #c026d3;">
                             <i class="fa-solid fa-arrows-split-up-and-left"></i>
@@ -175,7 +175,7 @@
                 </div>
 
                 <!-- CARD 6: MATCHING 2 -->
-                <div class="listening-hub-card" onclick="navigateToTask(6)">
+                <div class="listening-hub-card" data-listening-destination="listening.html?task=6" role="link" tabindex="0">
                     <div>
                         <div class="hub-card-icon" style="background: #fffbeb; color: #b45309;">
                             <i class="fa-solid fa-hotel"></i>
@@ -194,7 +194,7 @@
                 </div>
 
                 <!-- CARD 7: PLAN / MAP / DIAGRAM LABELLING -->
-                <div class="listening-hub-card" onclick="navigateToTask(7)">
+                <div class="listening-hub-card" data-listening-destination="listening.html?task=7" role="link" tabindex="0">
                     <div>
                         <div class="hub-card-icon" style="background: #f0fdf9; color: #0f766e;">
                             <i class="fa-solid fa-map-location-dot"></i>
@@ -213,7 +213,7 @@
                 </div>
 
                 <!-- CARD 8: NOTE & TABLE COMPLETION -->
-                <div class="listening-hub-card" onclick="navigateToTask(8)">
+                <div class="listening-hub-card" data-listening-destination="listening.html?task=8" role="link" tabindex="0">
                     <div>
                         <div class="hub-card-icon" style="background: #fdf2f8; color: #be185d;">
                             <i class="fa-solid fa-table-list"></i>
@@ -1438,6 +1438,20 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/script.js"></script>
 <script src="../js/auth-guard.js"></script>
+<script>
+    document.querySelectorAll("[data-listening-destination]").forEach(card => {
+        const destination = card.dataset.listeningDestination;
+        card.addEventListener("click", event => {
+            if (event.target.closest("a, button, input, label")) return;
+            window.location.assign(destination);
+        });
+        card.addEventListener("keydown", event => {
+            if (event.target !== card || !["Enter", " "].includes(event.key)) return;
+            event.preventDefault();
+            window.location.assign(destination);
+        });
+    });
+</script>
 </body>
 
 </html>
