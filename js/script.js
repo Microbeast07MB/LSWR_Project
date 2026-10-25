@@ -1,4 +1,4 @@
-﻿/* =====================================================
+u{FEFF}u{FEFF}/* =====================================================
    MOBILE MENU
 ===================================================== */
 
@@ -475,81 +475,123 @@ if (window.supabaseAuth && typeof window.supabaseAuth.onAuthStateChange === "fun
    ===================================================== */
 
 async function loadLearningDashboard() {
-    const percentageNodes = {
-        listening: ["listening-perc", "listening-bar"],
-        speaking: ["speaking-perc", "speaking-bar"],
-        reading: ["reading-perc", "reading-bar"],
-        writing: ["writing-perc", "writing-bar"]
+    const modules = {
+        listening: { total: 8, label: "Listening" },
+        speaking: { total: 3, label: "Speaking" },
+        reading: { total: 8, label: "Reading" },
+        writing: { total: 4, label: "Writing" }
     };
-    const updatePercent = (skill, value) => {
-        const [labelId, barId] = percentageNodes[skill];
-        const label = document.getElementById(labelId);
-        const bar = document.getElementById(barId);
-        if (label) label.textContent = `${value}%`;
-        if (bar) bar.style.width = `${value}%`;
+    const percentageNodes = {
+        listening: { percentage: "listening-perc", count: "listening-count", bar: "listening-bar" },
+        speaking: { percentage: "speaking-perc", count: "speaking-count", bar: "speaking-bar" },
+        reading: { percentage: "reading-perc", count: "reading-count", bar: "reading-bar" },
+        writing: { percentage: "writing-perc", count: "writing-count", bar: "writing-bar" }
+    };
+    const syncStatus = document.getElementById("progression-sync-status");
+    const overallNode = document.getElementById("overall-percentage");
+    if (!overallNode) return;
+
+    const renderModule = (skill, completed) => {
+        const { total } = modules[skill];
+        const percent = Math.round((completed / total) * 100);
+        const nodes = percentageNodes[skill];
+        const label = document.getElementById(nodes.percentage);
+        const count = document.getElementById(nodes.count);
+        const bar = document.getElementById(nodes.bar);
+        const track = bar?.parentElement;
+        if (label) label.textContent = `${percent}%`;
+        if (count) count.textContent = `${completed} / ${total}`;
+        if (bar) bar.style.width = `${percent}%`;
+        if (track) track.setAttribute("aria-valuenow", String(percent));
+        return { completed, total };
     };
 
-    if (!window.supabaseClient || !window.supabaseAuth) return;
+    const renderOverall = moduleTotals => {
+        const complete = Object.values(moduleTotals).reduce((sum, value) => sum + value.completed, 0);
+        const total = Object.values(moduleTotals).reduce((sum, value) => sum + value.total, 0);
+        const percent = total ? Math.round((complete / total) * 100) : 0;
+        overallNode.textContent = `${percent}%`;
+        const ring = document.getElementById("overall-progress-ring");
+        if (ring) {
+            ring.style.background = `conic-gradient(#655bff ${percent * 3.6}deg, #e9e8ff 0deg)`;
+            ring.setAttribute("aria-valuenow", String(percent));
+        }
+        const count = document.getElementById("overall-activity-count");
+        if (count) count.textContent = `${complete} of ${total} activities complete`;
+        const headline = document.getElementById("progress-headline");
+        if (headline) headline.textContent = percent === 100 ? "All modules completed!" : percent >= 75 ? "Excellent progress!" : percent >= 40 ? "Good progress!" : percent ? "Keep building your streak!" : "Start practicing!";
+        const description = document.getElementById("progress-description");
+        if (description) description.textContent = percent === 100 ? "You have completed every tracked activity." : "Complete activities in any module to move your progress forward.";
+        return percent;
+    };
+
+    if (!window.supabaseClient || !window.supabaseAuth) {
+        Object.keys(modules).forEach(skill => renderModule(skill, 0));
+        renderOverall(Object.fromEntries(Object.entries(modules).map(([skill, module]) => [skill, { completed: 0, total: module.total }])));
+        if (syncStatus) syncStatus.textContent = "Connect and sign in to sync saved checklist progress.";
+        return;
+    }
     const session = await window.supabaseAuth.getSession();
     const user = session?.user;
-    if (!user) return;
+    if (!user) {
+        Object.keys(modules).forEach(skill => renderModule(skill, 0));
+        renderOverall(Object.fromEntries(Object.entries(modules).map(([skill, module]) => [skill, { completed: 0, total: module.total }])));
+        if (syncStatus) syncStatus.textContent = "Sign in to view your saved checklist progress.";
+        return;
+    }
+
+    if (syncStatus) syncStatus.textContent = "Syncing saved checklist progress...";
 
     const { data: completions, error: completionError } = await window.supabaseClient
         .from("learning_completions")
         .select("skill, item_key, completed, completed_at")
         .eq("user_id", user.id)
         .eq("completed", true);
-    if (completionError) console.error("Could not load checklist progress:", completionError.message);
+    if (completionError) {
+        console.error("Could not load checklist progress:", completionError.message);
+        if (syncStatus) syncStatus.textContent = "Progress sync failed. Reload to try again.";
+        return;
+    }
 
+    const completedItems = Object.fromEntries(Object.keys(modules).map(skill => [skill, new Set()]));
     const activeDays = new Set();
-    const totals = Object.fromEntries(Object.keys(percentageNodes).map(skill => [skill, { score: 0, max: 0 }]));
-    const checklistRows = completions || [];
-    Object.keys(totals).forEach(skill => {
-        const skillCompletions = checklistRows.filter(row => row.skill === skill);
-        const uniqueItems = new Set(skillCompletions.map(row => row.item_key));
-        const expectedItems = { listening: 8, speaking: 3, reading: 8, writing: 4 }[skill];
-        totals[skill].score = Math.min(uniqueItems.size, expectedItems);
-        totals[skill].max = expectedItems;
-    });
-    checklistRows.forEach(row => {
-        if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
+    (completions || []).forEach(row => {
+        const skill = String(row.skill || "").toLowerCase();
+        const item = String(row.item_key || "").toLowerCase();
+        if (completedItems[skill] && item) completedItems[skill].add(item);
+        if (row.completed_at) {
+            const date = new Date(row.completed_at);
+            if (!Number.isNaN(date.getTime())) {
+                activeDays.add(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
+            }
+        }
     });
 
-    let overallScore = 0;
-    let overallMax = 0;
-    Object.entries(totals).forEach(([skill, total]) => {
-        const pct = total.max ? Math.round((total.score / total.max) * 100) : 0;
-        updatePercent(skill, pct);
-        overallScore += total.score;
-        overallMax += total.max;
-    });
-    const overall = overallMax ? Math.round((overallScore / overallMax) * 100) : 0;
-    const overallNode = document.getElementById("overall-percentage");
-    if (overallNode) overallNode.textContent = `${overall}%`;
-    const circle = document.querySelector(".progress-circle");
-    if (circle) circle.style.background = `conic-gradient(#655bff ${overall * 3.6}deg, #e9e8ff 0deg)`;
-
-    const headline = document.getElementById("progress-headline");
-    const description = document.getElementById("progress-description");
-    if (headline) headline.textContent = overall ? (overall >= 80 ? "Excellent progress!" : overall >= 50 ? "Good progress!" : "Keep it up!") : "Start practicing!";
-    if (description) description.textContent = overall ? "Your progress reflects completed activities across all four modules." : "Mark activities complete in any module to track your progress here.";
+    const moduleTotals = Object.fromEntries(Object.entries(modules).map(([skill, module]) => {
+        const completed = Math.min(completedItems[skill].size, module.total);
+        return [skill, renderModule(skill, completed)];
+    }));
+    renderOverall(moduleTotals);
 
     const goal = user.user_metadata?.ielts_goal;
     const goalNode = document.getElementById("ielts-goal-value");
-    if (goalNode && Number.isFinite(Number(goal)) && Number(goal) >= 0 && Number(goal) <= 9) goalNode.textContent = `Band ${Number(goal).toFixed(1)}`;
-
+    if (goalNode && goal !== undefined && Number.isFinite(Number(goal)) && Number(goal) >= 0 && Number(goal) <= 9) {
+        goalNode.textContent = `Band ${Number(goal).toFixed(1)}`;
+    }
     let streak = 0;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const cursor = new Date(today);
-    const todayKey = today.toLocaleDateString("en-CA");
-    if (!activeDays.has(todayKey)) cursor.setDate(cursor.getDate() - 1);
-    while (activeDays.has(cursor.toLocaleDateString("en-CA"))) {
+    const cursor = new Date();
+    cursor.setHours(0, 0, 0, 0);
+    const dayKey = date => `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    if (!activeDays.has(dayKey(cursor))) cursor.setDate(cursor.getDate() - 1);
+    while (activeDays.has(dayKey(cursor))) {
         streak++;
         cursor.setDate(cursor.getDate() - 1);
     }
     const streakNode = document.getElementById("streak-value");
     if (streakNode) streakNode.textContent = `${streak} ${streak === 1 ? "Day" : "Days"}`;
+    if (syncStatus) {
+        syncStatus.textContent = `Synced from saved checkboxes | ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
+    }
 }
 
 loadLearningDashboard();
@@ -559,10 +601,25 @@ document.addEventListener("DOMContentLoaded", initLearningChecklist);
 
 async function initLearningChecklist() {
     const checks = [...document.querySelectorAll("[data-learning-skill][data-learning-item]")];
-    if (!checks.length || !window.supabaseClient || !window.supabaseAuth) return;
+    if (!checks.length) return;
+    const saveButton = document.querySelector("[data-save-learning-progress]");
+    const status = document.querySelector("[data-learning-save-status]");
+    const showStatus = message => { if (status) status.textContent = message; };
+    if (!window.supabaseClient || !window.supabaseAuth) {
+        if (saveButton) saveButton.disabled = true;
+        showStatus("Progress saving is unavailable. Check your connection and sign in again.");
+        return;
+    }
     const session = await window.supabaseAuth.getSession();
     const user = session?.user;
-    if (!user) return;
+    if (!user) {
+        if (saveButton) saveButton.disabled = true;
+        showStatus("Sign in to load and save your progress.");
+        return;
+    }
+
+    if (saveButton) saveButton.disabled = true;
+    showStatus("Loading saved progress...");
 
     const { data, error } = await window.supabaseClient
         .from("learning_completions")
@@ -570,6 +627,7 @@ async function initLearningChecklist() {
         .eq("user_id", user.id);
     if (error) {
         console.error("Could not load learning checklist:", error.message);
+        showStatus("Couldn't load saved progress. Refresh and try again.");
         return;
     }
 
@@ -581,17 +639,43 @@ async function initLearningChecklist() {
         check.addEventListener("click", event => event.stopPropagation());
         check.closest("label")?.addEventListener("click", event => event.stopPropagation());
     });
+    if (checks[0].dataset.learningSkill === "speaking") updateSpeakingMockAvailability();
 
     const skill = checks[0].dataset.learningSkill;
-    const saveButton = document.querySelector("[data-save-learning-progress]");
-    if (!saveButton || checks.some(check => check.dataset.learningSkill !== skill)) return;
-    const status = document.querySelector("[data-learning-save-status]");
-    const showStatus = message => { if (status) status.textContent = message; };
-    const markDirty = () => showStatus("You have unsaved changes.");
-    checks.forEach(check => check.addEventListener("change", markDirty));
-    saveButton.addEventListener("click", event => event.stopPropagation());
+    if (!saveButton || checks.some(check => check.dataset.learningSkill !== skill)) {
+        showStatus("Checklist controls are incomplete. Refresh this page and try again.");
+        return;
+    }
+    checks.forEach(check => check.addEventListener("change", async () => {
+        const completed = check.checked;
+        check.disabled = true;
+        showStatus("Saving your checkbox...");
+        try {
+            const { error: saveError } = await window.supabaseClient
+                .from("learning_completions")
+                .upsert({
+                    user_id: user.id,
+                    skill: check.dataset.learningSkill,
+                    item_key: check.dataset.learningItem,
+                    completed,
+                    completed_at: completed ? new Date().toISOString() : null
+                }, { onConflict: "user_id,skill,item_key" });
+            if (saveError) throw saveError;
+            if (skill === "speaking") updateSpeakingMockAvailability();
+            showStatus("Checkbox saved. Dashboard progress will sync from this activity.");
+        } catch (saveError) {
+            check.checked = !completed;
+            console.error("Could not save learning checkbox:", saveError.message || saveError);
+            showStatus("Couldn't save this checkbox. Please try again.");
+        } finally {
+            check.disabled = false;
+        }
+    }));
+    saveButton.disabled = false;
+    showStatus("Your saved progress is up to date.");
 
-    saveButton.addEventListener("click", async () => {
+    saveButton.addEventListener("click", async event => {
+        event.stopPropagation();
         saveButton.disabled = true;
         showStatus("Saving your progress...");
         const timestamp = new Date().toISOString();
@@ -602,18 +686,18 @@ async function initLearningChecklist() {
             completed: check.checked,
             completed_at: check.checked ? timestamp : null
         }));
-        const { error: saveError } = await window.supabaseClient
-            .from("learning_completions")
-            .upsert(updates, { onConflict: "user_id,skill,item_key" });
-        saveButton.disabled = false;
-        if (saveError) {
-            console.error("Could not save learning checklist:", saveError.message);
+        try {
+            const { error: saveError } = await window.supabaseClient
+                .from("learning_completions")
+                .upsert(updates, { onConflict: "user_id,skill,item_key" });
+            if (saveError) throw saveError;
+            if (skill === "speaking") updateSpeakingMockAvailability();
+            await loadLearningDashboard();
+            showStatus("Progress saved and dashboard updated.");
+        } catch (saveError) {
+            console.error("Could not save learning checklist:", saveError.message || saveError);
             showStatus("Couldn't save your progress. Please try again.");
-            return;
+        } finally {
+            saveButton.disabled = false;
         }
-        if (skill === "speaking") updateSpeakingMockAvailability();
-        await loadLearningDashboard();
-        showStatus("Progress saved and dashboard updated.");
     });
-}
-

@@ -245,159 +245,49 @@
             <div class="glow-circle"></div>
 
 
-            <div class="dashboard-card">
-
-
-                <div class="dashboard-header">
-
+            <section class="dashboard-card progression-board" aria-labelledby="progression-board-title">
+                <header class="progression-board-header">
                     <div>
-
-                        <span class="small-label">
-                            YOUR LEARNING
-                        </span>
-
-                        <h3>
-                            English Progress
-                        </h3>
-
+                        <span class="small-label">YOUR LEARNING</span>
+                        <h3 id="progression-board-title">English Progress</h3>
                     </div>
+                    <div class="progress-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></div>
+                </header>
 
-
-                    <div class="progress-icon">
-
-                        <i class="fa-solid fa-chart-line"></i>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- Overall Progress -->
-
-                <div class="overall-progress">
-
-
-                    <div class="progress-circle">
-
+                <div class="progression-overview">
+                    <div class="progress-circle" id="overall-progress-ring" role="progressbar" aria-label="Overall learning progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                         <div>
-
                             <strong id="overall-percentage">0%</strong>
-
-                            <small>
-                                Overall
-                            </small>
-
+                            <small>Overall</small>
                         </div>
-
                     </div>
-
-
-                    <div class="progress-text">
-
-                        <strong id="progress-headline">
-                            Start practicing!
-                        </strong>
-
-                        <p id="progress-description">
-                            Keep practicing to reach
-                            your next level.
-                        </p>
-
+                    <div class="progression-summary">
+                        <strong id="progress-headline">Start practicing!</strong>
+                        <p id="progress-description">Mark module activities complete to build your progress.</p>
+                        <span class="progression-total" id="overall-activity-count">0 of 23 activities complete</span>
                     </div>
-
                 </div>
 
-
-
-                <!-- Listening -->
-
-                <div class="skill-row" onclick="window.location.href='pages/listening.html'" style="cursor: pointer;">
-
-                    <div class="skill-name">
-
-                        <span class="skill-dot listening"></span>
-
-                        Listening
-
-                    </div>
-
-                    <span id="listening-perc">0%</span>
-
+                <div class="progression-modules" aria-label="Progress by module">
+                    <a class="progress-module" href="pages/listening.html" style="--module-color:#655bff" aria-label="Listening module progress">
+                        <span class="progress-module-heading"><span class="progress-module-name"><span class="skill-dot listening"></span>Listening</span><span class="progress-module-values"><strong id="listening-perc">0%</strong><small id="listening-count">0 / 8</small></span></span>
+                        <span class="progress-track" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="listening-bar"></span></span>
+                    </a>
+                    <a class="progress-module" href="pages/speaking.html" style="--module-color:#f79009" aria-label="Speaking module progress">
+                        <span class="progress-module-heading"><span class="progress-module-name"><span class="skill-dot speaking"></span>Speaking</span><span class="progress-module-values"><strong id="speaking-perc">0%</strong><small id="speaking-count">0 / 3</small></span></span>
+                        <span class="progress-track" role="progressbar" aria-label="Speaking progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="speaking-bar"></span></span>
+                    </a>
+                    <a class="progress-module" href="pages/reading.html" style="--module-color:#12b76a" aria-label="Reading module progress">
+                        <span class="progress-module-heading"><span class="progress-module-name"><span class="skill-dot reading"></span>Reading</span><span class="progress-module-values"><strong id="reading-perc">0%</strong><small id="reading-count">0 / 8</small></span></span>
+                        <span class="progress-track" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="reading-bar"></span></span>
+                    </a>
+                    <a class="progress-module" href="pages/writing.html" style="--module-color:#f04438" aria-label="Writing module progress">
+                        <span class="progress-module-heading"><span class="progress-module-name"><span class="skill-dot writing"></span>Writing</span><span class="progress-module-values"><strong id="writing-perc">0%</strong><small id="writing-count">0 / 4</small></span></span>
+                        <span class="progress-track" role="progressbar" aria-label="Writing progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="writing-bar"></span></span>
+                    </a>
                 </div>
-
-                <div class="mini-bar">
-                    <div id="listening-bar" style="width: 0%;"></div>
-                </div>
-
-
-
-                <!-- Speaking -->
-
-                <div class="skill-row" onclick="window.location.href='pages/speaking.html'" style="cursor: pointer;">
-
-                    <div class="skill-name">
-
-                        <span class="skill-dot speaking"></span>
-
-                        Speaking
-
-                    </div>
-
-                    <span id="speaking-perc">0%</span>
-
-                </div>
-
-                <div class="mini-bar">
-                    <div id="speaking-bar" style="width: 0%;"></div>
-                </div>
-
-
-
-                <!-- Reading -->
-
-                <div class="skill-row" onclick="window.location.href='pages/reading.html'" style="cursor: pointer;">
-
-                    <div class="skill-name">
-
-                        <span class="skill-dot reading"></span>
-
-                        Reading
-
-                    </div>
-
-                    <span id="reading-perc">0%</span>
-
-                </div>
-
-                <div class="mini-bar">
-                    <div id="reading-bar" style="width: 0%;"></div>
-                </div>
-
-
-
-                <!-- Writing -->
-
-                <div class="skill-row" onclick="window.location.href='pages/writing.html'" style="cursor: pointer;">
-
-                    <div class="skill-name">
-
-                        <span class="skill-dot writing"></span>
-
-                        Writing
-
-                    </div>
-
-                    <span id="writing-perc">0%</span>
-
-                </div>
-
-                <div class="mini-bar">
-                    <div id="writing-bar" style="width: 0%;"></div>
-                </div>
-
-
-            </div>
+                <p class="progression-sync-status" id="progression-sync-status" role="status" aria-live="polite">Progress comes from your saved module checkboxes.</p>
+            </section>
 
 
 
