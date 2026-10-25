@@ -825,6 +825,10 @@
                 "Join Grammarium to track your LSRW and IELTS progress.";
         });
 
+        if (new URLSearchParams(window.location.search).get("mode") === "signup") {
+            signupTab.click();
+        }
+
 
         /* =========================
            PASSWORD VISIBILITY

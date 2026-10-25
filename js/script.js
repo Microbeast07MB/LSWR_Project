@@ -303,17 +303,6 @@ function initHomepageAuthGate() {
         }, true);
     }
 
-    const navActions = document.getElementById("navActions");
-    const mobileLogin = document.getElementById("mobileLoginBtn");
-    if (navActions && !document.querySelector(".user-nav-chip")) {
-        navActions.querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
-            if (button.classList.contains("signup-btn")) window.location.href = "pages/login.html?mode=signup";
-            else window.location.href = "pages/login.html";
-        }));
-    }
-    if (mobileLogin && !mobileLogin.textContent.toLowerCase().includes("logout")) {
-        mobileLogin.addEventListener("click", event => { event.preventDefault(); window.location.href = "pages/login.html"; });
-    }
 }
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initHomepageAuthGate);
@@ -354,15 +343,31 @@ buttons.forEach(button => {
 async function syncNavbarAuthState() {
     const navActions = document.getElementById("navActions");
     const mobileLoginBtn = document.getElementById("mobileLoginBtn");
+    const setDestination = (element, destination) => {
+        if (!element) return;
+        if (element instanceof HTMLAnchorElement) element.href = destination;
+        else element.onclick = () => { window.location.href = destination; };
+    };
+    const setSignedOutNavigation = () => {
+        if (navActions && !navActions.querySelector(".login-btn")) {
+            const loginLink = document.createElement("a");
+            loginLink.className = "login-btn";
+            loginLink.textContent = "Login";
+            const signupLink = document.createElement("a");
+            signupLink.className = "signup-btn";
+            signupLink.textContent = "Get Started";
+            navActions.replaceChildren(loginLink, signupLink);
+        }
+        document.querySelectorAll(".login-btn").forEach(link => setDestination(link, "pages/login.html"));
+        document.querySelectorAll(".signup-btn").forEach(link => setDestination(link, "pages/login.html?mode=signup"));
+        if (mobileLoginBtn) {
+            mobileLoginBtn.textContent = "Login";
+            mobileLoginBtn.onclick = () => { window.location.href = "pages/login.html"; };
+        }
+    };
 
     if (!window.supabaseAuth || !window.isSupabaseConfigured || !window.isSupabaseConfigured()) {
-        // Supabase not configured yet - fallback navigation
-        document.querySelectorAll(".login-btn, .mobile-login").forEach(btn => {
-            btn.onclick = () => { window.location.href = "pages/login.html"; };
-        });
-        document.querySelectorAll(".signup-btn").forEach(btn => {
-            btn.onclick = () => { window.location.href = "pages/login.html?mode=signup"; };
-        });
+        setSignedOutNavigation();
         return;
     }
 
@@ -371,45 +376,58 @@ async function syncNavbarAuthState() {
         const user = session ? session.user : null;
 
         if (user && navActions) {
-            const rawName = (user.user_metadata && user.user_metadata.full_name) || user.email.split("@")[0];
-            const initial = rawName.charAt(0).toUpperCase();
+            const profileName = user.user_metadata?.full_name || user.user_metadata?.name || "";
+            const emailName = String(user.email || "").split("@")[0];
+            const displayName = String(profileName || emailName || "Account").trim();
+            const chip = document.createElement("div");
+            chip.className = "user-nav-chip";
+            chip.title = user.email ? `Signed in as ${user.email}` : "Signed in";
 
-            // Render desktop user chip
-            navActions.innerHTML = `
-                <div class="user-nav-chip" title="Signed in as ${user.email}">
-                    <div class="user-avatar-circle">${initial}</div>
-                    <span class="user-nav-name">${rawName}</span>
-                    <button class="nav-logout-btn" id="navLogoutBtn" aria-label="Sign out" title="Sign out">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    </button>
-                </div>
-            `;
+            const avatar = document.createElement("span");
+            avatar.className = "user-avatar-circle";
+            avatar.textContent = Array.from(displayName)[0]?.toUpperCase() || "A";
+            avatar.setAttribute("aria-hidden", "true");
 
-            const navLogoutBtn = document.getElementById("navLogoutBtn");
-            if (navLogoutBtn) {
-                navLogoutBtn.addEventListener("click", async () => {
-                    navLogoutBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
-                    await window.supabaseAuth.signOut();
-                    window.location.reload();
-                });
-            }
+            const name = document.createElement("span");
+            name.className = "user-nav-name";
+            name.textContent = displayName;
 
-            // Render mobile user state
+            const logout = document.createElement("button");
+            logout.type = "button";
+            logout.className = "nav-logout-btn";
+            logout.setAttribute("aria-label", "Sign out");
+            logout.title = "Sign out";
+            logout.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>';
+            logout.addEventListener("click", async () => {
+                logout.disabled = true;
+                logout.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>';
+                const { error } = await window.supabaseAuth.signOut();
+                if (error) {
+                    console.error("Could not sign out:", error.message);
+                    logout.disabled = false;
+                    logout.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>';
+                    return;
+                }
+                window.location.reload();
+            });
+            chip.append(avatar, name, logout);
+            navActions.replaceChildren(chip);
+
             if (mobileLoginBtn) {
-                mobileLoginBtn.innerHTML = `<i class="fa-solid fa-arrow-right-from-bracket"></i> Logout (${rawName})`;
+                mobileLoginBtn.textContent = `Logout (${displayName})`;
                 mobileLoginBtn.onclick = async () => {
-                    await window.supabaseAuth.signOut();
+                    mobileLoginBtn.disabled = true;
+                    const { error } = await window.supabaseAuth.signOut();
+                    if (error) {
+                        console.error("Could not sign out:", error.message);
+                        mobileLoginBtn.disabled = false;
+                        return;
+                    }
                     window.location.reload();
                 };
             }
         } else {
-            // Not logged in - ensure buttons route correctly
-            document.querySelectorAll(".login-btn, .mobile-login").forEach(btn => {
-                btn.onclick = () => { window.location.href = "pages/login.html"; };
-            });
-            document.querySelectorAll(".signup-btn").forEach(btn => {
-                btn.onclick = () => { window.location.href = "pages/login.html?mode=signup"; };
-            });
+            setSignedOutNavigation();
         }
     } catch (err) {
         console.error("Auth navbar sync error:", err);

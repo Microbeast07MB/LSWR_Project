@@ -232,6 +232,10 @@ button {
 
 .login-btn {
 
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+
     padding: 10px 17px;
 
     color: #344054;
@@ -255,6 +259,11 @@ button {
 
 
 .signup-btn {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 
     padding: 11px 18px;
 
