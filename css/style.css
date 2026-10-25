@@ -1606,13 +1606,6 @@ button {
 .speaking-test-panel h2 { margin-bottom: 8px; color: var(--dark); }
 .speaking-test-panel p { margin-bottom: 18px; color: var(--muted); }
 
-.auth-gate-box { text-align: center; }
-.auth-gate-box > p { color: var(--muted); margin: 10px 0 22px; line-height: 1.6; }
-.auth-gate-actions { display: grid; gap: 14px; }
-.auth-gate-actions .modal-start { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; text-decoration: none; }
-.auth-gate-login { color: var(--primary); font-weight: 700; text-decoration: none; padding: 8px; }
-.auth-gate-login:hover { text-decoration: underline; }
-
 
 /* =====================================================
    IELTS SECTION
