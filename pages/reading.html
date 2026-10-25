@@ -71,7 +71,7 @@
             <div class="reading-types-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin-bottom: 50px;">
 
                 <!-- CARD 1: FLOW-CHART COMPLETION -->
-                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=flowchart'">
+                <div class="speaking-part-card" data-reading-destination="reading.html?type=flowchart">
                     <div>
                         <div style="width: 60px; height: 60px; border-radius: 16px; background: var(--light-purple); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                             <i class="fa-solid fa-diagram-project"></i>
@@ -92,7 +92,7 @@
                 </div>
 
                 <!-- CARD 2: TRUE / FALSE / NOT GIVEN -->
-                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=tfn'">
+                <div class="speaking-part-card" data-reading-destination="reading.html?type=tfn">
                     <div>
                         <div style="width: 60px; height: 60px; border-radius: 16px; background: #ecfdf3; color: #027a48; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                             <i class="fa-solid fa-scale-balanced"></i>
@@ -113,7 +113,7 @@
                 </div>
 
                 <!-- CARD 3: MATCHING FEATURES -->
-                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=features'">
+                <div class="speaking-part-card" data-reading-destination="reading.html?type=features">
                     <div>
                         <div style="width: 60px; height: 60px; border-radius: 16px; background: #eff8ff; color: #175cd3; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                             <i class="fa-solid fa-globe"></i>
@@ -134,7 +134,7 @@
                 </div>
 
                 <!-- CARD 4: MATCHING HEADINGS -->
-                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=headings'">
+                <div class="speaking-part-card" data-reading-destination="reading.html?type=headings">
                     <div>
                         <div style="width: 60px; height: 60px; border-radius: 16px; background: #fffaeb; color: #b54708; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                             <i class="fa-solid fa-heading"></i>
@@ -155,7 +155,7 @@
                 </div>
 
                 <!-- CARD 5: NOTE COMPLETION -->
-                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=notes'">
+                <div class="speaking-part-card" data-reading-destination="reading.html?type=notes">
                     <div>
                         <div style="width: 60px; height: 60px; border-radius: 16px; background: #f0f4ff; color: #2e5aac; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                             <i class="fa-solid fa-clipboard-list"></i>
@@ -176,7 +176,7 @@
                 </div>
 
                 <!-- CARD 6: SENTENCE COMPLETION -->
-                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=completion'">
+                <div class="speaking-part-card" data-reading-destination="reading.html?type=completion">
                     <div>
                         <div style="width: 60px; height: 60px; border-radius: 16px; background: #f0fdf9; color: #0e9384; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -197,7 +197,7 @@
                 </div>
 
                 <!-- CARD 7: SHORT-ANSWER QUESTIONS -->
-                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=short-answer'">
+                <div class="speaking-part-card" data-reading-destination="reading.html?type=short-answer">
                     <div>
                         <div style="width: 60px; height: 60px; border-radius: 16px; background: #fff4ed; color: #b42318; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                             <i class="fa-solid fa-file-circle-question"></i>
@@ -218,7 +218,7 @@
                 </div>
 
                 <!-- CARD 8: SUMMARY COMPLETION -->
-                <div class="speaking-part-card" onclick="window.location.href='reading.html?type=summary'">
+                <div class="speaking-part-card" data-reading-destination="reading.html?type=summary">
                     <div>
                         <div style="width: 60px; height: 60px; border-radius: 16px; background: #f4f3ff; color: #5925dc; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
                             <i class="fa-solid fa-align-left"></i>
@@ -722,6 +722,20 @@
         // INITIALIZATION ON PAGE LOAD
         // ==========================================
         window.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("[data-reading-destination]").forEach(card => {
+                card.addEventListener("click", event => {
+                    if (event.target.closest("a, button, input, label")) return;
+                    window.location.assign(card.dataset.readingDestination);
+                });
+                card.addEventListener("keydown", event => {
+                    if (event.target !== card || !["Enter", " "].includes(event.key)) return;
+                    event.preventDefault();
+                    window.location.assign(card.dataset.readingDestination);
+                });
+                card.tabIndex = 0;
+                card.setAttribute("role", "link");
+            });
+
             const params = new URLSearchParams(window.location.search);
             const requestedType = params.get("type");
 
