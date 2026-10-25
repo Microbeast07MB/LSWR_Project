@@ -326,38 +326,21 @@ else initHomepageAuthGate();
 
 const animatedElements =
     document.querySelectorAll(
-        ".skill-card, .feature, .engineering-content, .engineering-visual"
+        ".feature, .engineering-content, .engineering-visual"
     );
 
-
-const observer =
-    new IntersectionObserver(
-        (entries) => {
-
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-
-                    entry.target.classList.add("visible");
-
-                    observer.unobserve(entry.target);
-
-                }
-
-            });
-
-        },
-        {
-            threshold: 0.15
-        }
-    );
-
-
-animatedElements.forEach(element => {
-
-    observer.observe(element);
-
-});
+if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+        });
+    }, { threshold: 0.15 });
+    animatedElements.forEach(element => observer.observe(element));
+} else {
+    animatedElements.forEach(element => element.classList.add("visible"));
+}
 
 
 /* =====================================================
