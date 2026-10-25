@@ -901,6 +901,13 @@
                     return;
                 }
 
+                const activeSession = result.data?.session || await window.supabaseAuth.getSession();
+                if (!activeSession?.user) {
+                    message.textContent = "Your credentials were accepted, but no active session was created. Please try signing in again.";
+                    message.classList.add("error");
+                    return;
+                }
+
                 message.textContent =
                     "Login successful! Redirecting...";
 
@@ -1013,8 +1020,16 @@
                 }
 
 
-                message.textContent =
-                    "Account created successfully! Check your email if verification is required.";
+                if (result.data?.session?.user) {
+                    message.textContent = "Account created. Redirecting...";
+                    message.classList.add("success");
+                    setTimeout(() => {
+                        window.location.href = getPostLoginDestination();
+                    }, 700);
+                    return;
+                }
+
+                message.textContent = "Account created successfully! Check your email to verify your account, then sign in.";
 
                 message.classList.add("success");
 

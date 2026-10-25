@@ -340,7 +340,10 @@ buttons.forEach(button => {
    SUPABASE AUTHENTICATION & NAVBAR SYNC
 ===================================================== */
 
-async function syncNavbarAuthState() {
+let navbarSyncVersion = 0;
+
+async function syncNavbarAuthState(sessionFromAuthEvent, hasAuthEventSession = false) {
+    const syncVersion = ++navbarSyncVersion;
     const navActions = document.getElementById("navActions");
     const mobileLoginBtn = document.getElementById("mobileLoginBtn");
     const setDestination = (element, destination) => {
@@ -372,7 +375,8 @@ async function syncNavbarAuthState() {
     }
 
     try {
-        const session = await window.supabaseAuth.getSession();
+        const session = hasAuthEventSession ? sessionFromAuthEvent : await window.supabaseAuth.getSession();
+        if (syncVersion !== navbarSyncVersion) return;
         const user = session ? session.user : null;
 
         if (user && navActions) {
@@ -443,8 +447,8 @@ if (document.readyState === "loading") {
 
 // React to session change events
 if (window.supabaseAuth && typeof window.supabaseAuth.onAuthStateChange === "function") {
-    window.supabaseAuth.onAuthStateChange(() => {
-        syncNavbarAuthState();
+    window.supabaseAuth.onAuthStateChange((_event, session) => {
+        syncNavbarAuthState(session, true);
     });
 }
 
