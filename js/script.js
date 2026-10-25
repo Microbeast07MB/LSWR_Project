@@ -494,17 +494,6 @@ async function loadLearningDashboard() {
     const user = session?.user;
     if (!user) return;
 
-    const { data: rows, error } = await window.supabaseClient
-        .from("practice_results")
-        .select("skill, score, max_score, completed_at")
-        .eq("user_id", user.id)
-        .order("completed_at", { ascending: true });
-
-    if (error) {
-        console.error("Could not load learning progress:", error.message);
-        return;
-    }
-
     const { data: completions, error: completionError } = await window.supabaseClient
         .from("learning_completions")
         .select("skill, item_key, completed, completed_at")
@@ -512,26 +501,15 @@ async function loadLearningDashboard() {
         .eq("completed", true);
     if (completionError) console.error("Could not load checklist progress:", completionError.message);
 
-    const totals = Object.fromEntries(Object.keys(percentageNodes).map(skill => [skill, { score: 0, max: 0 }]));
     const activeDays = new Set();
-    (rows || []).forEach(row => {
-        const skill = String(row.skill || "").toLowerCase();
-        const score = Number(row.score);
-        const max = Number(row.max_score);
-        if (totals[skill] && Number.isFinite(score) && Number.isFinite(max) && max > 0) {
-            totals[skill].score += score;
-            totals[skill].max += max;
-        }
-        if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
-    });
-
+    const totals = Object.fromEntries(Object.keys(percentageNodes).map(skill => [skill, { score: 0, max: 0 }]));
     const checklistRows = completions || [];
     Object.keys(totals).forEach(skill => {
         const skillCompletions = checklistRows.filter(row => row.skill === skill);
         const uniqueItems = new Set(skillCompletions.map(row => row.item_key));
         const expectedItems = { listening: 8, speaking: 3, reading: 8, writing: 4 }[skill];
-        totals[skill].score += Math.min(uniqueItems.size, expectedItems);
-        totals[skill].max += expectedItems;
+        totals[skill].score = Math.min(uniqueItems.size, expectedItems);
+        totals[skill].max = expectedItems;
     });
     checklistRows.forEach(row => {
         if (row.completed_at) activeDays.add(new Date(row.completed_at).toLocaleDateString("en-CA"));
@@ -554,7 +532,7 @@ async function loadLearningDashboard() {
     const headline = document.getElementById("progress-headline");
     const description = document.getElementById("progress-description");
     if (headline) headline.textContent = overall ? (overall >= 80 ? "Excellent progress!" : overall >= 50 ? "Good progress!" : "Keep it up!") : "Start practicing!";
-    if (description) description.textContent = overall ? "Your progress is based on completed practice results." : "Complete a practice task to see your progress here.";
+    if (description) description.textContent = overall ? "Your progress reflects completed activities across all four modules." : "Mark activities complete in any module to track your progress here.";
 
     const goal = user.user_metadata?.ielts_goal;
     const goalNode = document.getElementById("ielts-goal-value");
@@ -600,7 +578,6 @@ async function initLearningChecklist() {
         const skill = check.dataset.learningSkill;
         const itemKey = check.dataset.learningItem;
         check.checked = completed.has(`${skill}:${itemKey}`);
-        check.addEventListener("click", event => event.stopPropagation());
         check.addEventListener("change", async () => {
             check.disabled = true;
             const { error: saveError } = await window.supabaseClient
