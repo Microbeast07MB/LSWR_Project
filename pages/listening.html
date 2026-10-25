@@ -1440,15 +1440,23 @@
 <script src="../js/auth-guard.js"></script>
 <script>
     document.querySelectorAll("[data-listening-destination]").forEach(card => {
-        const destination = card.dataset.listeningDestination;
+        const destination = new URL(card.dataset.listeningDestination, window.location.href);
+        const taskNumber = Number(destination.searchParams.get("task"));
+        const openTask = () => {
+            if (Number.isInteger(taskNumber) && taskNumber >= 1 && taskNumber <= 8 && typeof window.navigateToTask === "function") {
+                window.navigateToTask(taskNumber);
+            } else {
+                window.location.assign(destination.href);
+            }
+        };
         card.addEventListener("click", event => {
             if (event.target.closest("a, button, input, label")) return;
-            window.location.assign(destination);
+            openTask();
         });
         card.addEventListener("keydown", event => {
             if (event.target !== card || !["Enter", " "].includes(event.key)) return;
             event.preventDefault();
-            window.location.assign(destination);
+            openTask();
         });
     });
 </script>

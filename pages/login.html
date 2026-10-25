@@ -727,7 +727,8 @@
             try {
                 const destination = new URL(requested, window.location.origin);
                 const loginPath = new URL("login.html", window.location.href).pathname;
-                if (destination.origin === window.location.origin && destination.pathname !== loginPath) {
+                const appRoot = new URL("../", window.location.href).pathname;
+                if (destination.origin === window.location.origin && destination.pathname.startsWith(appRoot) && destination.pathname !== loginPath) {
                     return destination.href;
                 }
             } catch (error) {

@@ -301,7 +301,13 @@ async function syncNavbarAuthState(sessionFromAuthEvent, hasAuthEventSession = f
     try {
         const session = hasAuthEventSession ? sessionFromAuthEvent : await window.supabaseAuth.getSession();
         if (syncVersion !== navbarSyncVersion) return;
-        const user = session ? session.user : null;
+        let user = session?.user || null;
+        // Some browsers restore the user before the session wrapper settles.
+        // Ask Supabase for the verified user as a fallback before showing signed-out links.
+        if (!user && !hasAuthEventSession && typeof window.supabaseAuth.getUser === "function") {
+            user = await window.supabaseAuth.getUser();
+            if (syncVersion !== navbarSyncVersion) return;
+        }
 
         if (user && navActions) {
             const profileName = user.user_metadata?.full_name || user.user_metadata?.name || "";
@@ -371,7 +377,13 @@ if (document.readyState === "loading") {
 
 // React to session change events
 if (window.supabaseAuth && typeof window.supabaseAuth.onAuthStateChange === "function") {
-    window.supabaseAuth.onAuthStateChange((_event, session) => {
+    window.supabaseAuth.onAuthStateChange((event, session) => {
+        // Retry the persisted-session lookup if the initial auth event arrives
+        // before Supabase has finished restoring storage in this browser.
+        if (event === "INITIAL_SESSION" && !session) {
+            window.setTimeout(() => syncNavbarAuthState(), 0);
+            return;
+        }
         syncNavbarAuthState(session, true);
     });
 }
