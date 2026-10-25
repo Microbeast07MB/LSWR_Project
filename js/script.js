@@ -302,11 +302,14 @@ async function syncNavbarAuthState(sessionFromAuthEvent, hasAuthEventSession = f
         const session = hasAuthEventSession ? sessionFromAuthEvent : await window.supabaseAuth.getSession();
         if (syncVersion !== navbarSyncVersion) return;
         let user = session?.user || null;
-        // Some browsers restore the user before the session wrapper settles.
-        // Ask Supabase for the verified user as a fallback before showing signed-out links.
+        // Some browsers restore local auth storage after the page scripts run.
+        // Retry briefly before replacing the navbar with signed-out links.
         if (!user && !hasAuthEventSession && typeof window.supabaseAuth.getUser === "function") {
-            user = await window.supabaseAuth.getUser();
-            if (syncVersion !== navbarSyncVersion) return;
+            for (let attempt = 0; attempt < 4 && !user; attempt++) {
+                if (attempt) await new Promise(resolve => window.setTimeout(resolve, 250 * attempt));
+                user = await window.supabaseAuth.getUser();
+                if (syncVersion !== navbarSyncVersion) return;
+            }
         }
 
         if (user && navActions) {
@@ -348,7 +351,7 @@ async function syncNavbarAuthState(sessionFromAuthEvent, hasAuthEventSession = f
             navActions.replaceChildren(chip);
 
             if (mobileLoginBtn) {
-                mobileLoginBtn.textContent = `Logout (${displayName})`;
+                mobileLoginBtn.innerHTML = `<i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Logout (${displayName})`;
                 mobileLoginBtn.onclick = async () => {
                     mobileLoginBtn.disabled = true;
                     const { error } = await window.supabaseAuth.signOut();
@@ -387,6 +390,17 @@ if (window.supabaseAuth && typeof window.supabaseAuth.onAuthStateChange === "fun
         syncNavbarAuthState(session, true);
     });
 }
+
+// A page restored from the back-forward cache may not rerun its load handlers.
+// Refresh the navbar when the user returns to the tab or another tab changes auth.
+let navbarRefreshTimer;
+function refreshNavbarAuthState() {
+    window.clearTimeout(navbarRefreshTimer);
+    navbarRefreshTimer = window.setTimeout(() => syncNavbarAuthState(), 0);
+}
+window.addEventListener("pageshow", refreshNavbarAuthState);
+window.addEventListener("focus", refreshNavbarAuthState);
+window.addEventListener("storage", refreshNavbarAuthState);
 
 /* =====================================================
    LEARNING DASHBOARD
