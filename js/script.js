@@ -294,6 +294,44 @@ function getLocalAuthUser() {
     return null;
 }
 
+window.handleSignOut = async function(btn) {
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> <span>Signing out...</span>';
+    }
+    try {
+        localStorage.removeItem("grammarium_user");
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+            const k = localStorage.key(i);
+            if (k && k.startsWith("sb-") && k.endsWith("-auth-token")) {
+                localStorage.removeItem(k);
+            }
+        }
+    } catch (e) {
+        console.warn("Storage cleanup error:", e);
+    }
+    try {
+        if (window.supabaseAuth && typeof window.supabaseAuth.signOut === "function") {
+            await window.supabaseAuth.signOut();
+        } else if (window.supabaseClient && window.supabaseClient.auth) {
+            await window.supabaseClient.auth.signOut();
+        }
+    } catch (e) {
+        console.warn("Supabase signOut error:", e);
+    }
+    window.location.reload();
+};
+
+// Global click delegation for any sign-out button
+document.addEventListener("click", function(event) {
+    const btn = event.target.closest("#navSignOutBtn, #mobileSignOutBtn, .nav-logout-btn, .mobile-logout-btn");
+    if (btn) {
+        event.preventDefault();
+        event.stopPropagation();
+        window.handleSignOut(btn);
+    }
+});
+
 function renderNavbarForUser(user) {
     if (!user) return;
     const navActions = document.getElementById("navActions");
@@ -333,18 +371,6 @@ function renderNavbarForUser(user) {
         logout.title = "Sign out";
         logout.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> <span>Sign Out</span>';
 
-        logout.addEventListener("click", async () => {
-            logout.disabled = true;
-            logout.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> <span>Signing out...</span>';
-            try {
-                localStorage.removeItem("grammarium_user");
-            } catch (e) {}
-            if (window.supabaseAuth && typeof window.supabaseAuth.signOut === "function") {
-                await window.supabaseAuth.signOut();
-            }
-            window.location.reload();
-        });
-
         wrapper.append(chip, logout);
         navActions.replaceChildren(wrapper);
     }
@@ -370,16 +396,6 @@ function renderNavbarForUser(user) {
             mobileSignOutBtn.id = "mobileSignOutBtn";
         }
         mobileSignOutBtn.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign Out';
-        mobileSignOutBtn.onclick = async () => {
-            mobileSignOutBtn.disabled = true;
-            try {
-                localStorage.removeItem("grammarium_user");
-            } catch (e) {}
-            if (window.supabaseAuth && typeof window.supabaseAuth.signOut === "function") {
-                await window.supabaseAuth.signOut();
-            }
-            window.location.reload();
-        };
 
         if (mobileLoginBtn) {
             mobileLoginBtn.style.display = "none";
@@ -746,3 +762,4 @@ async function initLearningChecklist() {
             saveButton.disabled = false;
         }
     });
+}

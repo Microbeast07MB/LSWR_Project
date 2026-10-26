@@ -88,6 +88,30 @@
 
         </div>
         <script>
+            window.handleSignOut = async function(btn) {
+                if (btn) {
+                    btn.disabled = true;
+                    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Signing out...</span>';
+                }
+                try {
+                    localStorage.removeItem("grammarium_user");
+                    for (let i = localStorage.length - 1; i >= 0; i--) {
+                        const k = localStorage.key(i);
+                        if (k && k.startsWith("sb-") && k.endsWith("-auth-token")) {
+                            localStorage.removeItem(k);
+                        }
+                    }
+                } catch(e) {}
+                try {
+                    if (window.supabaseAuth && typeof window.supabaseAuth.signOut === "function") {
+                        await window.supabaseAuth.signOut();
+                    } else if (window.supabaseClient && window.supabaseClient.auth) {
+                        await window.supabaseClient.auth.signOut();
+                    }
+                } catch(e) {}
+                window.location.reload();
+            };
+
             (function() {
                 try {
                     let user = null;
@@ -108,7 +132,7 @@
                         const initial = (name.charAt(0) || "U").toUpperCase();
                         const navActions = document.getElementById("navActions");
                         if (navActions) {
-                            navActions.innerHTML = '<div class="user-nav-wrapper"><div class="user-nav-chip" title="' + (user.email || name) + '"><span class="user-avatar-circle" aria-hidden="true">' + initial + '</span><span class="user-nav-name">' + name + '</span></div><button type="button" class="nav-logout-btn" id="navSignOutBtn" title="Sign out" aria-label="Sign out"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span></button></div>';
+                            navActions.innerHTML = '<div class="user-nav-wrapper"><div class="user-nav-chip" title="' + (user.email || name) + '"><span class="user-avatar-circle" aria-hidden="true">' + initial + '</span><span class="user-nav-name">' + name + '</span></div><button type="button" class="nav-logout-btn" id="navSignOutBtn" onclick="handleSignOut(this)" title="Sign out" aria-label="Sign out"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span></button></div>';
                         }
                     }
                 } catch(e) {}
