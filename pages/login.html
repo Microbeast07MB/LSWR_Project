@@ -909,6 +909,12 @@
                     return;
                 }
 
+                try {
+                    localStorage.setItem("grammarium_user", JSON.stringify(activeSession.user));
+                } catch (e) {
+                    console.warn("Could not cache user locally:", e);
+                }
+
                 message.textContent =
                     "Login successful! Redirecting...";
 
@@ -919,7 +925,7 @@
 
                     window.location.href = getPostLoginDestination();
 
-                }, 1000);
+                }, 800);
 
             }
         );
@@ -1022,6 +1028,11 @@
 
 
                 if (result.data?.session?.user) {
+                    try {
+                        localStorage.setItem("grammarium_user", JSON.stringify(result.data.session.user));
+                    } catch (e) {
+                        console.warn("Could not cache user locally:", e);
+                    }
                     message.textContent = "Account created. Redirecting...";
                     message.classList.add("success");
                     setTimeout(() => {

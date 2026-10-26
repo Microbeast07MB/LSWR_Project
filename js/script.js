@@ -1,4 +1,4 @@
-﻿/* =====================================================
+/* =====================================================
    MOBILE MENU
 ===================================================== */
 
@@ -266,137 +266,234 @@ buttons.forEach(button => {
 
 let navbarSyncVersion = 0;
 
-async function syncNavbarAuthState(sessionFromAuthEvent, hasAuthEventSession = false) {
-    const syncVersion = ++navbarSyncVersion;
+function getLocalAuthUser() {
+    if (window.supabaseAuth && typeof window.supabaseAuth.getLocalUser === "function") {
+        const u = window.supabaseAuth.getLocalUser();
+        if (u) return u;
+    }
+    try {
+        const customUser = localStorage.getItem("grammarium_user");
+        if (customUser) {
+            const parsed = JSON.parse(customUser);
+            if (parsed && (parsed.id || parsed.email)) return parsed;
+        }
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith("sb-") && key.endsWith("-auth-token")) {
+                const item = localStorage.getItem(key);
+                if (item) {
+                    const parsed = JSON.parse(item);
+                    const user = parsed?.user || parsed?.currentSession?.user || null;
+                    if (user && (user.id || user.email)) return user;
+                }
+            }
+        }
+    } catch (e) {
+        console.warn("Could not read local auth user:", e);
+    }
+    return null;
+}
+
+function renderNavbarForUser(user) {
+    if (!user) return;
+    const navActions = document.getElementById("navActions");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileLoginBtn = document.getElementById("mobileLoginBtn");
+
+    const profileName = user.user_metadata?.full_name || user.user_metadata?.name || "";
+    const emailName = String(user.email || "").split("@")[0];
+    const displayName = String(profileName || emailName || "Student").trim();
+    const initial = (Array.from(displayName)[0] || "U").toUpperCase();
+
+    // 1. Desktop Nav Actions
+    if (navActions) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "user-nav-wrapper";
+
+        const chip = document.createElement("div");
+        chip.className = "user-nav-chip";
+        chip.title = user.email ? `Signed in as ${user.email}` : "Signed in";
+
+        const avatar = document.createElement("span");
+        avatar.className = "user-avatar-circle";
+        avatar.setAttribute("aria-hidden", "true");
+        avatar.textContent = initial;
+
+        const name = document.createElement("span");
+        name.className = "user-nav-name";
+        name.textContent = displayName;
+
+        chip.append(avatar, name);
+
+        const logout = document.createElement("button");
+        logout.type = "button";
+        logout.className = "nav-logout-btn";
+        logout.id = "navSignOutBtn";
+        logout.setAttribute("aria-label", "Sign out");
+        logout.title = "Sign out";
+        logout.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> <span>Sign Out</span>';
+
+        logout.addEventListener("click", async () => {
+            logout.disabled = true;
+            logout.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> <span>Signing out...</span>';
+            try {
+                localStorage.removeItem("grammarium_user");
+            } catch (e) {}
+            if (window.supabaseAuth && typeof window.supabaseAuth.signOut === "function") {
+                await window.supabaseAuth.signOut();
+            }
+            window.location.reload();
+        });
+
+        wrapper.append(chip, logout);
+        navActions.replaceChildren(wrapper);
+    }
+
+    // 2. Mobile Nav Actions
+    if (mobileMenu) {
+        let mobileUserBox = document.getElementById("mobileUserBox");
+        if (!mobileUserBox) {
+            mobileUserBox = document.createElement("div");
+            mobileUserBox.className = "mobile-user-box";
+            mobileUserBox.id = "mobileUserBox";
+        }
+        mobileUserBox.innerHTML = `
+            <span class="user-avatar-circle" aria-hidden="true">${initial}</span>
+            <span class="user-nav-name">${displayName}</span>
+        `;
+
+        let mobileSignOutBtn = document.getElementById("mobileSignOutBtn");
+        if (!mobileSignOutBtn) {
+            mobileSignOutBtn = document.createElement("button");
+            mobileSignOutBtn.type = "button";
+            mobileSignOutBtn.className = "mobile-logout-btn";
+            mobileSignOutBtn.id = "mobileSignOutBtn";
+        }
+        mobileSignOutBtn.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign Out';
+        mobileSignOutBtn.onclick = async () => {
+            mobileSignOutBtn.disabled = true;
+            try {
+                localStorage.removeItem("grammarium_user");
+            } catch (e) {}
+            if (window.supabaseAuth && typeof window.supabaseAuth.signOut === "function") {
+                await window.supabaseAuth.signOut();
+            }
+            window.location.reload();
+        };
+
+        if (mobileLoginBtn) {
+            mobileLoginBtn.style.display = "none";
+        }
+        if (!mobileUserBox.parentElement) mobileMenu.appendChild(mobileUserBox);
+        if (!mobileSignOutBtn.parentElement) mobileMenu.appendChild(mobileSignOutBtn);
+    }
+}
+
+function renderNavbarSignedOut() {
     const navActions = document.getElementById("navActions");
     const mobileLoginBtn = document.getElementById("mobileLoginBtn");
-    const setDestination = (element, destination) => {
-        if (!element) return;
-        if (element instanceof HTMLAnchorElement) element.href = destination;
-        else element.onclick = () => { window.location.href = destination; };
-    };
-    const setSignedOutNavigation = () => {
-        if (navActions && !navActions.querySelector(".login-btn")) {
-            const loginLink = document.createElement("a");
-            loginLink.className = "login-btn";
-            loginLink.textContent = "Login";
-            const signupLink = document.createElement("a");
-            signupLink.className = "signup-btn";
-            signupLink.textContent = "Get Started";
-            navActions.replaceChildren(loginLink, signupLink);
-        }
-        document.querySelectorAll(".login-btn").forEach(link => setDestination(link, "pages/login.html"));
-        document.querySelectorAll(".signup-btn").forEach(link => setDestination(link, "pages/login.html?mode=signup"));
-        if (mobileLoginBtn) {
-            mobileLoginBtn.textContent = "Login";
-            mobileLoginBtn.onclick = () => { window.location.href = "pages/login.html"; };
-        }
-    };
+    const mobileUserBox = document.getElementById("mobileUserBox");
+    const mobileSignOutBtn = document.getElementById("mobileSignOutBtn");
+
+    if (mobileUserBox) mobileUserBox.remove();
+    if (mobileSignOutBtn) mobileSignOutBtn.remove();
+    if (mobileLoginBtn) {
+        mobileLoginBtn.style.display = "";
+        mobileLoginBtn.textContent = "Login";
+        mobileLoginBtn.onclick = () => { window.location.href = "pages/login.html"; };
+    }
+
+    if (navActions && !navActions.querySelector(".login-btn")) {
+        const loginLink = document.createElement("a");
+        loginLink.className = "login-btn";
+        loginLink.href = "pages/login.html";
+        loginLink.textContent = "Login";
+
+        const signupLink = document.createElement("a");
+        signupLink.className = "signup-btn";
+        signupLink.href = "pages/login.html?mode=signup";
+        signupLink.textContent = "Get Started";
+
+        navActions.replaceChildren(loginLink, signupLink);
+    }
+}
+
+async function syncNavbarAuthState(sessionFromAuthEvent, hasAuthEventSession = false) {
+    const syncVersion = ++navbarSyncVersion;
+
+    // 1. Instant optimistic sync from local storage
+    const localUser = getLocalAuthUser();
+    if (localUser) {
+        renderNavbarForUser(localUser);
+    }
 
     if (!window.supabaseAuth || !window.isSupabaseConfigured || !window.isSupabaseConfigured()) {
-        setSignedOutNavigation();
+        if (!localUser) renderNavbarSignedOut();
         return;
     }
 
     try {
-        const session = hasAuthEventSession ? sessionFromAuthEvent : await window.supabaseAuth.getSession();
-        if (syncVersion !== navbarSyncVersion) return;
-        let user = session?.user || null;
-        // Some browsers restore local auth storage after the page scripts run.
-        // Retry briefly before replacing the navbar with signed-out links.
-        if (!user && !hasAuthEventSession && typeof window.supabaseAuth.getUser === "function") {
-            for (let attempt = 0; attempt < 4 && !user; attempt++) {
-                if (attempt) await new Promise(resolve => window.setTimeout(resolve, 250 * attempt));
-                user = await window.supabaseAuth.getUser();
-                if (syncVersion !== navbarSyncVersion) return;
-            }
+        let session = null;
+        if (hasAuthEventSession) {
+            session = sessionFromAuthEvent;
+        } else if (typeof window.supabaseAuth.getSession === "function") {
+            session = await Promise.race([
+                window.supabaseAuth.getSession(),
+                new Promise(resolve => setTimeout(() => resolve(null), 3000))
+            ]);
         }
 
-        if (user && navActions) {
-            const profileName = user.user_metadata?.full_name || user.user_metadata?.name || "";
-            const emailName = String(user.email || "").split("@")[0];
-            const displayName = String(profileName || emailName || "Account").trim();
-            const chip = document.createElement("div");
-            chip.className = "user-nav-chip";
-            chip.title = user.email ? `Signed in as ${user.email}` : "Signed in";
+        if (syncVersion !== navbarSyncVersion) return;
 
-            const avatar = document.createElement("span");
-            avatar.className = "user-avatar-circle";
-            avatar.textContent = Array.from(displayName)[0]?.toUpperCase() || "A";
-            avatar.setAttribute("aria-hidden", "true");
-
-            const name = document.createElement("span");
-            name.className = "user-nav-name";
-            name.textContent = displayName;
-
-            const logout = document.createElement("button");
-            logout.type = "button";
-            logout.className = "nav-logout-btn";
-            logout.setAttribute("aria-label", "Sign out");
-            logout.title = "Sign out";
-            logout.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>';
-            logout.addEventListener("click", async () => {
-                logout.disabled = true;
-                logout.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>';
-                const { error } = await window.supabaseAuth.signOut();
-                if (error) {
-                    console.error("Could not sign out:", error.message);
-                    logout.disabled = false;
-                    logout.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>';
-                    return;
-                }
-                window.location.reload();
-            });
-            chip.append(avatar, name, logout);
-            navActions.replaceChildren(chip);
-
-            if (mobileLoginBtn) {
-                mobileLoginBtn.innerHTML = `<i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Logout (${displayName})`;
-                mobileLoginBtn.onclick = async () => {
-                    mobileLoginBtn.disabled = true;
-                    const { error } = await window.supabaseAuth.signOut();
-                    if (error) {
-                        console.error("Could not sign out:", error.message);
-                        mobileLoginBtn.disabled = false;
-                        return;
-                    }
-                    window.location.reload();
-                };
-            }
-        } else {
-            setSignedOutNavigation();
+        let user = session?.user || null;
+        if (user) {
+            try { localStorage.setItem("grammarium_user", JSON.stringify(user)); } catch (e) {}
+            renderNavbarForUser(user);
+            loadLearningDashboard(user);
+        } else if (session === null && !localUser) {
+            try { localStorage.removeItem("grammarium_user"); } catch (e) {}
+            renderNavbarSignedOut();
+            loadLearningDashboard(null);
         }
     } catch (err) {
-        console.error("Auth navbar sync error:", err);
+        console.warn("Auth navbar sync error:", err);
     }
 }
 
 // Run on page load
 if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", syncNavbarAuthState);
+    document.addEventListener("DOMContentLoaded", () => syncNavbarAuthState());
 } else {
     syncNavbarAuthState();
 }
 
-// React to session change events
+// React to session change events safely outside internal GoTrue locks
 if (window.supabaseAuth && typeof window.supabaseAuth.onAuthStateChange === "function") {
     window.supabaseAuth.onAuthStateChange((event, session) => {
-        // Retry the persisted-session lookup if the initial auth event arrives
-        // before Supabase has finished restoring storage in this browser.
-        if (event === "INITIAL_SESSION" && !session) {
-            window.setTimeout(() => syncNavbarAuthState(), 0);
-            return;
-        }
-        syncNavbarAuthState(session, true);
+        setTimeout(() => {
+            if (event === "SIGNED_OUT") {
+                try { localStorage.removeItem("grammarium_user"); } catch (e) {}
+                renderNavbarSignedOut();
+                loadLearningDashboard(null);
+            } else if (session?.user) {
+                try { localStorage.setItem("grammarium_user", JSON.stringify(session.user)); } catch (e) {}
+                renderNavbarForUser(session.user);
+                loadLearningDashboard(session.user);
+            } else if (event === "INITIAL_SESSION" && !session) {
+                if (!getLocalAuthUser()) {
+                    renderNavbarSignedOut();
+                    loadLearningDashboard(null);
+                }
+            }
+        }, 0);
     });
 }
 
-// A page restored from the back-forward cache may not rerun its load handlers.
-// Refresh the navbar when the user returns to the tab or another tab changes auth.
+// Refresh when window regains focus, is restored from cache, or storage updates
 let navbarRefreshTimer;
 function refreshNavbarAuthState() {
     window.clearTimeout(navbarRefreshTimer);
-    navbarRefreshTimer = window.setTimeout(() => syncNavbarAuthState(), 0);
+    navbarRefreshTimer = window.setTimeout(() => syncNavbarAuthState(), 50);
 }
 window.addEventListener("pageshow", refreshNavbarAuthState);
 window.addEventListener("focus", refreshNavbarAuthState);
@@ -406,7 +503,7 @@ window.addEventListener("storage", refreshNavbarAuthState);
    LEARNING DASHBOARD
    ===================================================== */
 
-async function loadLearningDashboard() {
+async function loadLearningDashboard(providedUser) {
     const modules = {
         listening: { total: 8, label: "Listening" },
         speaking: { total: 3, label: "Speaking" },
@@ -463,8 +560,23 @@ async function loadLearningDashboard() {
         if (syncStatus) syncStatus.textContent = "Connect and sign in to sync saved checklist progress.";
         return;
     }
-    const session = await window.supabaseAuth.getSession();
-    const user = session?.user;
+
+    let user = providedUser;
+    if (!user) {
+        user = getLocalAuthUser();
+    }
+    if (!user && window.supabaseAuth?.getSession) {
+        try {
+            const session = await Promise.race([
+                window.supabaseAuth.getSession(),
+                new Promise(resolve => setTimeout(() => resolve(null), 2500))
+            ]);
+            user = session?.user || null;
+        } catch (e) {
+            console.warn("Could not retrieve session for dashboard:", e);
+        }
+    }
+
     if (!user) {
         Object.keys(modules).forEach(skill => renderModule(skill, 0));
         renderOverall(Object.fromEntries(Object.entries(modules).map(([skill, module]) => [skill, { completed: 0, total: module.total }])));

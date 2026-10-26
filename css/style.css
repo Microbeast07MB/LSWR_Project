@@ -288,28 +288,34 @@ button {
 
 }
 
-/* Logged-In User Navbar Chip */
+/* Logged-In User Navbar */
+.user-nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .user-nav-chip {
     display: flex;
     align-items: center;
     gap: 10px;
     background: #f8fafc;
     border: 1.5px solid #eaecf0;
-    padding: 4px 6px 4px 12px;
+    padding: 5px 12px 5px 6px;
     border-radius: 100px;
     box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
 }
 
 .user-avatar-circle {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
     flex-shrink: 0;
@@ -319,33 +325,68 @@ button {
     font-size: 13.5px;
     font-weight: 600;
     color: var(--dark);
-    max-width: 140px;
+    max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .nav-logout-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 1px solid #eaecf0;
-    background: #ffffff;
-    color: #667085;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 9px;
+    border: 1.5px solid #eaecf0;
+    background: #ffffff;
+    color: #475467;
+    font-size: 13.5px;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 12px;
     transition: all 0.2s ease;
-    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .nav-logout-btn:hover {
     background: #fef3f2;
     border-color: #fee4e2;
     color: #d92d20;
-    transform: scale(1.05);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(217, 45, 32, 0.08);
+}
+
+/* Mobile Logged-in Menu */
+.mobile-user-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #f8fafc;
+    border: 1px solid #eaecf0;
+    border-radius: 10px;
+    margin-top: 8px;
+}
+
+.mobile-logout-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #fee4e2;
+    color: #d92d20;
+    border: 1px solid #fecdca;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mobile-logout-btn:hover {
+    background: #fddcd8;
 }
 
 

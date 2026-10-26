@@ -236,9 +236,39 @@ const supabaseAuth = {
 
 
     /**
+     * Get Current Locally Stored User (synchronous instant lookup)
+     */
+    getLocalUser() {
+        try {
+            const stored = localStorage.getItem("grammarium_user");
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                if (parsed && (parsed.id || parsed.email)) return parsed;
+            }
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith("sb-") && key.endsWith("-auth-token")) {
+                    const item = localStorage.getItem(key);
+                    if (item) {
+                        const parsed = JSON.parse(item);
+                        const user = parsed?.user || parsed?.currentSession?.user || null;
+                        if (user && (user.id || user.email)) return user;
+                    }
+                }
+            }
+        } catch (e) {
+            console.warn("[Supabase] Local user read warning:", e);
+        }
+        return null;
+    },
+
+    /**
      * Sign Out
      */
     async signOut() {
+        try {
+            localStorage.removeItem("grammarium_user");
+        } catch (e) {}
 
         if (!this.isReady()) {
             return { error: null };
