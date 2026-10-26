@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -47,7 +47,7 @@
     <main class="speaking-container listening-hub-shell">
 
         <!-- HEADER SECTION -->
-        <div class="speaking-header" style="text-align: center; margin-bottom: 50px;">
+        <div class="speaking-header" style="text-align: center; margin-bottom: 40px;">
             <div class="part-badge-group" style="justify-content: center;">
                 <span class="part-badge">
                     <i class="fa-solid fa-microphone"></i>
@@ -55,9 +55,11 @@
                 </span>
             </div>
 
-            <h1 class="speaking-title" style="font-size: 38px;">Master Your English Speaking</h1>
+            <h1 class="speaking-title" style="font-size: 36px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin-bottom: 12px;">
+                Master Your English Speaking
+            </h1>
 
-            <p class="speaking-subtitle" style="max-width: 600px; margin: 0 auto;">
+            <p class="speaking-subtitle" style="max-width: 680px; margin: 0 auto; color: var(--muted); font-size: 15.5px; line-height: 1.6;">
                 Select any of the three official IELTS Speaking Parts below to practice questions independently, listen to official sample recordings, and review sample answers.
             </p>
         </div>
@@ -67,65 +69,74 @@
         <div class="speaking-parts-grid listening-hub-grid">
 
             <!-- PART 1 CARD -->
-            <div class="speaking-part-card listening-hub-card">
+            <div class="listening-hub-card" onclick="window.location.href='speaking-part1.html'" role="link" tabindex="0">
                 <div>
-                    <div style="width: 60px; height: 60px; border-radius: 16px; background: var(--light-purple); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                    <div class="hub-card-icon" style="background: #eeedff; color: var(--primary);">
                         <i class="fa-solid fa-comments"></i>
                     </div>
 
-                    <span style="font-size: 13px; font-weight: 800; color: var(--primary); letter-spacing: 0.8px; text-transform: uppercase;">Part 01</span>
-                    <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Introduction & Interview</h3>
-                    <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                    <span class="hub-card-tag" style="color: var(--primary);">Part 01 • Introduction</span>
+                    <h3 class="hub-card-title">Introduction & Interview</h3>
+                    <p class="hub-card-desc">
                         Practice general questions about yourself, your hometown, accommodation, studies, and everyday routines.
                     </p>
                 </div>
 
-                <a href="speaking-part1.html" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                    Start Part 1 Practice
-                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                </a>
+                <div class="hub-card-footer">
+                    <span class="hub-meta-badge"><i class="fa-regular fa-clock"></i> 4–5 Mins (Interview)</span>
+                    <a href="speaking-part1.html" class="nav-link-btn primary" onclick="event.stopPropagation();">
+                        Start
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
                 <label class="speaking-completion"><input type="checkbox" data-learning-skill="speaking" data-learning-item="part1"> <span>I've completed Part 1 practice</span></label>
             </div>
 
             <!-- PART 2 CARD -->
-            <div class="speaking-part-card listening-hub-card">
+            <div class="listening-hub-card" onclick="window.location.href='speaking-part2.html'" role="link" tabindex="0">
                 <div>
-                    <div style="width: 60px; height: 60px; border-radius: 16px; background: #ecfdf3; color: #027a48; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                    <div class="hub-card-icon" style="background: #ecfdf3; color: #027a48;">
                         <i class="fa-solid fa-stopwatch"></i>
                     </div>
 
-                    <span style="font-size: 13px; font-weight: 800; color: #027a48; letter-spacing: 0.8px; text-transform: uppercase;">Part 02</span>
-                    <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Individual Long Turn</h3>
-                    <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                    <span class="hub-card-tag" style="color: #027a48;">Part 02 • Long Turn</span>
+                    <h3 class="hub-card-title">Individual Long Turn</h3>
+                    <p class="hub-card-desc">
                         Practice speaking on specific topics, organizing your ideas, and reviewing official sample recordings.
                     </p>
                 </div>
 
-                <a href="speaking-part2.html" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                    Start Part 2 Practice
-                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                </a>
+                <div class="hub-card-footer">
+                    <span class="hub-meta-badge"><i class="fa-regular fa-clock"></i> 3–4 Mins (Cue Card)</span>
+                    <a href="speaking-part2.html" class="nav-link-btn primary" onclick="event.stopPropagation();">
+                        Start
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
                 <label class="speaking-completion"><input type="checkbox" data-learning-skill="speaking" data-learning-item="part2"> <span>I've completed Part 2 practice</span></label>
             </div>
 
             <!-- PART 3 CARD -->
-            <div class="speaking-part-card listening-hub-card">
+            <div class="listening-hub-card" onclick="window.location.href='speaking-part3.html'" role="link" tabindex="0">
                 <div>
-                    <div style="width: 60px; height: 60px; border-radius: 16px; background: #fff4ed; color: #b42318; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                    <div class="hub-card-icon" style="background: #fff4ed; color: #b42318;">
                         <i class="fa-solid fa-users"></i>
                     </div>
 
-                    <span style="font-size: 13px; font-weight: 800; color: #b42318; letter-spacing: 0.8px; text-transform: uppercase;">Part 03</span>
-                    <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Two-way Discussion</h3>
-                    <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                    <span class="hub-card-tag" style="color: #b42318;">Part 03 • Discussion</span>
+                    <h3 class="hub-card-title">Two-way Discussion</h3>
+                    <p class="hub-card-desc">
                         Engage in deeper analytical discussions regarding societal values, advertising, and cultural trends.
                     </p>
                 </div>
 
-                <a href="speaking-part3.html" class="nav-link-btn primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                    Start Part 3 Practice
-                    <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                </a>
+                <div class="hub-card-footer">
+                    <span class="hub-meta-badge"><i class="fa-regular fa-clock"></i> 4–5 Mins (Analytical)</span>
+                    <a href="speaking-part3.html" class="nav-link-btn primary" onclick="event.stopPropagation();">
+                        Start
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
                 <label class="speaking-completion"><input type="checkbox" data-learning-skill="speaking" data-learning-item="part3"> <span>I've completed Part 3 practice</span></label>
             </div>
 

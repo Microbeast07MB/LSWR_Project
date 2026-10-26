@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -32,9 +32,9 @@
 
     <!-- TOP NAVBAR -->
     <header class="listening-navbar">
-        <a href="../index.html" class="back-home">
+        <a href="../index.html" class="back-home" id="readingBackBtn">
             <i class="fa-solid fa-arrow-left"></i>
-            Back to Home
+            <span id="backBtnText">Back to Home</span>
         </a>
 
         <div class="listening-logo">
@@ -62,7 +62,7 @@
 
         <!-- READING HUB SELECTION GRID (Shown when no ?type= is in URL) -->
         <div id="readingHubSection" class="listening-hub-container" style="display: none;">
-            <div class="speaking-header" style="text-align: center; margin-bottom: 50px;">
+            <div class="speaking-header" style="text-align: center; margin-bottom: 40px;">
                 <div class="part-badge-group" style="justify-content: center;">
                     <span class="part-badge">
                         <i class="fa-solid fa-book"></i>
@@ -70,9 +70,13 @@
                     </span>
                 </div>
 
-                <h1 class="speaking-title" style="font-size: 38px;">Test Your Reading Skills</h1>
+                <h1 class="speaking-title"
+                    style="font-size: 36px; font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--dark); margin-bottom: 12px;">
+                    Test Your Reading Skills
+                </h1>
 
-                <p class="speaking-subtitle" style="max-width: 620px; margin: 0 auto;">
+                <p class="speaking-subtitle"
+                    style="max-width: 680px; margin: 0 auto; color: var(--muted); font-size: 15.5px; line-height: 1.6;">
                     Choose a question type below to practice different IELTS Reading question formats using authentic
                     test materials.
                 </p>
@@ -81,217 +85,216 @@
             <div class="reading-types-grid listening-hub-grid">
 
                 <!-- CARD 1: FLOW-CHART COMPLETION -->
-                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=flowchart">
+                <div class="listening-hub-card" data-reading-destination="reading.html?type=flowchart" role="link"
+                    tabindex="0">
                     <div>
-                        <div
-                            style="width: 60px; height: 60px; border-radius: 16px; background: var(--light-purple); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                        <div class="hub-card-icon" style="background: #eeedff; color: var(--primary);">
                             <i class="fa-solid fa-diagram-project"></i>
                         </div>
 
-                        <span
-                            style="font-size: 13px; font-weight: 800; color: var(--primary); letter-spacing: 0.8px; text-transform: uppercase;">Question
-                            Type 01</span>
-                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">
-                            Flow-chart Completion</h3>
-                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                        <span class="hub-card-tag" style="color: var(--primary);">Question Type 01</span>
+                        <h3 class="hub-card-title">Flow-chart Completion</h3>
+                        <p class="hub-card-desc">
                             Complete the flow-chart using words from the reading passage.
                         </p>
                     </div>
 
-                    <a href="reading.html?type=flowchart" class="nav-link-btn primary"
-                        style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                        Start Practice
-                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                    </a>
+                    <div class="hub-card-footer">
+                        <span class="hub-meta-badge"><i class="fa-solid fa-list-check"></i> 8 Questions (33–40)</span>
+                        <a href="reading.html?type=flowchart" class="nav-link-btn primary"
+                            onclick="event.stopPropagation();">
+                            Start
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                     <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading"
                             data-learning-item="type1"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 2: TRUE / FALSE / NOT GIVEN -->
-                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=tfn">
+                <div class="listening-hub-card" data-reading-destination="reading.html?type=tfn" role="link"
+                    tabindex="0">
                     <div>
-                        <div
-                            style="width: 60px; height: 60px; border-radius: 16px; background: #ecfdf3; color: #027a48; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                        <div class="hub-card-icon" style="background: #ecfdf3; color: #027a48;">
                             <i class="fa-solid fa-scale-balanced"></i>
                         </div>
 
-                        <span
-                            style="font-size: 13px; font-weight: 800; color: #027a48; letter-spacing: 0.8px; text-transform: uppercase;">Question
-                            Type 02</span>
-                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">True /
-                            False / Not Given</h3>
-                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                        <span class="hub-card-tag" style="color: #027a48;">Question Type 02</span>
+                        <h3 class="hub-card-title">True / False / Not Given</h3>
+                        <p class="hub-card-desc">
                             Decide whether each statement agrees with the information in the passage.
                         </p>
                     </div>
 
-                    <a href="reading.html?type=tfn" class="nav-link-btn primary"
-                        style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                        Start Practice
-                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                    </a>
+                    <div class="hub-card-footer">
+                        <span class="hub-meta-badge"><i class="fa-solid fa-list-check"></i> 7 Questions (8–14)</span>
+                        <a href="reading.html?type=tfn" class="nav-link-btn primary" onclick="event.stopPropagation();">
+                            Start
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                     <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading"
                             data-learning-item="type2"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 3: MATCHING FEATURES -->
-                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=features">
+                <div class="listening-hub-card" data-reading-destination="reading.html?type=features" role="link"
+                    tabindex="0">
                     <div>
-                        <div
-                            style="width: 60px; height: 60px; border-radius: 16px; background: #eff8ff; color: #175cd3; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                        <div class="hub-card-icon" style="background: #eff8ff; color: #175cd3;">
                             <i class="fa-solid fa-globe"></i>
                         </div>
 
-                        <span
-                            style="font-size: 13px; font-weight: 800; color: #175cd3; letter-spacing: 0.8px; text-transform: uppercase;">Question
-                            Type 03</span>
-                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">
-                            Matching Features</h3>
-                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                        <span class="hub-card-tag" style="color: #175cd3;">Question Type 03</span>
+                        <h3 class="hub-card-title">Matching Features</h3>
+                        <p class="hub-card-desc">
                             Match statements with the appropriate person, country, advertisement, or feature.
                         </p>
                     </div>
 
-                    <a href="reading.html?type=features" class="nav-link-btn primary"
-                        style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                        Start Practice
-                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                    </a>
+                    <div class="hub-card-footer">
+                        <span class="hub-meta-badge"><i class="fa-solid fa-list-check"></i> 6 Questions (15–20)</span>
+                        <a href="reading.html?type=features" class="nav-link-btn primary"
+                            onclick="event.stopPropagation();">
+                            Start
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                     <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading"
                             data-learning-item="type3"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 4: MATCHING HEADINGS -->
-                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=headings">
+                <div class="listening-hub-card" data-reading-destination="reading.html?type=headings" role="link"
+                    tabindex="0">
                     <div>
-                        <div
-                            style="width: 60px; height: 60px; border-radius: 16px; background: #fffaeb; color: #b54708; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                        <div class="hub-card-icon" style="background: #fffaeb; color: #b54708;">
                             <i class="fa-solid fa-heading"></i>
                         </div>
 
-                        <span
-                            style="font-size: 13px; font-weight: 800; color: #b54708; letter-spacing: 0.8px; text-transform: uppercase;">Question
-                            Type 04</span>
-                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">
-                            Matching Headings</h3>
-                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                        <span class="hub-card-tag" style="color: #b54708;">Question Type 04</span>
+                        <h3 class="hub-card-title">Matching Headings</h3>
+                        <p class="hub-card-desc">
                             Choose the most appropriate heading for each paragraph.
                         </p>
                     </div>
 
-                    <a href="reading.html?type=headings" class="nav-link-btn primary"
-                        style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                        Start Practice
-                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                    </a>
+                    <div class="hub-card-footer">
+                        <span class="hub-meta-badge"><i class="fa-solid fa-list-check"></i> 6 Questions (1–6)</span>
+                        <a href="reading.html?type=headings" class="nav-link-btn primary"
+                            onclick="event.stopPropagation();">
+                            Start
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                     <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading"
                             data-learning-item="type4"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 5: NOTE COMPLETION -->
-                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=notes">
+                <div class="listening-hub-card" data-reading-destination="reading.html?type=notes" role="link"
+                    tabindex="0">
                     <div>
-                        <div
-                            style="width: 60px; height: 60px; border-radius: 16px; background: #f0f4ff; color: #2e5aac; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                        <div class="hub-card-icon" style="background: #f0f4ff; color: #2e5aac;">
                             <i class="fa-solid fa-clipboard-list"></i>
                         </div>
 
-                        <span
-                            style="font-size: 13px; font-weight: 800; color: #2e5aac; letter-spacing: 0.8px; text-transform: uppercase;">Question
-                            Type 05</span>
-                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Note
-                            Completion</h3>
-                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                        <span class="hub-card-tag" style="color: #2e5aac;">Question Type 05</span>
+                        <h3 class="hub-card-title">Note Completion</h3>
+                        <p class="hub-card-desc">
                             Complete the notes using words from the reading passage.
                         </p>
                     </div>
 
-                    <a href="reading.html?type=notes" class="nav-link-btn primary"
-                        style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                        Start Practice
-                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                    </a>
+                    <div class="hub-card-footer">
+                        <span class="hub-meta-badge"><i class="fa-solid fa-list-check"></i> 4 Questions (1–4)</span>
+                        <a href="reading.html?type=notes" class="nav-link-btn primary"
+                            onclick="event.stopPropagation();">
+                            Start
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                     <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading"
                             data-learning-item="type5"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 6: SENTENCE COMPLETION -->
-                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=completion">
+                <div class="listening-hub-card" data-reading-destination="reading.html?type=completion" role="link"
+                    tabindex="0">
                     <div>
-                        <div
-                            style="width: 60px; height: 60px; border-radius: 16px; background: #f0fdf9; color: #0e9384; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                        <div class="hub-card-icon" style="background: #f0fdf9; color: #0e9384;">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </div>
 
-                        <span
-                            style="font-size: 13px; font-weight: 800; color: #0e9384; letter-spacing: 0.8px; text-transform: uppercase;">Question
-                            Type 06</span>
-                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">
-                            Sentence Completion</h3>
-                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                        <span class="hub-card-tag" style="color: #0e9384;">Question Type 06</span>
+                        <h3 class="hub-card-title">Sentence Completion</h3>
+                        <p class="hub-card-desc">
                             Complete the sentences using words from the passage.
                         </p>
                     </div>
 
-                    <a href="reading.html?type=completion" class="nav-link-btn primary"
-                        style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                        Start Practice
-                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                    </a>
+                    <div class="hub-card-footer">
+                        <span class="hub-meta-badge"><i class="fa-solid fa-list-check"></i> 4 Questions (11–14)</span>
+                        <a href="reading.html?type=completion" class="nav-link-btn primary"
+                            onclick="event.stopPropagation();">
+                            Start
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                     <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading"
                             data-learning-item="type6"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 7: SHORT-ANSWER QUESTIONS -->
-                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=short-answer">
+                <div class="listening-hub-card" data-reading-destination="reading.html?type=short-answer" role="link"
+                    tabindex="0">
                     <div>
-                        <div
-                            style="width: 60px; height: 60px; border-radius: 16px; background: #fff4ed; color: #b42318; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                        <div class="hub-card-icon" style="background: #fff4ed; color: #b42318;">
                             <i class="fa-solid fa-file-circle-question"></i>
                         </div>
 
-                        <span
-                            style="font-size: 13px; font-weight: 800; color: #b42318; letter-spacing: 0.8px; text-transform: uppercase;">Question
-                            Type 07</span>
-                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">
-                            Short-answer Questions</h3>
-                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                        <span class="hub-card-tag" style="color: #b42318;">Question Type 07</span>
+                        <h3 class="hub-card-title">Short-answer Questions</h3>
+                        <p class="hub-card-desc">
                             Answer questions using information from the reading passage.
                         </p>
                     </div>
 
-                    <a href="reading.html?type=short-answer" class="nav-link-btn primary"
-                        style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                        Start Practice
-                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                    </a>
+                    <div class="hub-card-footer">
+                        <span class="hub-meta-badge"><i class="fa-solid fa-list-check"></i> 5 Questions (1–5)</span>
+                        <a href="reading.html?type=short-answer" class="nav-link-btn primary"
+                            onclick="event.stopPropagation();">
+                            Start
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                     <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading"
                             data-learning-item="type7"> <span>Completed this practice</span></label>
                 </div>
 
                 <!-- CARD 8: SUMMARY COMPLETION -->
-                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=summary">
+                <div class="listening-hub-card" data-reading-destination="reading.html?type=summary" role="link"
+                    tabindex="0">
                     <div>
-                        <div
-                            style="width: 60px; height: 60px; border-radius: 16px; background: #f4f3ff; color: #5925dc; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
+                        <div class="hub-card-icon" style="background: #f4f3ff; color: #5925dc;">
                             <i class="fa-solid fa-align-left"></i>
                         </div>
 
-                        <span
-                            style="font-size: 13px; font-weight: 800; color: #5925dc; letter-spacing: 0.8px; text-transform: uppercase;">Question
-                            Type 08</span>
-                        <h3 style="font-size: 24px; font-weight: 800; color: var(--dark); margin: 8px 0 12px 0;">Summary
-                            Completion</h3>
-                        <p style="color: #64748b; font-size: 15px; line-height: 1.65; margin-bottom: 25px;">
+                        <span class="hub-card-tag" style="color: #5925dc;">Question Type 08</span>
+                        <h3 class="hub-card-title">Summary Completion</h3>
+                        <p class="hub-card-desc">
                             Complete the summary using words from the reading passage.
                         </p>
                     </div>
 
-                    <a href="reading.html?type=summary" class="nav-link-btn primary"
-                        style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-                        Start Practice
-                        <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
-                    </a>
+                    <div class="hub-card-footer">
+                        <span class="hub-meta-badge"><i class="fa-solid fa-list-check"></i> 4 Questions (7–10)</span>
+                        <a href="reading.html?type=summary" class="nav-link-btn primary"
+                            onclick="event.stopPropagation();">
+                            Start
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                     <label class="speaking-completion"><input type="checkbox" data-learning-skill="reading"
                             data-learning-item="type8"> <span>Completed this practice</span></label>
                 </div>

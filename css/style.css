@@ -1587,22 +1587,24 @@ button {
 
 /* PART CARDS IN HUB PAGES (SPEAKING & WRITING) */
 .speaking-part-card {
-    background: linear-gradient(145deg, #ffffff, #f9f8ff) !important;
-    border: 1.5px solid #a49dff !important;
-    border-radius: 22px !important;
-    padding: 32px 28px !important;
-    box-shadow: 0 10px 30px rgba(99, 91, 255, 0.1) !important;
+    background: #ffffff;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.05);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
+    box-sizing: border-box;
+    height: 100%;
 }
 
 .speaking-part-card:hover {
-    border-color: #635bff !important;
-    box-shadow: 0 22px 45px rgba(99, 91, 255, 0.22) !important;
-    transform: translateY(-8px) !important;
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px rgba(99, 91, 255, 0.12);
+    transform: translateY(-5px);
 }
 
 .speaking-completion {
@@ -3862,24 +3864,44 @@ footer {
 
 .speaking-nav-pills {
     display: flex;
+    align-items: center;
     gap: 8px;
-    margin-left: auto;
+    overflow-x: auto;
+    max-width: 60%;
+    padding: 6px 4px;
+    scrollbar-width: none;
+    margin: 0;
+}
+
+.speaking-nav-pills::-webkit-scrollbar {
+    display: none;
 }
 
 .speaking-nav-pills a {
-    padding: 6px 14px;
+    padding: 7px 14px;
     border-radius: 20px;
     font-size: 13px;
     font-weight: 600;
     color: var(--muted);
-    background: #f2f4f7;
-    transition: 0.2s;
+    background: #f1f5f9;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.speaking-nav-pills a:hover,
+.speaking-nav-pills a:hover {
+    background: var(--light-purple);
+    color: var(--primary);
+    transform: translateY(-1px);
+}
+
 .speaking-nav-pills a.active {
     background: var(--primary);
-    color: white;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(99, 91, 255, 0.28);
 }
 
 .speaking-title {
@@ -4408,26 +4430,44 @@ footer {
 
 .writing-nav-pills {
     display: flex;
+    align-items: center;
     gap: 8px;
-    margin-left: auto;
-    flex-wrap: wrap;
+    overflow-x: auto;
+    max-width: 60%;
+    padding: 6px 4px;
+    scrollbar-width: none;
+    margin: 0;
+}
+
+.writing-nav-pills::-webkit-scrollbar {
+    display: none;
 }
 
 .writing-nav-pills a {
-    padding: 6px 14px;
+    padding: 7px 14px;
     border-radius: 20px;
     font-size: 13px;
     font-weight: 600;
     color: var(--muted);
-    background: #f2f4f7;
-    transition: 0.2s;
+    background: #f1f5f9;
+    white-space: nowrap;
+    transition: all 0.25s ease;
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.writing-nav-pills a:hover,
+.writing-nav-pills a:hover {
+    background: var(--light-purple);
+    color: var(--primary);
+    transform: translateY(-1px);
+}
+
 .writing-nav-pills a.active {
     background: var(--primary);
-    color: white;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(99, 91, 255, 0.28);
 }
 
 .writing-title {
@@ -5627,26 +5667,44 @@ footer {
 
 .reading-nav-pills {
     display: flex;
+    align-items: center;
     gap: 8px;
-    margin-left: auto;
-    flex-wrap: wrap;
+    overflow-x: auto;
+    max-width: 60%;
+    padding: 6px 4px;
+    scrollbar-width: none;
+    margin: 0;
+}
+
+.reading-nav-pills::-webkit-scrollbar {
+    display: none;
 }
 
 .reading-nav-pills a {
-    padding: 6px 14px;
+    padding: 7px 14px;
     border-radius: 20px;
     font-size: 13px;
     font-weight: 600;
     color: var(--muted);
-    background: #f2f4f7;
-    transition: 0.2s;
+    background: #f1f5f9;
+    white-space: nowrap;
+    transition: all 0.25s ease;
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.reading-nav-pills a:hover,
+.reading-nav-pills a:hover {
+    background: var(--light-purple);
+    color: var(--primary);
+    transform: translateY(-1px);
+}
+
 .reading-nav-pills a.active {
     background: var(--primary);
-    color: white;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(99, 91, 255, 0.28);
 }
 
 .reading-option-card {
@@ -6012,18 +6070,27 @@ footer {
     box-shadow: 0 4px 12px rgba(99, 91, 255, 0.28);
 }
 
-/* LISTENING HUB */
-.listening-hub-container {
+/* UNIFIED LSWR HUBS (LISTENING, SPEAKING, READING, WRITING) */
+.listening-hub-container,
+.listening-hub-shell,
+main.speaking-container.listening-hub-shell,
+main.writing-container.listening-hub-shell,
+main.reading-container.listening-hub-shell {
+    width: 100%;
     max-width: 1100px;
     margin: 0 auto;
     padding: 30px 20px 80px 20px;
+    box-sizing: border-box;
 }
 
-.listening-hub-grid {
+.listening-hub-grid,
+.speaking-parts-grid,
+.reading-types-grid,
+.writing-parts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    margin-top: 30px;
+    margin: 30px 0 50px;
 }
 
 .listening-hub-card {
@@ -6039,6 +6106,8 @@ footer {
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    box-sizing: border-box;
+    height: 100%;
 }
 
 .listening-hub-card:hover {
@@ -6047,12 +6116,29 @@ footer {
     box-shadow: 0 20px 40px rgba(99, 91, 255, 0.12);
 }
 
-/* Keep the Speaking, Reading, and Writing hubs aligned with Listening. */
-.listening-hub-shell {
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 30px 20px 80px;
+.listening-hub-card .hub-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+    margin-top: auto;
+}
+
+.listening-hub-card .nav-link-btn {
+    padding: 8px 18px;
+    font-size: 13px;
+    border-radius: 10px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.listening-hub-card .speaking-completion {
+    margin-top: 16px;
 }
 
 #readingProblemSection {
@@ -6060,62 +6146,33 @@ footer {
     margin: 0 auto;
 }
 
-.listening-hub-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-    margin: 30px 0 50px;
-}
-
-.listening-hub-card.speaking-part-card {
-    min-height: 100%;
-    background: #fff;
-    border: 1.5px solid var(--border);
-    border-radius: 20px;
-    padding: 28px;
-    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.05);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.listening-hub-card.speaking-part-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary);
-    box-shadow: 0 20px 40px rgba(99, 91, 255, 0.12);
-}
-
-.listening-hub-card.speaking-part-card h3 {
-    font-family: "Manrope", sans-serif;
-    font-size: 20px !important;
-    line-height: 1.3;
-}
-
-.listening-hub-card.speaking-part-card p {
-    color: var(--muted) !important;
-    font-size: 14px !important;
-    line-height: 1.6 !important;
-}
-
-.listening-hub-card.speaking-part-card > a.nav-link-btn {
-    width: auto !important;
-    align-self: flex-end;
-    margin-top: 12px;
-    padding: 8px 18px !important;
-    font-size: 13px !important;
-}
-
-.listening-hub-card .speaking-completion {
-    margin-top: 16px;
+@media (max-width: 992px) {
+    .listening-hub-grid,
+    .speaking-parts-grid,
+    .reading-types-grid,
+    .writing-parts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
 }
 
 @media (max-width: 768px) {
-    .listening-hub-shell {
+    .listening-hub-container,
+    .listening-hub-shell,
+    main.speaking-container.listening-hub-shell,
+    main.writing-container.listening-hub-shell,
+    main.reading-container.listening-hub-shell {
         padding: 24px 16px 60px;
     }
+}
 
-    .listening-hub-grid {
+@media (max-width: 640px) {
+    .listening-hub-grid,
+    .speaking-parts-grid,
+    .reading-types-grid,
+    .writing-parts-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 }
 
