@@ -6047,6 +6047,78 @@ footer {
     box-shadow: 0 20px 40px rgba(99, 91, 255, 0.12);
 }
 
+/* Keep the Speaking, Reading, and Writing hubs aligned with Listening. */
+.listening-hub-shell {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px 80px;
+}
+
+#readingProblemSection {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.listening-hub-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin: 30px 0 50px;
+}
+
+.listening-hub-card.speaking-part-card {
+    min-height: 100%;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.listening-hub-card.speaking-part-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px rgba(99, 91, 255, 0.12);
+}
+
+.listening-hub-card.speaking-part-card h3 {
+    font-family: "Manrope", sans-serif;
+    font-size: 20px !important;
+    line-height: 1.3;
+}
+
+.listening-hub-card.speaking-part-card p {
+    color: var(--muted) !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+}
+
+.listening-hub-card.speaking-part-card > a.nav-link-btn {
+    width: auto !important;
+    align-self: flex-end;
+    margin-top: 12px;
+    padding: 8px 18px !important;
+    font-size: 13px !important;
+}
+
+.listening-hub-card .speaking-completion {
+    margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+    .listening-hub-shell {
+        padding: 24px 16px 60px;
+    }
+
+    .listening-hub-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .hub-card-icon {
     width: 52px;
     height: 52px;

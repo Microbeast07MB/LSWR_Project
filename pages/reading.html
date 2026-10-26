@@ -42,7 +42,8 @@
             Grammarium
         </div>
 
-        <div class="reading-nav-pills" id="readingNavPills">
+        <div class="listening-nav-pills reading-nav-pills" id="readingNavPills">
+            <a href="reading.html" id="pill-hub">All Tasks</a>
             <a href="reading.html?type=flowchart" id="pill-flowchart">Flow-chart</a>
             <a href="reading.html?type=tfn" id="pill-tfn">True/False/NG</a>
             <a href="reading.html?type=features" id="pill-features">Features</a>
@@ -52,14 +53,15 @@
             <a href="reading.html?type=short-answer" id="pill-short-answer">Short Answer</a>
             <a href="reading.html?type=summary" id="pill-summary">Summary</a>
         </div>
+        <div class="question-number">Practice Hub</div>
     </header>
 
 
     <!-- MAIN CONTENT -->
-    <main class="reading-container">
+    <main class="reading-container listening-hub-shell">
 
         <!-- READING HUB SELECTION GRID (Shown when no ?type= is in URL) -->
-        <div id="readingHubSection" style="display: none;">
+        <div id="readingHubSection" class="listening-hub-container" style="display: none;">
             <div class="speaking-header" style="text-align: center; margin-bottom: 50px;">
                 <div class="part-badge-group" style="justify-content: center;">
                     <span class="part-badge">
@@ -76,11 +78,10 @@
                 </p>
             </div>
 
-            <div class="reading-types-grid"
-                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin-bottom: 50px;">
+            <div class="reading-types-grid listening-hub-grid">
 
                 <!-- CARD 1: FLOW-CHART COMPLETION -->
-                <div class="speaking-part-card" data-reading-destination="reading.html?type=flowchart">
+                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=flowchart">
                     <div>
                         <div
                             style="width: 60px; height: 60px; border-radius: 16px; background: var(--light-purple); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
@@ -107,7 +108,7 @@
                 </div>
 
                 <!-- CARD 2: TRUE / FALSE / NOT GIVEN -->
-                <div class="speaking-part-card" data-reading-destination="reading.html?type=tfn">
+                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=tfn">
                     <div>
                         <div
                             style="width: 60px; height: 60px; border-radius: 16px; background: #ecfdf3; color: #027a48; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
@@ -134,7 +135,7 @@
                 </div>
 
                 <!-- CARD 3: MATCHING FEATURES -->
-                <div class="speaking-part-card" data-reading-destination="reading.html?type=features">
+                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=features">
                     <div>
                         <div
                             style="width: 60px; height: 60px; border-radius: 16px; background: #eff8ff; color: #175cd3; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
@@ -161,7 +162,7 @@
                 </div>
 
                 <!-- CARD 4: MATCHING HEADINGS -->
-                <div class="speaking-part-card" data-reading-destination="reading.html?type=headings">
+                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=headings">
                     <div>
                         <div
                             style="width: 60px; height: 60px; border-radius: 16px; background: #fffaeb; color: #b54708; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
@@ -188,7 +189,7 @@
                 </div>
 
                 <!-- CARD 5: NOTE COMPLETION -->
-                <div class="speaking-part-card" data-reading-destination="reading.html?type=notes">
+                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=notes">
                     <div>
                         <div
                             style="width: 60px; height: 60px; border-radius: 16px; background: #f0f4ff; color: #2e5aac; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
@@ -215,7 +216,7 @@
                 </div>
 
                 <!-- CARD 6: SENTENCE COMPLETION -->
-                <div class="speaking-part-card" data-reading-destination="reading.html?type=completion">
+                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=completion">
                     <div>
                         <div
                             style="width: 60px; height: 60px; border-radius: 16px; background: #f0fdf9; color: #0e9384; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
@@ -242,7 +243,7 @@
                 </div>
 
                 <!-- CARD 7: SHORT-ANSWER QUESTIONS -->
-                <div class="speaking-part-card" data-reading-destination="reading.html?type=short-answer">
+                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=short-answer">
                     <div>
                         <div
                             style="width: 60px; height: 60px; border-radius: 16px; background: #fff4ed; color: #b42318; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
@@ -269,7 +270,7 @@
                 </div>
 
                 <!-- CARD 8: SUMMARY COMPLETION -->
-                <div class="speaking-part-card" data-reading-destination="reading.html?type=summary">
+                <div class="speaking-part-card listening-hub-card" data-reading-destination="reading.html?type=summary">
                     <div>
                         <div
                             style="width: 60px; height: 60px; border-radius: 16px; background: #f4f3ff; color: #5925dc; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 22px;">
@@ -831,6 +832,8 @@
                 document.querySelectorAll(".reading-nav-pills a").forEach(pill => {
                     pill.classList.remove("active");
                 });
+                const hubPill = document.getElementById("pill-hub");
+                if (hubPill) hubPill.classList.add("active");
             }
         });
 
