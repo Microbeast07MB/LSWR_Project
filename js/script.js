@@ -570,13 +570,6 @@ async function loadLearningDashboard(providedUser) {
         return percent;
     };
 
-    if (!window.supabaseClient || !window.supabaseAuth) {
-        Object.keys(modules).forEach(skill => renderModule(skill, 0));
-        renderOverall(Object.fromEntries(Object.entries(modules).map(([skill, module]) => [skill, { completed: 0, total: module.total }])));
-        if (syncStatus) syncStatus.textContent = "Connect and sign in to sync saved checklist progress.";
-        return;
-    }
-
     let user = providedUser;
     if (!user) {
         user = getLocalAuthUser();
@@ -596,26 +589,60 @@ async function loadLearningDashboard(providedUser) {
     if (!user) {
         Object.keys(modules).forEach(skill => renderModule(skill, 0));
         renderOverall(Object.fromEntries(Object.entries(modules).map(([skill, module]) => [skill, { completed: 0, total: module.total }])));
-        if (syncStatus) syncStatus.textContent = "Sign in to view your saved checklist progress.";
+        if (syncStatus) syncStatus.textContent = "Sign in to view and sync your checklist progress.";
         return;
     }
 
-    if (syncStatus) syncStatus.textContent = "Syncing saved checklist progress...";
+    // Read cached completions from localStorage first
+    const storageKey = `grammarium_completions_${user.id}`;
+    let cachedMap = {};
+    try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) cachedMap = JSON.parse(stored) || {};
+    } catch (e) {
+        console.warn("Could not read local completion cache:", e);
+    }
 
-    const { data: completions, error: completionError } = await window.supabaseClient
-        .from("learning_completions")
-        .select("skill, item_key, completed, completed_at")
-        .eq("user_id", user.id)
-        .eq("completed", true);
-    if (completionError) {
-        console.error("Could not load checklist progress:", completionError.message);
-        if (syncStatus) syncStatus.textContent = "Progress sync failed. Reload to try again.";
-        return;
+    // Try fetching latest completions from Supabase if online
+    let remoteCompletions = null;
+    let isTableMissing = false;
+    if (window.supabaseClient) {
+        try {
+            const { data, error } = await window.supabaseClient
+                .from("learning_completions")
+                .select("skill, item_key, completed, completed_at")
+                .eq("user_id", user.id);
+            if (!error && data) {
+                remoteCompletions = data;
+                // Merge remote into local cache
+                data.forEach(row => {
+                    const k = `${row.skill}:${row.item_key}`;
+                    cachedMap[k] = {
+                        skill: row.skill,
+                        item_key: row.item_key,
+                        completed: !!row.completed,
+                        completed_at: row.completed_at
+                    };
+                });
+                try {
+                    localStorage.setItem(storageKey, JSON.stringify(cachedMap));
+                } catch (err) {}
+            } else if (error) {
+                if (error.code === "PGRST205" || error.message?.includes("learning_completions")) {
+                    isTableMissing = true;
+                }
+                console.warn("Supabase learning_completions query note:", error.message);
+            }
+        } catch (err) {
+            console.warn("Supabase fetch failed, relying on cached checklist:", err);
+        }
     }
 
     const completedItems = Object.fromEntries(Object.keys(modules).map(skill => [skill, new Set()]));
     const activeDays = new Set();
-    (completions || []).forEach(row => {
+
+    Object.values(cachedMap).forEach(row => {
+        if (!row.completed) return;
         const skill = String(row.skill || "").toLowerCase();
         const item = String(row.item_key || "").toLowerCase();
         if (completedItems[skill] && item) completedItems[skill].add(item);
@@ -649,8 +676,13 @@ async function loadLearningDashboard(providedUser) {
     }
     const streakNode = document.getElementById("streak-value");
     if (streakNode) streakNode.textContent = `${streak} ${streak === 1 ? "Day" : "Days"}`;
+
     if (syncStatus) {
-        syncStatus.textContent = `Synced from saved checkboxes | ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
+        if (isTableMissing) {
+            syncStatus.textContent = "Progress updated locally (run Supabase SQL script to enable cloud sync).";
+        } else {
+            syncStatus.textContent = `Synced from saved checkboxes | ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
+        }
     }
 }
 
@@ -665,101 +697,158 @@ async function initLearningChecklist() {
     const saveButton = document.querySelector("[data-save-learning-progress]");
     const status = document.querySelector("[data-learning-save-status]");
     const showStatus = message => { if (status) status.textContent = message; };
-    if (!window.supabaseClient || !window.supabaseAuth) {
-        if (saveButton) saveButton.disabled = true;
-        showStatus("Progress saving is unavailable. Check your connection and sign in again.");
-        return;
+
+    let user = getLocalAuthUser();
+    if (!user && window.supabaseAuth?.getSession) {
+        try {
+            const session = await window.supabaseAuth.getSession();
+            user = session?.user || null;
+        } catch (e) {
+            console.warn("Could not get auth session for checklist:", e);
+        }
     }
-    const session = await window.supabaseAuth.getSession();
-    const user = session?.user;
+
     if (!user) {
         if (saveButton) saveButton.disabled = true;
         showStatus("Sign in to load and save your progress.");
         return;
     }
 
-    if (saveButton) saveButton.disabled = true;
-    showStatus("Loading saved progress...");
+    const storageKey = `grammarium_completions_${user.id}`;
+    let cachedMap = {};
+    try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) cachedMap = JSON.parse(stored) || {};
+    } catch (e) {}
 
-    const { data, error } = await window.supabaseClient
-        .from("learning_completions")
-        .select("skill, item_key, completed")
-        .eq("user_id", user.id);
-    if (error) {
-        console.error("Could not load learning checklist:", error.message);
-        showStatus("Couldn't load saved progress. Refresh and try again.");
-        return;
-    }
-
-    const completed = new Set((data || []).filter(row => row.completed).map(row => `${row.skill}:${row.item_key}`));
+    // Populate checkboxes from local cache immediately
     checks.forEach(check => {
         const skill = check.dataset.learningSkill;
         const itemKey = check.dataset.learningItem;
-        check.checked = completed.has(`${skill}:${itemKey}`);
+        const record = cachedMap[`${skill}:${itemKey}`];
+        if (record) {
+            check.checked = !!record.completed;
+        }
         check.addEventListener("click", event => event.stopPropagation());
         check.closest("label")?.addEventListener("click", event => event.stopPropagation());
     });
-    if (checks[0].dataset.learningSkill === "speaking") updateSpeakingMockAvailability();
+    if (checks[0]?.dataset.learningSkill === "speaking") updateSpeakingMockAvailability();
 
-    const skill = checks[0].dataset.learningSkill;
-    if (!saveButton || checks.some(check => check.dataset.learningSkill !== skill)) {
-        showStatus("Checklist controls are incomplete. Refresh this page and try again.");
-        return;
-    }
-    checks.forEach(check => check.addEventListener("change", async () => {
-        const completed = check.checked;
-        check.disabled = true;
-        showStatus("Saving your checkbox...");
+    // Check if cloud sync is available
+    if (window.supabaseClient) {
         try {
-            const { error: saveError } = await window.supabaseClient
+            const { data, error } = await window.supabaseClient
                 .from("learning_completions")
-                .upsert({
+                .select("skill, item_key, completed, completed_at")
+                .eq("user_id", user.id);
+            if (!error && data) {
+                data.forEach(row => {
+                    const k = `${row.skill}:${row.item_key}`;
+                    cachedMap[k] = {
+                        skill: row.skill,
+                        item_key: row.item_key,
+                        completed: !!row.completed,
+                        completed_at: row.completed_at
+                    };
+                });
+                try {
+                    localStorage.setItem(storageKey, JSON.stringify(cachedMap));
+                } catch (e) {}
+
+                checks.forEach(check => {
+                    const skill = check.dataset.learningSkill;
+                    const itemKey = check.dataset.learningItem;
+                    const record = cachedMap[`${skill}:${itemKey}`];
+                    if (record) {
+                        check.checked = !!record.completed;
+                    }
+                });
+                if (checks[0]?.dataset.learningSkill === "speaking") updateSpeakingMockAvailability();
+            }
+        } catch (e) {
+            console.warn("Cloud sync fetch unavailable:", e);
+        }
+    }
+
+    const saveChecklist = async (showFeedback = true) => {
+        if (showFeedback) showStatus("Saving your progress...");
+        const timestamp = new Date().toISOString();
+        const skill = checks[0]?.dataset.learningSkill;
+
+        // 1. Update local storage cache
+        checks.forEach(check => {
+            const sk = check.dataset.learningSkill;
+            const itemKey = check.dataset.learningItem;
+            cachedMap[`${sk}:${itemKey}`] = {
+                skill: sk,
+                item_key: itemKey,
+                completed: check.checked,
+                completed_at: check.checked ? timestamp : null
+            };
+        });
+        try {
+            localStorage.setItem(storageKey, JSON.stringify(cachedMap));
+        } catch (e) {}
+
+        if (skill === "speaking") updateSpeakingMockAvailability();
+
+        // 2. Try updating Supabase
+        let cloudSynced = false;
+        if (window.supabaseClient) {
+            try {
+                const updates = checks.map(check => ({
                     user_id: user.id,
                     skill: check.dataset.learningSkill,
                     item_key: check.dataset.learningItem,
-                    completed,
-                    completed_at: completed ? new Date().toISOString() : null
-                }, { onConflict: "user_id,skill,item_key" });
-            if (saveError) throw saveError;
-            if (skill === "speaking") updateSpeakingMockAvailability();
-            await loadLearningDashboard();
-            showStatus("Checkbox saved. Dashboard progress will sync from this activity.");
-        } catch (saveError) {
-            check.checked = !completed;
-            console.error("Could not save learning checkbox:", saveError.message || saveError);
-            showStatus("Couldn't save this checkbox. Please try again.");
-        } finally {
-            check.disabled = false;
+                    completed: check.checked,
+                    completed_at: check.checked ? timestamp : null
+                }));
+                const { error: saveError } = await window.supabaseClient
+                    .from("learning_completions")
+                    .upsert(updates, { onConflict: "user_id,skill,item_key" });
+                if (!saveError) {
+                    cloudSynced = true;
+                } else {
+                    console.warn("Supabase upsert note:", saveError.message);
+                }
+            } catch (err) {
+                console.warn("Supabase network error:", err);
+            }
         }
-    }));
-    saveButton.disabled = false;
-    showStatus("Your saved progress is up to date.");
 
-    saveButton.addEventListener("click", async event => {
-        event.stopPropagation();
-        saveButton.disabled = true;
-        showStatus("Saving your progress...");
-        const timestamp = new Date().toISOString();
-        const updates = checks.map(check => ({
-            user_id: user.id,
-            skill,
-            item_key: check.dataset.learningItem,
-            completed: check.checked,
-            completed_at: check.checked ? timestamp : null
-        }));
-        try {
-            const { error: saveError } = await window.supabaseClient
-                .from("learning_completions")
-                .upsert(updates, { onConflict: "user_id,skill,item_key" });
-            if (saveError) throw saveError;
-            if (skill === "speaking") updateSpeakingMockAvailability();
-            await loadLearningDashboard();
-            showStatus("Progress saved and dashboard updated.");
-        } catch (saveError) {
-            console.error("Could not save learning checklist:", saveError.message || saveError);
-            showStatus("Couldn't save your progress. Please try again.");
-        } finally {
-            saveButton.disabled = false;
+        // 3. Update dashboard if on home page
+        if (typeof loadLearningDashboard === "function") {
+            await loadLearningDashboard(user);
         }
+
+        if (showFeedback) {
+            showStatus(cloudSynced ? "Progress saved and dashboard updated!" : "Progress saved locally! (Run Supabase SQL script for cloud sync)");
+            setTimeout(() => {
+                if (status) status.textContent = "";
+            }, 3500);
+        }
+    };
+
+    // Auto-save on individual checkbox toggle
+    checks.forEach(check => {
+        check.addEventListener("change", () => {
+            saveChecklist(false);
+        });
     });
+
+    // Save button click
+    if (saveButton) {
+        saveButton.disabled = false;
+        saveButton.addEventListener("click", async event => {
+            event.stopPropagation();
+            saveButton.disabled = true;
+            await saveChecklist(true);
+            saveButton.disabled = false;
+        });
+    }
+
+    showStatus("Your saved progress is ready.");
+    setTimeout(() => {
+        if (status) status.textContent = "";
+    }, 2000);
 }
