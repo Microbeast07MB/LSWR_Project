@@ -37,10 +37,10 @@
             <span id="backBtnText">Back to Home</span>
         </a>
 
-        <div class="listening-logo">
+        <a href="../index.html" class="listening-logo">
             <i class="fa-solid fa-language"></i>
             Grammarium
-        </div>
+        </a>
 
         <div class="listening-nav-pills reading-nav-pills" id="readingNavPills">
             <a href="reading.html" id="pill-hub">All Tasks</a>
@@ -815,7 +815,22 @@
                 currentType = requestedType;
                 if (hubSec) hubSec.style.display = "none";
                 if (probSec) probSec.style.display = "block";
-                if (backBtn) backBtn.href = "reading.html";
+                if (backBtn) {
+                    backBtn.href = "reading.html";
+                    backBtn.onclick = function (e) {
+                        e.preventDefault();
+                        history.pushState({}, "", "reading.html");
+                        if (hubSec) hubSec.style.display = "block";
+                        if (probSec) probSec.style.display = "none";
+                        backBtn.href = new URL("../index.html", window.location.href).href;
+                        if (backText) backText.textContent = "Back to Home";
+                        backBtn.onclick = null;
+                        document.querySelectorAll(".reading-nav-pills a").forEach(p => p.classList.remove("active"));
+                        const hubPill = document.getElementById("pill-hub");
+                        if (hubPill) hubPill.classList.add("active");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                    };
+                }
                 if (backText) backText.textContent = "Back to Reading Hub";
 
                 // Highlight Active Nav Pill
@@ -829,7 +844,10 @@
             } else {
                 if (hubSec) hubSec.style.display = "block";
                 if (probSec) probSec.style.display = "none";
-                if (backBtn) backBtn.href = "index.html";
+                if (backBtn) {
+                    backBtn.href = new URL("../index.html", window.location.href).href;
+                    backBtn.onclick = null;
+                }
                 if (backText) backText.textContent = "Back to Home";
 
                 document.querySelectorAll(".reading-nav-pills a").forEach(pill => {
